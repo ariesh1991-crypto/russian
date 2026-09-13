@@ -1035,7 +1035,7 @@ function screenHome() {
       }).join("") +
     '</div>' +
     installCardHTML() +
-    '<p class="foot">ההתקדמות נשמרת במכשיר הזה</p>';
+    '<p class="foot">גרסה 3 · ' + TOTAL + ' מילים · ההתקדמות נשמרת במכשיר הזה</p>';
 }
 
 function isInstalled() {
@@ -1296,7 +1296,19 @@ document.getElementById("installNo").addEventListener("click", () => {
   try { localStorage.setItem("ru-install-dismissed", "1"); } catch (e) {}
 });
 window.addEventListener("appinstalled", () => bar.classList.remove("show"));
-if ("serviceWorker" in navigator) window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+if ("serviceWorker" in navigator) {
+  let reloading = false;
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if (reloading) return;
+    reloading = true;
+    location.reload();
+  });
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js")
+      .then(reg => reg.update().catch(() => {}))
+      .catch(() => {});
+  });
+}
 
 applyPrefs();
 render();

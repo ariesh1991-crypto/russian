@@ -1,16 +1,22 @@
-const CACHE = "ru-speak-v2";
+const CACHE = "ru-speak-v3";
 const ASSETS = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));
 });
 
+// מוחק מטמון ישן, משתלט על הלשוניות הפתוחות ומרענן אותן —
+// אחרת מכשיר שכבר ביקר באתר ימשיך לראות את הגרסה הישנה מהמטמון.
 self.addEventListener("activate", e => {
-  e.waitUntil(
-    caches.keys()
-      .then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
-      .then(() => self.clients.claim())
-  );
+  e.waitUntil((async () => {
+    const keys = await caches.keys();
+    await Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)));
+    await self.clients.claim();
+    const clients = await self.clients.matchAll({ type: "window" });
+    for (const c of clients) {
+      if (typeof c.navigate === "function") { try { await c.navigate(c.url); } catch (err) {} }
+    }
+  })());
 });
 
 // דף האפליקציה: קודם מהרשת (כדי שעדכונים יגיעו), ורק אם אין אינטרנט — מהמטמון.
