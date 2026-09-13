@@ -301,6 +301,30 @@
   .mode strong { display: block; font-family: "Rubik", sans-serif; font-size: 1.05rem; }
   .mode span { font-size: .85rem; color: var(--muted); }
 
+  .steps { display: flex; flex-direction: column; gap: 10px; }
+  .step {
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    padding: 14px; border-radius: var(--r-m);
+    background: var(--surface); border: 2px solid var(--line);
+  }
+  .step-done { border-style: dashed; border-color: var(--good-line); background: var(--good-bg); }
+  .step-num {
+    width: 42px; height: 42px; border-radius: 14px; flex: none;
+    display: grid; place-items: center;
+    font-family: "Rubik", sans-serif; font-weight: 800; font-size: 1.1rem;
+    background: var(--c-bg); color: var(--c); border: 1px solid var(--c-line);
+  }
+  .step-body { flex: 1 1 190px; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .step-body > b { font-family: "Rubik", sans-serif; font-size: 1rem; }
+  .step-words { font-size: .85rem; color: var(--muted); line-height: 1.45; }
+  .step-pill {
+    align-self: flex-start; margin-top: 4px;
+    font-size: .78rem; font-weight: 700; color: var(--c);
+    background: var(--c-bg); border-radius: 99px; padding: 2px 10px;
+  }
+  .step .btn { flex: 0 0 auto; }
+  @media (max-width: 460px) { .step .btn { flex: 1 1 100%; } }
+
   .word-list { display: flex; flex-direction: column; gap: 8px; }
   .word-row {
     display: grid;
@@ -1001,23 +1025,29 @@ function renderMini() {
 }
 
 function screenHome() {
-  const done = mastered(ALL), inWork = started(ALL), pct = Math.round(done / TOTAL * 100);
-  const next = CATS.find(c => mastered(c.words) < c.words.length) || CATS[0];
+  const done = mastered(ALL), learned = taught(ALL).length, pct = Math.round(done / TOTAL * 100);
+  const step = nextStep();
+  const cta = step
+    ? '<button class="btn btn-lg hero-cta" data-start="' + step.c.id + ':' + step.ci + '">' +
+      (learned ? "ממשיכים ללמוד ←" : "מתחילים ללמוד ←") + '</button>'
+    : '<button class="btn btn-lg hero-cta" data-quiz="quick">🎧 תרגול</button>';
   app.innerHTML =
     '<div id="voiceNotice">' + voiceNoticeHTML() + '</div>' +
     '<section class="hero">' +
       '<h1>לומדים לשמוע ולדבר רוסית</h1>' +
-      '<p>כל מילה עם הקראה בקול וכתיב בעברית — שומעים, חוזרים בקול, ומתרגלים. בלי אותיות רוסיות, בלי שיעורי דקדוק.</p>' +
+      '<p>בכל שלב לומדים 5 מילים חדשות עם הקראה בקול, ומיד אחר כך נבחנים רק עליהן. בלי אותיות רוסיות, בלי דקדוק.</p>' +
       '<div class="hero-bar"><i style="width:' + pct + '%"></i></div>' +
       '<div class="hero-stats">' +
-        '<span><b>' + done + '</b>מילים שאת/ה יודע/ת</span>' +
-        '<span><b>' + inWork + '</b>בתרגול</span>' +
+        '<span><b>' + learned + '</b>מילים שלמדת</span>' +
+        '<span><b>' + done + '</b>כבר יושבות טוב</span>' +
         '<span><b>' + TOTAL + '</b>בקורס</span>' +
       '</div>' +
-      '<div class="row">' +
-        '<button class="btn btn-lg hero-cta" data-go="quiz" data-cat="mix">🎧 תרגול מהיר</button>' +
-        '<button class="btn btn-lg" style="background:rgba(255,255,255,.18);color:#fff" data-go="cat" data-cat="' + next.id + '">' + esc(next.icon) + ' ' + esc(next.title) + '</button>' +
+      '<div class="row">' + cta +
+        (learned >= 4
+          ? '<button class="btn btn-lg" style="background:rgba(255,255,255,.18);color:#fff" data-quiz="quick">🎧 תרגול חוזר</button>'
+          : "") +
       '</div>' +
+      (step ? '<p style="margin:0;font-size:.85rem">הבא בתור: ' + esc(step.c.icon + " " + step.c.title) + ' · שלב ' + (step.ci + 1) + ' מתוך ' + step.chunks.length + '</p>' : "") +
     '</section>' +
     '<div class="section-head"><h2>השיעורים</h2><span class="hint">' + CATS.length + ' שיעורים · לפי סדר לימוד</span></div>' +
     '<div class="grid">' +
@@ -1036,7 +1066,7 @@ function screenHome() {
       }).join("") +
     '</div>' +
     installCardHTML() +
-    '<p class="foot">גרסה 4 · ' + TOTAL + ' מילים · ההתקדמות נשמרת במכשיר הזה</p>';
+    '<p class="foot">גרסה 5 · ' + TOTAL + ' מילים · ההתקדמות נשמרת במכשיר הזה</p>';
 }
 
 function isInstalled() {
@@ -1050,17 +1080,60 @@ function installCardHTML() {
     '<button class="btn btn-brand" data-install="1">איך עושים את זה?</button></div>';
 }
 
+/* ---- מקבצים: לומדים 5 מילים, ומיד נבחנים עליהן ---- */
+const CHUNK = 5;
+function chunksOf(c) {
+  const out = [];
+  for (let i = 0; i < c.words.length; i += CHUNK) out.push(c.words.slice(i, i + CHUNK));
+  if (out.length > 1 && out[out.length - 1].length < 4) {
+    const last = out.pop();
+    out[out.length - 1] = out[out.length - 1].concat(last);
+  }
+  return out;
+}
+const isSeen = id => !!(progress[id] && progress[id].seen);
+const taught = ws => ws.filter(w => isSeen(w.id));
+function markSeen(id) {
+  const p = progress[id] || (progress[id] = { score: 0, right: 0, wrong: 0 });
+  if (!p.seen) { p.seen = true; saveProgress(); }
+}
+function nextStep() {
+  for (const c of CATS) {
+    const chunks = chunksOf(c);
+    for (let i = 0; i < chunks.length; i++) if (taught(chunks[i]).length < chunks[i].length) return { c, ci: i, chunks };
+  }
+  return null;
+}
+
 function screenCat() {
-  const c = catById(state.catId), m = mastered(c.words);
+  const c = catById(state.catId), m = mastered(c.words), chunks = chunksOf(c);
+  const t = taught(c.words).length;
   app.innerHTML =
     '<div class="crumbs"><button class="btn btn-ghost" data-go="home">← כל השיעורים</button></div>' +
     '<div style="--h:' + c.h + '">' +
       '<div class="head-card"><span class="emoji">' + c.icon + '</span>' +
         '<div><h1>' + esc(c.title) + '</h1><p>' + esc(c.blurb) + ' · ' + m + ' מתוך ' + c.words.length + ' כבר יודעים.</p></div></div>' +
-      '<div class="mode-row">' +
-        '<button class="mode" data-go="learn" data-cat="' + c.id + '"><span class="ic">🃏</span><span><strong>ללמוד את המילים</strong><span>כרטיסיות עם הקראה — אחת אחת</span></span></button>' +
-        '<button class="mode" data-go="quiz" data-cat="' + c.id + '"><span class="ic">🎧</span><span><strong>תרגול האזנה</strong><span>10 שאלות קצרות</span></span></button>' +
+      '<div class="section-head"><h2>שלבי השיעור</h2><span class="hint">בכל שלב: לומדים כמה מילים ומיד נבחנים עליהן</span></div>' +
+      '<div class="steps">' +
+        chunks.map((ch, i) => {
+          const seen = taught(ch).length, know = ch.filter(w => scoreOf(w.id) >= MASTER_AT).length;
+          const state2 = know === ch.length ? "done" : seen === ch.length ? "practice" : seen > 0 ? "part" : "new";
+          const pill = state2 === "done" ? '<span class="done-pill">✓ יודעת את כולן</span>'
+            : state2 === "practice" ? '<span class="step-pill">נלמד · כדאי לתרגל</span>'
+            : state2 === "part" ? '<span class="step-pill">התחלת</span>' : "";
+          const label = state2 === "new" ? "מתחילים ←" : state2 === "done" ? "לחזור שוב" : "להמשיך ←";
+          return '<div class="step' + (state2 === "done" ? " step-done" : "") + '">' +
+            '<span class="step-num">' + (i + 1) + '</span>' +
+            '<span class="step-body"><b>' + ch.length + ' מילים</b>' +
+              '<span class="step-words">' + ch.map(w => esc(w.he)).join(" · ") + '</span>' + pill + '</span>' +
+            '<button class="btn ' + (state2 === "new" || state2 === "part" ? "btn-c" : "") + '" data-start="' + c.id + ':' + i + '">' + label + '</button>' +
+          '</div>';
+        }).join("") +
       '</div>' +
+      (t >= 4
+        ? '<div class="mode-row"><button class="mode" data-quiz="review:' + c.id + '"><span class="ic">🎧</span>' +
+          '<span><strong>חזרה על כל השיעור</strong><span>10 שאלות רק על מילים שכבר למדת</span></span></button></div>'
+        : '<p class="note" style="margin:18px 0">התרגול נפתח אחרי שלומדים — כל שאלה תהיה רק על מילים שכבר עברת עליהן.</p>') +
       '<div class="section-head"><h2>כל המילים בשיעור</h2><span class="hint">לחיצה על הרמקול משמיעה</span></div>' +
       '<div class="word-list">' +
         c.words.map(w =>
@@ -1075,11 +1148,12 @@ function screenCat() {
 }
 
 function screenLearn() {
-  const c = catById(state.catId), w = c.words[state.idx];
+  const c = catById(state.catId), list = state.chunkWords, w = list[state.idx];
+  markSeen(w.id);
   app.innerHTML =
     '<div class="crumbs"><button class="btn btn-ghost" data-go="cat" data-cat="' + c.id + '">← ' + esc(c.title) + '</button></div>' +
     '<div class="stage" style="--h:' + c.h + '">' +
-      '<span class="counter">כרטיסייה ' + (state.idx + 1) + ' מתוך ' + c.words.length + '</span>' +
+      '<span class="counter">שלב ' + (state.ci + 1) + ' · לומדים מילה ' + (state.idx + 1) + ' מתוך ' + list.length + '</span>' +
       '<div class="card">' +
         '<button class="big-speak" data-say="' + esc(w.ru) + '" aria-label="השמע שוב">' + ICON + '</button>' +
         '<div class="translit">' + esc(w.tr) + '</div>' +
@@ -1095,31 +1169,55 @@ function screenLearn() {
       '</div>' +
       '<div class="row">' +
         '<button class="btn btn-ghost" data-learn="prev"' + (state.idx === 0 ? " disabled" : "") + '>הקודם</button>' +
-        '<button class="btn btn-ghost" data-learn="next">הבא ←</button>' +
+        '<button class="btn btn-ghost" data-learn="next">' + (state.idx === list.length - 1 ? "לשאלות ←" : "הבא ←") + '</button>' +
       '</div>' +
     '</div>';
   if (!state.flipped) setTimeout(() => speak(w.ru), 220);
 }
 
-function buildQuiz(catId) {
-  let pool;
-  if (catId === "mix") {
-    const weak = ALL.filter(w => scoreOf(w.id) > 0 && scoreOf(w.id) < MASTER_AT);
-    const fresh = ALL.filter(w => scoreOf(w.id) === 0);
-    pool = shuffle(weak).slice(0, 6).concat(shuffle(fresh).slice(0, 8));
-    if (pool.length < 10) pool = pool.concat(shuffle(ALL).slice(0, 10));
-  } else pool = shuffle(catById(catId).words);
-  const picks = shuffle(pool).slice(0, 10);
-  return {
-    catId,
-    h: catId === "mix" ? 248 : catById(catId).h,
-    qs: picks.map((w, i) => {
-      const sameCat = ALL.filter(x => x.cat === w.cat && x.id !== w.id);
-      const others = shuffle(sameCat.length >= 3 ? sameCat : ALL.filter(x => x.id !== w.id)).slice(0, 3);
-      return { word: w, type: i % 3 === 2 ? "recall" : "listen", options: shuffle([w].concat(others)) };
-    }),
-    i: 0, right: 0, answered: null, wrongList: []
-  };
+/* ---- בניית שאלות: רק על מילים שכבר נלמדו ---- */
+function uniq(ws) { const seen = {}; return ws.filter(w => (seen[w.id] ? false : (seen[w.id] = true))); }
+
+function buildQuestions(listenWords, recallWords, pool) {
+  const src = listenWords.map(w => ({ w: w, type: "listen" }))
+    .concat(recallWords.map(w => ({ w: w, type: "recall" })));
+  return shuffle(src).map(q => {
+    let others = shuffle(pool.filter(x => x.id !== q.w.id)).slice(0, 3);
+    if (others.length < 3) {
+      const same = ALL.filter(x => x.cat === q.w.cat && x.id !== q.w.id && !others.some(o => o.id === x.id));
+      others = others.concat(shuffle(same).slice(0, 3 - others.length));
+    }
+    return { word: q.w, type: q.type, options: shuffle([q.w].concat(others)) };
+  });
+}
+const emptyQuiz = extra => Object.assign({ i: 0, right: 0, answered: null, wrongList: [] }, extra);
+
+function quizForChunk(catId, ci) {
+  const c = catById(catId), list = chunksOf(c)[ci];
+  const pool = uniq(list.concat(taught(c.words)));
+  return emptyQuiz({
+    kind: "chunk", catId: catId, ci: ci, h: c.h,
+    label: "תרגול על " + list.length + " המילים שלמדת עכשיו",
+    qs: buildQuestions(list, shuffle(list).slice(0, 3), pool)
+  });
+}
+function quizForReview(catId) {
+  const c = catById(catId), t = taught(c.words);
+  const picks = shuffle(t).slice(0, 10);
+  const pool = t.length >= 4 ? t : c.words;
+  return emptyQuiz({
+    kind: "review", catId: catId, h: c.h, label: "חזרה על מה שלמדת בשיעור",
+    qs: buildQuestions(picks.slice(0, 7), picks.slice(7, 10), pool)
+  });
+}
+function quizQuick() {
+  const t = taught(ALL);
+  const weak = t.filter(w => scoreOf(w.id) < MASTER_AT);
+  const picks = uniq(shuffle(weak).slice(0, 7).concat(shuffle(t))).slice(0, 10);
+  return emptyQuiz({
+    kind: "quick", catId: "mix", h: 248, label: "תרגול על מילים שכבר למדת",
+    qs: buildQuestions(picks.slice(0, 7), picks.slice(7, 10), t)
+  });
 }
 
 function screenQuiz() {
@@ -1137,6 +1235,7 @@ function screenQuiz() {
         '<span class="bar"><i style="width:' + pct + '%"></i></span>' +
         '<span class="hearts">✓ ' + q.right + '</span>' +
       '</div>' +
+      '<span class="counter">' + esc(q.label) + '</span>' +
       '<div class="prompt">' +
         (cur.type === "listen"
           ? '<p class="ask">מה שמעת?</p><button class="big-speak" data-say="' + esc(w.ru) + '" aria-label="השמע שוב">' + ICON + '</button><p class="ask">לחיצה = להשמיע שוב</p>'
@@ -1174,6 +1273,20 @@ function answer(id) {
   document.querySelector("[data-next]").focus();
 }
 
+function resultActions(q) {
+  if (q.kind === "chunk") {
+    const c = catById(q.catId), chunks = chunksOf(c);
+    const more = q.ci + 1 < chunks.length;
+    return '<button class="btn btn-lg btn-c" data-start="' + c.id + ':' + (more ? q.ci + 1 : q.ci) + '">' +
+        (more ? "לשלב הבא ←" : "ללמוד את השלב שוב") + '</button>' +
+      '<button class="btn btn-lg" data-quiz="chunk:' + c.id + ':' + q.ci + '">לתרגל שוב 🔁</button>' +
+      '<button class="btn btn-ghost" data-go="cat" data-cat="' + c.id + '">חזרה לשיעור</button>';
+  }
+  const again = q.kind === "review" ? 'data-quiz="review:' + q.catId + '"' : 'data-quiz="quick"';
+  return '<button class="btn btn-lg btn-c" ' + again + '>עוד סיבוב 🔁</button>' +
+    '<button class="btn btn-lg" data-go="home">כל השיעורים</button>';
+}
+
 function screenResult() {
   const q = state.quiz, pct = q.right / q.qs.length;
   const stars = pct >= 0.9 ? "★★★" : pct >= 0.6 ? "★★☆" : "★☆☆";
@@ -1188,11 +1301,8 @@ function screenResult() {
           ? '<div class="review">' + q.wrongList.map(w =>
               '<div class="r-row"><button class="speak" data-say="' + esc(w.ru) + '" aria-label="השמע">' + ICON + '</button>' +
               '<span><b>' + esc(w.tr) + '</b> <span class="g">— ' + esc(w.he) + '</span></span></div>').join("") + '</div>'
-          : '<p class="note">בלי טעויות בכלל! אפשר לעבור לשיעור הבא.</p>') +
-        '<div class="row">' +
-          '<button class="btn btn-lg btn-c" data-go="quiz" data-cat="' + q.catId + '">עוד סיבוב 🔁</button>' +
-          '<button class="btn btn-lg" data-go="home">כל השיעורים</button>' +
-        '</div>' +
+          : '<p class="note">בלי טעויות בכלל!</p>') +
+        '<div class="row">' + resultActions(q) + '</div>' +
       '</div>' +
     '</div>';
 }
@@ -1212,8 +1322,22 @@ document.addEventListener("click", e => {
     const to = nav.dataset.go, cat = nav.dataset.cat;
     if (to === "home") go("home", { catId: null });
     else if (to === "cat") go("cat", { catId: cat });
-    else if (to === "learn") go("learn", { catId: cat, idx: 0, flipped: false });
-    else if (to === "quiz") go("quiz", { quiz: buildQuiz(cat) });
+    return;
+  }
+
+  const st = e.target.closest("[data-start]");
+  if (st) {
+    const parts = st.dataset.start.split(":"), c = catById(parts[0]), ci = +parts[1];
+    go("learn", { catId: c.id, ci: ci, chunkWords: chunksOf(c)[ci], idx: 0, flipped: false });
+    return;
+  }
+
+  const qz = e.target.closest("[data-quiz]");
+  if (qz) {
+    const p = qz.dataset.quiz.split(":");
+    if (p[0] === "quick") go("quiz", { quiz: quizQuick() });
+    else if (p[0] === "review") go("quiz", { quiz: quizForReview(p[1]) });
+    else if (p[0] === "chunk") go("quiz", { quiz: quizForChunk(p[1], +p[2]) });
     return;
   }
 
@@ -1229,16 +1353,15 @@ document.addEventListener("click", e => {
 
   const lb = e.target.closest("[data-learn]");
   if (lb) {
-    const c = catById(state.catId), w = c.words[state.idx], act = lb.dataset.learn;
+    const list = state.chunkWords, w = list[state.idx], act = lb.dataset.learn;
+    const advance = () => {
+      if (state.idx === list.length - 1) go("quiz", { quiz: quizForChunk(state.catId, state.ci) });
+      else { state.idx++; state.flipped = false; render(); }
+    };
     if (act === "flip") { state.flipped = true; render(); }
-    else if (act === "known" || act === "again") {
-      setKnown(w.id, act === "known");
-      if (state.idx === c.words.length - 1) go("cat", { catId: c.id });
-      else { state.idx++; state.flipped = false; render(); }
-    } else if (act === "next") {
-      if (state.idx === c.words.length - 1) go("cat", { catId: c.id });
-      else { state.idx++; state.flipped = false; render(); }
-    } else if (act === "prev" && state.idx > 0) { state.idx--; state.flipped = false; render(); }
+    else if (act === "known" || act === "again") { setKnown(w.id, act === "known"); advance(); }
+    else if (act === "next") advance();
+    else if (act === "prev" && state.idx > 0) { state.idx--; state.flipped = false; render(); }
     return;
   }
 
