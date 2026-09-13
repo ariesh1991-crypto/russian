@@ -1,0 +1,1244 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#16233A">
+<meta name="description" content="קורס רוסית מדוברת בעברית — מילים, הבנה ודיבור, עם הקראה בקול.">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="מדברים רוסית">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>מדברים רוסית</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Heebo:wght@400;500;700&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+  :root {
+    --bg: #E9ECF1;
+    --surface: #FFFFFF;
+    --surface-2: #F3F5F8;
+    --ink: #16233A;
+    --ink-soft: #3C4A61;
+    --muted: #6B7A91;
+    --line: #D3D9E2;
+    --accent: #A87B2E;
+    --accent-soft: #F1E4CA;
+    --accent-ink: #7A5718;
+    --good: #2C6E52;
+    --good-soft: #DCEDE4;
+    --bad: #8E2F36;
+    --bad-soft: #F5DEDF;
+    --shadow: 0 1px 2px rgba(22,35,58,.06), 0 8px 24px rgba(22,35,58,.07);
+    --shadow-lift: 0 2px 4px rgba(22,35,58,.08), 0 18px 40px rgba(22,35,58,.14);
+    --r-s: 8px;
+    --r-m: 14px;
+    --r-l: 22px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0E151F;
+      --surface: #17202D;
+      --surface-2: #1E2937;
+      --ink: #E7ECF3;
+      --ink-soft: #C3CDDB;
+      --muted: #8B9AAE;
+      --line: #2A3646;
+      --accent: #D8AC5C;
+      --accent-soft: #3A2F1B;
+      --accent-ink: #EFCE92;
+      --good: #64C79B;
+      --good-soft: #16352A;
+      --bad: #E08A90;
+      --bad-soft: #3A1D20;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+      --shadow-lift: 0 2px 6px rgba(0,0,0,.4), 0 18px 40px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0E151F;
+    --surface: #17202D;
+    --surface-2: #1E2937;
+    --ink: #E7ECF3;
+    --ink-soft: #C3CDDB;
+    --muted: #8B9AAE;
+    --line: #2A3646;
+    --accent: #D8AC5C;
+    --accent-soft: #3A2F1B;
+    --accent-ink: #EFCE92;
+    --good: #64C79B;
+    --good-soft: #16352A;
+    --bad: #E08A90;
+    --bad-soft: #3A1D20;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+    --shadow-lift: 0 2px 6px rgba(0,0,0,.4), 0 18px 40px rgba(0,0,0,.5);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Heebo", "Segoe UI", system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    direction: rtl;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .ru {
+    font-family: "PT Serif", Georgia, serif;
+    direction: ltr;
+    unicode-bidi: isolate;
+  }
+
+  .shell {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 16px 72px;
+  }
+
+  /* ---------- top bar ---------- */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+    margin: 0 -16px 22px;
+    padding: 12px 16px;
+  }
+  .topbar-inner {
+    max-width: 880px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: 9px;
+    font-family: "Frank Ruhl Libre", Georgia, serif;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: -.01em;
+  }
+  .brand .mark {
+    font-family: "PT Serif", Georgia, serif;
+    color: var(--accent);
+    font-size: 20px;
+  }
+  .topbar .spacer { flex: 1; }
+
+  .mini-progress {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .mini-bar {
+    width: 72px;
+    height: 6px;
+    border-radius: 99px;
+    background: var(--line);
+    overflow: hidden;
+  }
+  .mini-bar i {
+    display: block;
+    height: 100%;
+    background: var(--accent);
+    border-radius: 99px;
+    transition: width .4s ease;
+  }
+
+  /* ---------- buttons ---------- */
+  button {
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    border: none;
+    background: none;
+  }
+  button:focus-visible, .card-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 18px;
+    border-radius: var(--r-s);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-weight: 500;
+    transition: transform .12s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .btn:hover { box-shadow: var(--shadow); }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--bg);
+  }
+  .btn-accent {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #14100A;
+    font-weight: 700;
+  }
+  .btn-ghost {
+    background: transparent;
+    border-color: transparent;
+    color: var(--muted);
+    padding: 8px 10px;
+  }
+  .btn-ghost:hover { color: var(--ink); box-shadow: none; background: var(--surface-2); }
+
+  /* ---------- headings ---------- */
+  h1, h2, h3 {
+    font-family: "Frank Ruhl Libre", Georgia, serif;
+    font-weight: 700;
+    text-wrap: balance;
+    margin: 0;
+    letter-spacing: -.01em;
+  }
+  h1 { font-size: 30px; line-height: 1.25; }
+  h2 { font-size: 21px; }
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: .12em;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .lead { color: var(--ink-soft); max-width: 58ch; margin: 8px 0 0; }
+
+  /* ---------- home ---------- */
+  .hero {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 4px 0 26px;
+  }
+  .hero-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .stat {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    padding: 7px 13px;
+    border-radius: 99px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .stat b {
+    font-size: 16px;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .quick-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .section-head .hint { color: var(--muted); font-size: 13px; }
+
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+  }
+  .cat {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: start;
+    padding: 16px;
+    border-radius: var(--r-m);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    transition: transform .14s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  .cat:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lift);
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  }
+  .cat-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .cat-num {
+    font-family: "PT Serif", Georgia, serif;
+    font-size: 13px;
+    color: var(--accent-ink);
+    background: var(--accent-soft);
+    border-radius: 6px;
+    padding: 2px 7px;
+    font-variant-numeric: tabular-nums;
+  }
+  .cat-title { font-family: "Frank Ruhl Libre", Georgia, serif; font-weight: 700; font-size: 17px; }
+  .cat-sample {
+    font-size: 14px;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .cat-foot {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: auto;
+    font-size: 13px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .track {
+    flex: 1;
+    height: 5px;
+    border-radius: 99px;
+    background: var(--line);
+    overflow: hidden;
+  }
+  .track i {
+    display: block;
+    height: 100%;
+    border-radius: 99px;
+    background: var(--good);
+    transition: width .4s ease;
+  }
+
+  /* ---------- category screen ---------- */
+  .crumbs {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .mode-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin: 18px 0 26px;
+  }
+  .mode {
+    text-align: start;
+    padding: 16px;
+    border-radius: var(--r-m);
+    border: 1px solid var(--line);
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition: transform .14s ease, box-shadow .18s ease;
+  }
+  .mode:hover { transform: translateY(-2px); box-shadow: var(--shadow-lift); }
+  .mode strong { font-family: "Frank Ruhl Libre", Georgia, serif; font-size: 17px; }
+  .mode span { font-size: 13px; color: var(--muted); }
+
+  .word-list {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--line);
+    border-radius: var(--r-m);
+    overflow: hidden;
+    background: var(--surface);
+  }
+  .word-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  .word-row:last-child { border-bottom: none; }
+  .word-row .he { flex: 1; min-width: 0; }
+  .word-row .he b { font-weight: 500; }
+  .word-row .he small { display: block; color: var(--muted); font-size: 13px; }
+  .word-row .tr { color: var(--ink-soft); font-size: 14px; text-align: start; min-width: 34%; }
+  .word-row .tr .cy { display: block; font-size: 12px; color: var(--muted); }
+  .dot {
+    width: 8px; height: 8px; border-radius: 99px;
+    background: var(--line);
+    flex: none;
+  }
+  .dot.learning { background: var(--accent); }
+  .dot.known { background: var(--good); }
+
+  .speak {
+    flex: none;
+    width: 38px; height: 38px;
+    border-radius: 99px;
+    display: grid; place-items: center;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    transition: background .15s ease, transform .12s ease;
+  }
+  .speak:hover { background: var(--accent-soft); color: var(--accent-ink); }
+  .speak:active { transform: scale(.94); }
+  .speak.playing { background: var(--accent); color: #14100A; border-color: var(--accent); }
+
+  /* ---------- flashcard ---------- */
+  .stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    padding-top: 6px;
+  }
+  .counter {
+    font-size: 13px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: .04em;
+  }
+  .card {
+    width: 100%;
+    max-width: 520px;
+    min-height: 300px;
+    border-radius: var(--r-l);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    padding: 30px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    text-align: center;
+  }
+  .card .ru-big {
+    font-family: "PT Serif", Georgia, serif;
+    font-size: clamp(30px, 8vw, 46px);
+    line-height: 1.15;
+    color: var(--ink);
+  }
+  .card .translit {
+    font-size: clamp(20px, 5.5vw, 27px);
+    font-weight: 500;
+    color: var(--accent-ink);
+    background: var(--accent-soft);
+    padding: 4px 14px;
+    border-radius: 99px;
+  }
+  .card .meaning {
+    font-family: "Frank Ruhl Libre", Georgia, serif;
+    font-size: clamp(22px, 6vw, 30px);
+    font-weight: 700;
+  }
+  .card .note { font-size: 14px; color: var(--muted); max-width: 40ch; }
+  .veil { color: var(--muted); font-size: 15px; }
+
+  .card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    width: 100%;
+    max-width: 520px;
+  }
+  .card-actions .btn { flex: 1; min-width: 120px; }
+
+  .big-speak {
+    width: 92px; height: 92px;
+    border-radius: 99px;
+    display: grid; place-items: center;
+    background: var(--accent);
+    color: #14100A;
+    border: none;
+    box-shadow: var(--shadow-lift);
+    transition: transform .14s ease;
+  }
+  .big-speak:hover { transform: scale(1.04); }
+  .big-speak:active { transform: scale(.96); }
+  .big-speak svg { width: 38px; height: 38px; }
+
+  /* ---------- quiz ---------- */
+  .quiz-head {
+    width: 100%;
+    max-width: 560px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .quiz-head .track { height: 6px; }
+  .streak {
+    font-size: 13px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .prompt {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .prompt .ask { font-size: 14px; color: var(--muted); }
+  .prompt .he-word {
+    font-family: "Frank Ruhl Libre", Georgia, serif;
+    font-size: clamp(26px, 7vw, 36px);
+    font-weight: 700;
+  }
+  .options {
+    width: 100%;
+    max-width: 560px;
+    display: grid;
+    gap: 10px;
+  }
+  .opt {
+    text-align: start;
+    padding: 14px 16px;
+    border-radius: var(--r-m);
+    border: 1px solid var(--line);
+    background: var(--surface);
+    font-size: 17px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background .15s ease, border-color .15s ease, transform .12s ease;
+  }
+  .opt:hover:not(:disabled) { border-color: var(--accent); transform: translateX(-3px); }
+  .opt:disabled { cursor: default; }
+  .opt .cy { display: block; font-size: 13px; color: var(--muted); }
+  .opt .badge { margin-inline-start: auto; font-size: 20px; line-height: 1; }
+  .opt.correct { background: var(--good-soft); border-color: var(--good); color: var(--good); font-weight: 700; }
+  .opt.correct .cy { color: var(--good); }
+  .opt.wrong { background: var(--bad-soft); border-color: var(--bad); color: var(--bad); }
+  .opt.wrong .cy { color: var(--bad); }
+
+  .feedback {
+    width: 100%;
+    max-width: 560px;
+    border-radius: var(--r-m);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px;
+  }
+  .feedback.ok { background: var(--good-soft); color: var(--good); }
+  .feedback.no { background: var(--bad-soft); color: var(--bad); }
+  .feedback .txt { flex: 1; }
+  .feedback .txt b { font-weight: 700; }
+
+  /* ---------- results ---------- */
+  .result {
+    width: 100%;
+    max-width: 520px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 24px;
+    border-radius: var(--r-l);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+  }
+  .score {
+    font-family: "PT Serif", Georgia, serif;
+    font-size: 58px;
+    line-height: 1;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+  .review {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: start;
+  }
+  .review .r-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-size: 14px;
+    padding: 8px 10px;
+    border-radius: var(--r-s);
+    background: var(--surface-2);
+  }
+  .review .r-row .g { color: var(--muted); }
+
+  /* ---------- notice ---------- */
+  .notice {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 12px 14px;
+    border-radius: var(--r-m);
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+    font-size: 14px;
+    margin-bottom: 18px;
+    border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  }
+  .notice b { display: block; }
+
+  .sync {
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 26px;
+  }
+
+  @media (max-width: 520px) {
+    .shell { padding: 0 12px 48px; }
+    h1 { font-size: 25px; }
+    .card { padding: 24px 16px; min-height: 260px; }
+    .cat-grid { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><span class="mark">Р</span><span>מדברים רוסית</span></div>
+    <span class="spacer"></span>
+    <div class="mini-progress" id="miniProgress"></div>
+  </div>
+</div>
+
+<div class="shell" id="app"></div>
+
+<script>
+const CATS = [
+  {
+    id: "greet", title: "שיחה ראשונה", blurb: "מה שאומרים בדקה הראשונה של כל מפגש.",
+    words: [
+      { ru: "Здравствуйте", tr: "זְדְרַאסְטְוּויְטְיֶה", he: "שלום (מנומס, לכל אדם)", note: "הצורה המכבדת — מתאימה לזרים, מבוגרים, בעלי מקצוע." },
+      { ru: "Привет", tr: "פְּרִיבְיֶט", he: "היי (לחברים)", note: "רק עם מכרים, ילדים או חברים." },
+      { ru: "Доброе утро", tr: "דוֹבְּרוֹיֶה אוּטְרָה", he: "בוקר טוב" },
+      { ru: "Добрый день", tr: "דוֹבְּרִי דְיֶן", he: "צהריים טובים" },
+      { ru: "Добрый вечер", tr: "דוֹבְּרִי וְיֶצֶ'ר", he: "ערב טוב" },
+      { ru: "Как дела?", tr: "קַאק דְיֶלָה", he: "מה שלומך?" },
+      { ru: "Хорошо, спасибо", tr: "חַרַשׁוֹ, סְפַּסִיבַּה", he: "טוב, תודה" },
+      { ru: "Как вас зовут?", tr: "קַאק וַואס זַבוּט", he: "איך קוראים לך?" },
+      { ru: "Меня зовут…", tr: "מִינְיָא זַבוּט…", he: "קוראים לי…" },
+      { ru: "Очень приятно", tr: "אוֹצֶ'ן פְּרִיָאטְנָה", he: "נעים מאוד" },
+      { ru: "До свидания", tr: "דַה סְוִידָאנְיָה", he: "להתראות" },
+      { ru: "Пока", tr: "פַּקָא", he: "ביי (לא רשמי)" },
+      { ru: "Спокойной ночи", tr: "סְפַּקוֹינַי נוֹצִ'י", he: "לילה טוב" }
+    ]
+  },
+  {
+    id: "basics", title: "מילות יסוד", blurb: "עשר המילים שמחזיקות כל שיחה על הרגליים.",
+    words: [
+      { ru: "Да", tr: "דָה", he: "כן" },
+      { ru: "Нет", tr: "נְיֶט", he: "לא" },
+      { ru: "Спасибо", tr: "סְפַּסִיבַּה", he: "תודה" },
+      { ru: "Пожалуйста", tr: "פַּזָ'אלוּסְטָה", he: "בבקשה / על לא דבר", note: "משמשת גם כשנותנים משהו וגם כתשובה ל'תודה'." },
+      { ru: "Извините", tr: "אִיזְוִינִיטְיֶה", he: "סליחה" },
+      { ru: "Хорошо", tr: "חַרַשׁוֹ", he: "טוב / בסדר" },
+      { ru: "Плохо", tr: "פְּלוֹחָה", he: "רע" },
+      { ru: "Может быть", tr: "מוֹזֶ'ט בִּיט", he: "אולי" },
+      { ru: "Конечно", tr: "קַנְיֶשְׁנָה", he: "בטח / כמובן" },
+      { ru: "Я не понимаю", tr: "יָא נְיֶה פַּנִימָאיוּ", he: "אני לא מבין/ה" },
+      { ru: "Я не знаю", tr: "יָא נְיֶה זְנָאיוּ", he: "אני לא יודע/ת" },
+      { ru: "Помогите", tr: "פַּמַגִיטְיֶה", he: "תעזרו לי" },
+      { ru: "Повторите, пожалуйста", tr: "פַּבְטַרִיטְיֶה פַּזָ'אלוּסְטָה", he: "תחזור/תחזרי בבקשה" },
+      { ru: "Медленнее", tr: "מְיֶדְלֶנֶיֶה", he: "לאט יותר" }
+    ]
+  },
+  {
+    id: "questions", title: "מילות שאלה", blurb: "איך שואלים — הכלי שמאפשר לנהל שיחה ולא רק לענות.",
+    words: [
+      { ru: "Кто?", tr: "קְטוֹ", he: "מי?" },
+      { ru: "Что?", tr: "שְׁטוֹ", he: "מה?" },
+      { ru: "Где?", tr: "גְדְיֶה", he: "איפה?" },
+      { ru: "Когда?", tr: "קַגְדָא", he: "מתי?" },
+      { ru: "Почему?", tr: "פַּצֶ'מוּ", he: "למה?" },
+      { ru: "Как?", tr: "קַאק", he: "איך?" },
+      { ru: "Сколько?", tr: "סְקוֹלְקָה", he: "כמה?" },
+      { ru: "Какой?", tr: "קַקוֹי", he: "איזה?" },
+      { ru: "Куда?", tr: "קוּדָא", he: "לאן?" },
+      { ru: "Сколько стоит?", tr: "סְקוֹלְקָה סְטוֹיִט", he: "כמה זה עולה?" },
+      { ru: "Где туалет?", tr: "גְדְיֶה טוּאַלְיֶט", he: "איפה השירותים?" },
+      { ru: "Который час?", tr: "קַטוֹרִי צַ'אס", he: "מה השעה?" }
+    ]
+  },
+  {
+    id: "useful", title: "ביטויים שימושיים", blurb: "'אני רוצה', 'אני צריך' — המשפטים שבונים בקשה.",
+    words: [
+      { ru: "Я хочу", tr: "יָא חַצ'וּ", he: "אני רוצה" },
+      { ru: "Я не хочу", tr: "יָא נְיֶה חַצ'וּ", he: "אני לא רוצה" },
+      { ru: "Мне нужно", tr: "מְנְיֶה נוּזְ'נָה", he: "אני צריך/ה" },
+      { ru: "Я люблю", tr: "יָא לְיוּבְּלְיוּ", he: "אני אוהב/ת" },
+      { ru: "Дайте, пожалуйста", tr: "דַאיְטְיֶה פַּזָ'אלוּסְטָה", he: "תן/תני בבקשה" },
+      { ru: "Я голоден", tr: "יָא גוֹלַדֶן", he: "אני רעב" },
+      { ru: "Я устал", tr: "יָא אוּסְטַאל", he: "אני עייף" },
+      { ru: "Всё хорошо", tr: "פְסְיוֹ חַרַשׁוֹ", he: "הכל בסדר" },
+      { ru: "Я говорю по-русски", tr: "יָא גַוַורְיוּ פַּה-רוּסְקִי", he: "אני מדבר/ת רוסית" },
+      { ru: "Вы говорите по-английски?", tr: "וִוי גַוַורִיטְיֶה פַּה-אַנְגְלִיסְקִי", he: "אתה מדבר אנגלית?" },
+      { ru: "Давай", tr: "דַוַואי", he: "בוא / יאללה" },
+      { ru: "Хорошего дня", tr: "חַרוֹשֶׁבָה דְנְיָא", he: "שיהיה יום טוב" }
+    ]
+  },
+  {
+    id: "numbers", title: "מספרים 1–10", blurb: "בלי מספרים אין קניות, אין שעות ואין כתובות.",
+    words: [
+      { ru: "Ноль", tr: "נוֹל", he: "אפס" },
+      { ru: "Один", tr: "אַדִין", he: "אחת" },
+      { ru: "Два", tr: "דְוָוא", he: "שתיים" },
+      { ru: "Три", tr: "טְרִי", he: "שלוש" },
+      { ru: "Четыре", tr: "צֶ'טִירְיֶה", he: "ארבע" },
+      { ru: "Пять", tr: "פְּיָאט", he: "חמש" },
+      { ru: "Шесть", tr: "שֶׁסְט", he: "שש" },
+      { ru: "Семь", tr: "סְיֶם", he: "שבע" },
+      { ru: "Восемь", tr: "ווֹסֶם", he: "שמונה" },
+      { ru: "Девять", tr: "דְיֶוִיט", he: "תשע" },
+      { ru: "Десять", tr: "דְיֶסִיט", he: "עשר" },
+      { ru: "Сто", tr: "סְטוֹ", he: "מאה" }
+    ]
+  },
+  {
+    id: "family", title: "משפחה ואנשים", blurb: "המילים שכל שיחת היכרות מגיעה אליהן.",
+    words: [
+      { ru: "Мама", tr: "מָאמָה", he: "אמא" },
+      { ru: "Папа", tr: "פָּאפָּה", he: "אבא" },
+      { ru: "Брат", tr: "בְּרַאט", he: "אח" },
+      { ru: "Сестра", tr: "סִיסְטְרָא", he: "אחות" },
+      { ru: "Бабушка", tr: "בָּאבּוּשְׁקָה", he: "סבתא" },
+      { ru: "Дедушка", tr: "דְיֶדוּשְׁקָה", he: "סבא" },
+      { ru: "Сын", tr: "סִין", he: "בן" },
+      { ru: "Дочь", tr: "דוֹץ'", he: "בת" },
+      { ru: "Муж", tr: "מוּשׁ", he: "בעל" },
+      { ru: "Жена", tr: "זֶ'נָא", he: "אישה (רעיה)" },
+      { ru: "Ребёнок", tr: "רִיבְּיוֹנַק", he: "ילד" },
+      { ru: "Друг", tr: "דְרוּג", he: "חבר" },
+      { ru: "Семья", tr: "סִימְיָא", he: "משפחה" }
+    ]
+  },
+  {
+    id: "food", title: "אוכל ושתייה", blurb: "מה מזמינים, מה קונים, מה שמים על השולחן.",
+    words: [
+      { ru: "Вода", tr: "וַדָא", he: "מים" },
+      { ru: "Хлеб", tr: "חְלְיֶבּ", he: "לחם" },
+      { ru: "Молоко", tr: "מַלַקוֹ", he: "חלב" },
+      { ru: "Чай", tr: "צָ'אי", he: "תה" },
+      { ru: "Кофе", tr: "קוֹפֶה", he: "קפה" },
+      { ru: "Суп", tr: "סוּפּ", he: "מרק" },
+      { ru: "Мясо", tr: "מְיָאסָה", he: "בשר" },
+      { ru: "Рыба", tr: "רִיבָּה", he: "דג" },
+      { ru: "Сыр", tr: "סִיר", he: "גבינה" },
+      { ru: "Яйцо", tr: "יַיְצוֹ", he: "ביצה" },
+      { ru: "Фрукты", tr: "פְרוּקְטִי", he: "פירות" },
+      { ru: "Овощи", tr: "אוֹבַשִׁי", he: "ירקות" },
+      { ru: "Вкусно", tr: "פְקוּסְנָה", he: "טעים" }
+    ]
+  },
+  {
+    id: "time", title: "זמן וימים", blurb: "היום, מחר, עכשיו — איך קובעים ומתארים זמן.",
+    words: [
+      { ru: "Сегодня", tr: "סִיווֹדְנְיָה", he: "היום" },
+      { ru: "Завтра", tr: "זַאבְטְרָה", he: "מחר" },
+      { ru: "Вчера", tr: "פְצִ'ירָא", he: "אתמול" },
+      { ru: "Сейчас", tr: "סִיצָ'אס", he: "עכשיו" },
+      { ru: "Утро", tr: "אוּטְרָה", he: "בוקר" },
+      { ru: "День", tr: "דְיֶן", he: "יום" },
+      { ru: "Вечер", tr: "וְיֶצֶ'ר", he: "ערב" },
+      { ru: "Ночь", tr: "נוֹץ'", he: "לילה" },
+      { ru: "Неделя", tr: "נִידְיֶלְיָה", he: "שבוע" },
+      { ru: "Месяц", tr: "מְיֶסִיץ", he: "חודש" },
+      { ru: "Год", tr: "גוֹט", he: "שנה" },
+      { ru: "Час", tr: "צַ'אס", he: "שעה" },
+      { ru: "Минута", tr: "מִינוּטָה", he: "דקה" }
+    ]
+  },
+  {
+    id: "places", title: "מקומות בעיר", blurb: "לאן הולכים, ואיך אומרים איפה זה.",
+    words: [
+      { ru: "Дом", tr: "דוֹם", he: "בית" },
+      { ru: "Магазин", tr: "מַגַזִין", he: "חנות" },
+      { ru: "Аптека", tr: "אַפְּטְיֶקָה", he: "בית מרקחת" },
+      { ru: "Больница", tr: "בַּלְנִיצָה", he: "בית חולים" },
+      { ru: "Школа", tr: "שְׁקוֹלָה", he: "בית ספר" },
+      { ru: "Работа", tr: "רַבּוֹטָה", he: "עבודה" },
+      { ru: "Улица", tr: "אוּלִיצָה", he: "רחוב" },
+      { ru: "Город", tr: "גוֹרַט", he: "עיר" },
+      { ru: "Ресторан", tr: "רִיסְטַרַאן", he: "מסעדה" },
+      { ru: "Вокзал", tr: "וַקְזַאל", he: "תחנת רכבת" },
+      { ru: "Банк", tr: "בַּאנְק", he: "בנק" },
+      { ru: "Рынок", tr: "רִינַק", he: "שוק" }
+    ]
+  },
+  {
+    id: "colors", title: "צבעים ותיאורים", blurb: "מילים שמאפשרות לתאר ולהצביע על משהו מסוים.",
+    words: [
+      { ru: "Красный", tr: "קְרָאסְנִי", he: "אדום" },
+      { ru: "Синий", tr: "סִינִי", he: "כחול" },
+      { ru: "Зелёный", tr: "זִילְיוֹנִי", he: "ירוק" },
+      { ru: "Жёлтый", tr: "זוֹ'לְטִי", he: "צהוב" },
+      { ru: "Белый", tr: "בְּיֶלִי", he: "לבן" },
+      { ru: "Чёрный", tr: "צ'וֹרְנִי", he: "שחור" },
+      { ru: "Большой", tr: "בַּלְשׁוֹי", he: "גדול" },
+      { ru: "Маленький", tr: "מָאלֶנְקִי", he: "קטן" },
+      { ru: "Новый", tr: "נוֹבִי", he: "חדש" },
+      { ru: "Старый", tr: "סְטָארִי", he: "ישן" },
+      { ru: "Красивый", tr: "קְרַסִיבִי", he: "יפה" },
+      { ru: "Дорогой", tr: "דַרַגוֹי", he: "יקר" }
+    ]
+  }
+];
+
+CATS.forEach((c, ci) => c.words.forEach((w, wi) => { w.id = c.id + "-" + wi; w.cat = c.id; w.catTitle = c.title; }));
+const ALL_WORDS = CATS.flatMap(c => c.words);
+const TOTAL = ALL_WORDS.length;
+const MASTER_AT = 3;
+
+/* ---------------- state ---------------- */
+let progress = {};            // id -> {score, right, wrong}
+const state = { screen: "home", catId: null, idx: 0, flipped: false, quiz: null };
+let dbRef = null, saveTimer = null, syncNote = "נשמר במכשיר הזה";
+
+function scoreOf(id) { return (progress[id] && progress[id].score) || 0; }
+function levelOf(id) { const s = scoreOf(id); return s >= MASTER_AT ? "known" : s > 0 ? "learning" : ""; }
+function masteredCount(words) { return words.filter(w => scoreOf(w.id) >= MASTER_AT).length; }
+function touched(words) { return words.filter(w => scoreOf(w.id) > 0).length; }
+
+function bump(id, right) {
+  const p = progress[id] || (progress[id] = { score: 0, right: 0, wrong: 0 });
+  if (right) { p.score = Math.min(5, p.score + 1); p.right++; }
+  else { p.score = Math.max(0, p.score - 1); p.wrong++; }
+  save();
+}
+function setKnown(id, known) {
+  const p = progress[id] || (progress[id] = { score: 0, right: 0, wrong: 0 });
+  p.score = known ? MASTER_AT : 1;
+  save();
+}
+
+function save() {
+  try { localStorage.setItem("ru-progress", JSON.stringify(progress)); } catch (e) {}
+  renderMini();
+  if (!dbRef) return;
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    dbRef.set({ words: progress, updatedAt: new Date().toISOString() }).catch(() => {});
+  }, 700);
+}
+
+try {
+  const raw = localStorage.getItem("ru-progress");
+  if (raw) progress = JSON.parse(raw) || {};
+} catch (e) { progress = {}; }
+
+(async function initDb() {
+  if (!window.claude || !claude.use) return;
+  const db = await claude.use("db");
+  if (!db) return;
+  dbRef = db.doc("progress/main");
+  try {
+    const snap = await dbRef.get();
+    if (snap.exists) {
+      const remote = (snap.data() || {}).words || {};
+      Object.keys(remote).forEach(id => {
+        const r = remote[id], l = progress[id];
+        if (!l || (r.score || 0) > (l.score || 0)) progress[id] = r;
+      });
+      render();
+    }
+    syncNote = "ההתקדמות מסונכרנת בין המכשירים שלך";
+    renderSync();
+  } catch (e) {}
+})();
+
+/* ---------------- speech ---------------- */
+let ruVoice = null, voicesChecked = false;
+function loadVoices() {
+  if (!window.speechSynthesis) return;
+  const vs = speechSynthesis.getVoices();
+  if (!vs.length) return;
+  voicesChecked = true;
+  ruVoice = vs.find(v => (v.lang || "").toLowerCase().replace("_", "-").startsWith("ru")) || null;
+  renderVoiceNotice();
+}
+if (window.speechSynthesis) {
+  loadVoices();
+  speechSynthesis.onvoiceschanged = loadVoices;
+  setTimeout(loadVoices, 900);
+}
+function speak(text, btn) {
+  if (!window.speechSynthesis) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = "ru-RU";
+  if (ruVoice) u.voice = ruVoice;
+  u.rate = 0.82;
+  if (btn) {
+    btn.classList.add("playing");
+    const off = () => btn.classList.remove("playing");
+    u.onend = off; u.onerror = off;
+    setTimeout(off, 4000);
+  }
+  speechSynthesis.speak(u);
+}
+
+const ICON_SPEAK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
+
+/* ---------------- helpers ---------------- */
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const shuffle = a => { const x = a.slice(); for (let i = x.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [x[i], x[j]] = [x[j], x[i]]; } return x; };
+const byId = id => ALL_WORDS.find(w => w.id === id);
+const catById = id => CATS.find(c => c.id === id);
+const app = document.getElementById("app");
+
+function go(screen, patch) { Object.assign(state, patch || {}, { screen }); render(); window.scrollTo({ top: 0, behavior: "smooth" }); }
+
+/* ---------------- screens ---------------- */
+function renderMini() {
+  const done = masteredCount(ALL_WORDS);
+  const pct = Math.round(done / TOTAL * 100);
+  document.getElementById("miniProgress").innerHTML =
+    '<span>' + done + '/' + TOTAL + ' מילים</span><span class="mini-bar"><i style="width:' + pct + '%"></i></span>';
+}
+function renderSync() {
+  const el = document.querySelector(".sync");
+  if (el) el.textContent = syncNote;
+}
+function renderVoiceNotice() {
+  const el = document.getElementById("voiceNotice");
+  if (!el) return;
+  el.innerHTML = (voicesChecked && !ruVoice)
+    ? '<div class="notice"><span>🔈</span><div><b>לא נמצא קול רוסי במכשיר</b>ההקראה תעבוד, אבל ההגייה עלולה להישמע מוזרה. באנדרואיד אפשר להוסיף קול רוסי בהגדרות ← שפות ← טקסט לדיבור.</div></div>'
+    : "";
+}
+
+function screenHome() {
+  const done = masteredCount(ALL_WORDS), started = touched(ALL_WORDS);
+  const next = CATS.find(c => masteredCount(c.words) < c.words.length) || CATS[0];
+  app.innerHTML =
+    '<div id="voiceNotice"></div>' +
+    '<div class="hero">' +
+      '<div>' +
+        '<p class="eyebrow">קורס רוסית מדוברת</p>' +
+        '<h1>לומדים לשמוע ולדבר — בלי אותיות</h1>' +
+        '<p class="lead">כל מילה מגיעה עם הקראה בקול, כתיב בעברית כדי לדעת איך לבטא, והתרגול הוא הקשבה: שומעים ובוחרים מה נאמר. בדיוק כמו שמורה היה מתחיל — קודם השיחה, האותיות אחר כך.</p>' +
+      '</div>' +
+      '<div class="hero-stats">' +
+        '<span class="stat"><b>' + done + '</b> מילים שאת/ה יודע/ת</span>' +
+        '<span class="stat"><b>' + started + '</b> בתרגול</span>' +
+        '<span class="stat"><b>' + TOTAL + '</b> בקורס</span>' +
+      '</div>' +
+      '<div class="quick-row">' +
+        '<button class="btn btn-accent" data-go="quiz" data-cat="mix">תרגול האזנה מהיר</button>' +
+        '<button class="btn" data-go="cat" data-cat="' + next.id + '">המשך: ' + esc(next.title) + '</button>' +
+      '</div>' +
+    '</div>' +
+    '<div class="section-head"><h2>שיעורים</h2><span class="hint">לפי סדר — כל שיעור בונה על הקודם</span></div>' +
+    '<div class="cat-grid">' +
+      CATS.map((c, i) => {
+        const m = masteredCount(c.words), pct = Math.round(m / c.words.length * 100);
+        return '<button class="cat" data-go="cat" data-cat="' + c.id + '">' +
+          '<div class="cat-top"><span class="cat-num">' + (i + 1) + '</span><span class="cat-title">' + esc(c.title) + '</span></div>' +
+          '<div class="cat-sample">' + esc(c.blurb) + '</div>' +
+          '<div class="cat-foot"><span>' + m + '/' + c.words.length + '</span><span class="track"><i style="width:' + pct + '%"></i></span></div>' +
+        '</button>';
+      }).join("") +
+    '</div>' +
+    '<p class="sync">' + esc(syncNote) + '</p>';
+  renderVoiceNotice();
+}
+
+function screenCat() {
+  const c = catById(state.catId);
+  const m = masteredCount(c.words);
+  app.innerHTML =
+    '<div class="crumbs"><button class="btn-ghost" data-go="home">← כל השיעורים</button></div>' +
+    '<p class="eyebrow">שיעור ' + (CATS.indexOf(c) + 1) + '</p>' +
+    '<h1>' + esc(c.title) + '</h1>' +
+    '<p class="lead">' + esc(c.blurb) + ' ' + m + ' מתוך ' + c.words.length + ' מילים כבר יושבות טוב.</p>' +
+    '<div class="mode-row">' +
+      '<button class="mode" data-go="learn" data-cat="' + c.id + '"><strong>ללמוד את המילים</strong><span>כרטיסיות עם הקראה — שומעים, חוזרים בקול, מסמנים אם ידעת</span></button>' +
+      '<button class="mode" data-go="quiz" data-cat="' + c.id + '"><strong>תרגול האזנה</strong><span>10 שאלות: שומעים מילה ובוחרים את המשמעות</span></button>' +
+    '</div>' +
+    '<div class="section-head"><h2>כל המילים בשיעור</h2><span class="hint">לחיצה על הרמקול משמיעה</span></div>' +
+    '<div class="word-list">' +
+      c.words.map(w =>
+        '<div class="word-row">' +
+          '<span class="dot ' + levelOf(w.id) + '"></span>' +
+          '<div class="he"><b>' + esc(w.he) + '</b>' + (w.note ? '<small>' + esc(w.note) + '</small>' : '') + '</div>' +
+          '<div class="tr">' + esc(w.tr) + '<span class="cy ru">' + esc(w.ru) + '</span></div>' +
+          '<button class="speak" data-say="' + esc(w.ru) + '" aria-label="השמע ' + esc(w.he) + '">' + ICON_SPEAK + '</button>' +
+        '</div>').join("") +
+    '</div>';
+}
+
+function screenLearn() {
+  const c = catById(state.catId);
+  const w = c.words[state.idx];
+  app.innerHTML =
+    '<div class="crumbs"><button class="btn-ghost" data-go="cat" data-cat="' + c.id + '">← ' + esc(c.title) + '</button></div>' +
+    '<div class="stage">' +
+      '<span class="counter">כרטיסייה ' + (state.idx + 1) + ' מתוך ' + c.words.length + '</span>' +
+      '<div class="card">' +
+        '<button class="big-speak" data-say="' + esc(w.ru) + '" aria-label="השמע">' + ICON_SPEAK + '</button>' +
+        '<div class="translit">' + esc(w.tr) + '</div>' +
+        (state.flipped
+          ? '<div class="meaning">' + esc(w.he) + '</div>' +
+            '<div class="ru-big" style="font-size:22px">' + esc(w.ru) + '</div>' +
+            (w.note ? '<p class="note">' + esc(w.note) + '</p>' : '')
+          : '<p class="veil">תשמע/י, תגיד/י בקול — ואז גלה/י את המשמעות</p>') +
+      '</div>' +
+      '<div class="card-actions">' +
+        (state.flipped
+          ? '<button class="btn" data-learn="again">עוד לא יודע/ת</button><button class="btn btn-accent" data-learn="known">ידעתי ✓</button>'
+          : '<button class="btn btn-primary" data-learn="flip">גלה משמעות</button>') +
+      '</div>' +
+      '<div class="card-actions">' +
+        '<button class="btn btn-ghost" data-learn="prev"' + (state.idx === 0 ? ' disabled' : '') + '>הקודם</button>' +
+        '<button class="btn btn-ghost" data-learn="next">הבא ←</button>' +
+      '</div>' +
+    '</div>';
+  if (!state.flipped) setTimeout(() => speak(w.ru), 220);
+}
+
+function buildQuiz(catId) {
+  let pool;
+  if (catId === "mix") {
+    const weak = ALL_WORDS.filter(w => scoreOf(w.id) > 0 && scoreOf(w.id) < MASTER_AT);
+    const fresh = ALL_WORDS.filter(w => scoreOf(w.id) === 0);
+    pool = shuffle(weak).slice(0, 6).concat(shuffle(fresh).slice(0, 6));
+    if (pool.length < 10) pool = pool.concat(shuffle(ALL_WORDS).slice(0, 10));
+  } else {
+    pool = shuffle(catById(catId).words);
+  }
+  const picks = shuffle(pool).slice(0, 10);
+  const qs = picks.map((w, i) => {
+    const sameCat = ALL_WORDS.filter(x => x.cat === w.cat && x.id !== w.id);
+    const others = shuffle(sameCat.length >= 3 ? sameCat : ALL_WORDS.filter(x => x.id !== w.id)).slice(0, 3);
+    return { word: w, type: i % 3 === 2 ? "recall" : "listen", options: shuffle([w].concat(others)) };
+  });
+  return { catId, qs, i: 0, right: 0, answered: null, wrongList: [] };
+}
+
+function screenQuiz() {
+  const q = state.quiz, cur = q.qs[q.i], w = cur.word;
+  const pct = Math.round(q.i / q.qs.length * 100);
+  const backCat = q.catId === "mix" ? "" : '<button class="btn-ghost" data-go="cat" data-cat="' + q.catId + '">← ' + esc(catById(q.catId).title) + '</button>';
+  app.innerHTML =
+    '<div class="crumbs">' + (backCat || '<button class="btn-ghost" data-go="home">← כל השיעורים</button>') + '</div>' +
+    '<div class="stage">' +
+      '<div class="quiz-head">' +
+        '<span class="counter">' + (q.i + 1) + '/' + q.qs.length + '</span>' +
+        '<span class="track"><i style="width:' + pct + '%"></i></span>' +
+        '<span class="streak">' + q.right + ' נכונות</span>' +
+      '</div>' +
+      '<div class="prompt">' +
+        (cur.type === "listen"
+          ? '<p class="ask">מה שמעת?</p><button class="big-speak" data-say="' + esc(w.ru) + '" aria-label="השמע שוב">' + ICON_SPEAK + '</button><p class="ask">לחיצה להשמעה חוזרת</p>'
+          : '<p class="ask">איך אומרים ברוסית?</p><div class="he-word">' + esc(w.he) + '</div>') +
+      '</div>' +
+      '<div class="options">' +
+        cur.options.map(o =>
+          '<button class="opt" data-ans="' + o.id + '">' +
+            (cur.type === "listen"
+              ? esc(o.he)
+              : esc(o.tr) + '<span class="cy ru">' + esc(o.ru) + '</span>') +
+          '</button>').join("") +
+      '</div>' +
+      '<div id="fb"></div>' +
+    '</div>';
+  if (cur.type === "listen") setTimeout(() => speak(w.ru), 260);
+}
+
+function answer(id) {
+  const q = state.quiz, cur = q.qs[q.i], w = cur.word;
+  if (q.answered) return;
+  q.answered = id;
+  const right = id === w.id;
+  bump(w.id, right);
+  if (right) q.right++; else q.wrongList.push(w);
+  document.querySelectorAll(".opt").forEach(b => {
+    b.disabled = true;
+    if (b.dataset.ans === w.id) b.classList.add("correct");
+    else if (b.dataset.ans === id) b.classList.add("wrong");
+  });
+  speak(w.ru);
+  const last = q.i === q.qs.length - 1;
+  document.getElementById("fb").innerHTML =
+    '<div class="feedback ' + (right ? "ok" : "no") + '">' +
+      '<div class="txt">' + (right ? "נכון! " : "לא נורא — ") + '<b>' + esc(w.tr) + '</b> = ' + esc(w.he) + '</div>' +
+      '<button class="btn btn-primary" data-next="1">' + (last ? "סיום" : "הבא ←") + '</button>' +
+    '</div>';
+  document.querySelector("[data-next]").focus();
+}
+
+function screenResult() {
+  const q = state.quiz;
+  const pct = Math.round(q.right / q.qs.length * 100);
+  const title = pct >= 90 ? "מצוין — זה כבר נשמע כמו רוסית" : pct >= 60 ? "יפה מאוד, ממשיכים" : "זה בדיוק שלב הלמידה";
+  app.innerHTML =
+    '<div class="stage">' +
+      '<div class="result">' +
+        '<p class="eyebrow">סיום תרגול</p>' +
+        '<div class="score">' + q.right + '/' + q.qs.length + '</div>' +
+        '<h2>' + title + '</h2>' +
+        (q.wrongList.length
+          ? '<div class="review">' + q.wrongList.map(w =>
+              '<div class="r-row"><button class="speak" data-say="' + esc(w.ru) + '" aria-label="השמע">' + ICON_SPEAK + '</button>' +
+              '<span><b>' + esc(w.tr) + '</b> <span class="g">— ' + esc(w.he) + '</span></span></div>').join("") + '</div>'
+          : '<p class="lead" style="text-align:center">בלי טעויות בכלל. שווה לעבור לשיעור הבא.</p>') +
+        '<div class="card-actions">' +
+          '<button class="btn btn-accent" data-go="quiz" data-cat="' + q.catId + '">עוד סיבוב</button>' +
+          '<button class="btn" data-go="home">כל השיעורים</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+}
+
+function render() {
+  renderMini();
+  if (state.screen === "home") screenHome();
+  else if (state.screen === "cat") screenCat();
+  else if (state.screen === "learn") screenLearn();
+  else if (state.screen === "quiz") screenQuiz();
+  else if (state.screen === "result") screenResult();
+}
+
+/* ---------------- events ---------------- */
+document.addEventListener("click", e => {
+  const say = e.target.closest("[data-say]");
+  if (say) { speak(say.dataset.say, say); return; }
+
+  const nav = e.target.closest("[data-go]");
+  if (nav) {
+    const to = nav.dataset.go, cat = nav.dataset.cat;
+    if (to === "home") go("home", { catId: null });
+    else if (to === "cat") go("cat", { catId: cat });
+    else if (to === "learn") go("learn", { catId: cat, idx: 0, flipped: false });
+    else if (to === "quiz") go("quiz", { quiz: buildQuiz(cat) });
+    return;
+  }
+
+  const ans = e.target.closest("[data-ans]");
+  if (ans) { answer(ans.dataset.ans); return; }
+
+  if (e.target.closest("[data-next]")) {
+    const q = state.quiz;
+    if (q.i === q.qs.length - 1) go("result");
+    else { q.i++; q.answered = null; render(); }
+    return;
+  }
+
+  const lb = e.target.closest("[data-learn]");
+  if (lb) {
+    const c = catById(state.catId), act = lb.dataset.learn;
+    const w = c.words[state.idx];
+    if (act === "flip") { state.flipped = true; render(); }
+    else if (act === "known" || act === "again") {
+      setKnown(w.id, act === "known");
+      if (state.idx === c.words.length - 1) go("cat", { catId: c.id });
+      else { state.idx++; state.flipped = false; render(); }
+    }
+    else if (act === "next") {
+      if (state.idx === c.words.length - 1) go("cat", { catId: c.id });
+      else { state.idx++; state.flipped = false; render(); }
+    }
+    else if (act === "prev" && state.idx > 0) { state.idx--; state.flipped = false; render(); }
+  }
+});
+
+document.addEventListener("keydown", e => {
+  if (state.screen === "learn") {
+    if (e.key === " ") { e.preventDefault(); if (!state.flipped) { state.flipped = true; render(); } }
+    if (e.key === "ArrowLeft") document.querySelector('[data-learn="next"]')?.click();
+    if (e.key === "ArrowRight") document.querySelector('[data-learn="prev"]')?.click();
+  }
+  if (state.screen === "quiz" && /^[1-4]$/.test(e.key)) {
+    document.querySelectorAll(".opt")[+e.key - 1]?.click();
+  }
+  if (e.key === "Enter") document.querySelector("[data-next]")?.click();
+});
+
+render();
+</script>
+<style>
+  .install-bar {
+    position: fixed;
+    inset-inline: 12px;
+    bottom: 12px;
+    z-index: 40;
+    display: none;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-lift);
+    font-size: 14px;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+  .install-bar.show { display: flex; }
+  .install-bar .t { flex: 1; }
+  .install-bar .t b { display: block; font-family: "Frank Ruhl Libre", Georgia, serif; }
+  .install-bar .t span { color: var(--muted); font-size: 13px; }
+</style>
+<div class="install-bar" id="installBar">
+  <div class="t"><b>להוסיף למסך הבית?</b><span>ייפתח כמו אפליקציה, גם בלי אינטרנט</span></div>
+  <button class="btn btn-accent" id="installBtn">התקנה</button>
+  <button class="btn btn-ghost" id="installNo" aria-label="לא עכשיו">✕</button>
+</div>
+<script>
+  let deferredPrompt = null;
+  const bar = document.getElementById("installBar");
+  window.addEventListener("beforeinstallprompt", e => {
+    e.preventDefault();
+    deferredPrompt = e;
+    if (!localStorage.getItem("ru-install-dismissed")) bar.classList.add("show");
+  });
+  document.getElementById("installBtn").addEventListener("click", async () => {
+    bar.classList.remove("show");
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    deferredPrompt = null;
+  });
+  document.getElementById("installNo").addEventListener("click", () => {
+    bar.classList.remove("show");
+    try { localStorage.setItem("ru-install-dismissed", "1"); } catch (e) {}
+  });
+  window.addEventListener("appinstalled", () => bar.classList.remove("show"));
+
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+  }
+</script>
+</body>
+</html>
