@@ -1066,7 +1066,7 @@ function screenHome() {
       }).join("") +
     '</div>' +
     installCardHTML() +
-    '<p class="foot">גרסה 6 · ' + TOTAL + ' מילים · ההתקדמות נשמרת במכשיר הזה</p>';
+    '<p class="foot">גרסה 7 · ' + TOTAL + ' מילים · ההתקדמות נשמרת במכשיר הזה</p>';
 }
 
 function isInstalled() {
@@ -1420,9 +1420,16 @@ document.getElementById("installNo").addEventListener("click", () => {
   try { localStorage.setItem("ru-install-dismissed", "1"); } catch (e) {}
 });
 window.addEventListener("appinstalled", () => bar.classList.remove("show"));
-// הרענון אחרי עדכון נעשה בצד ה-service worker בלבד (ראה sw.js).
-// אין כאן מאזין ל-controllerchange בכוונה — שני מנגנוני רענון יחד יוצרים לולאה.
+// רענון אוטומטי כשגרסה חדשה משתלטת. התנאי hadController קריטי:
+// בביקור הראשון אין controller, וריענון שם היה יוצר לולאה.
 if ("serviceWorker" in navigator) {
+  const hadController = !!navigator.serviceWorker.controller;
+  let reloaded = false;
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if (!hadController || reloaded) return;
+    reloaded = true;
+    location.reload();
+  });
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("sw.js")
       .then(reg => reg.update().catch(() => {}))
