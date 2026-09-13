@@ -3,11 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#16233A">
+<meta name="theme-color" content="#4C55D4">
 <meta name="description" content="קורס רוסית מדוברת בעברית — מילים, הבנה ודיבור, עם הקראה בקול.">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="מדברים רוסית">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
@@ -15,869 +14,943 @@
 <title>מדברים רוסית</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Heebo:wght@400;500;700&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;600;800&family=Heebo:wght@400;500;700&family=PT+Serif:wght@400;700&display=swap">
 <style>
   :root {
-    --bg: #E9ECF1;
+    font-size: 17px;
+
+    --bg: #F4F6FB;
+    --bg-2: #E8ECF7;
     --surface: #FFFFFF;
-    --surface-2: #F3F5F8;
-    --ink: #16233A;
-    --ink-soft: #3C4A61;
-    --muted: #6B7A91;
-    --line: #D3D9E2;
-    --accent: #A87B2E;
-    --accent-soft: #F1E4CA;
-    --accent-ink: #7A5718;
-    --good: #2C6E52;
-    --good-soft: #DCEDE4;
-    --bad: #8E2F36;
-    --bad-soft: #F5DEDF;
-    --shadow: 0 1px 2px rgba(22,35,58,.06), 0 8px 24px rgba(22,35,58,.07);
-    --shadow-lift: 0 2px 4px rgba(22,35,58,.08), 0 18px 40px rgba(22,35,58,.14);
-    --r-s: 8px;
-    --r-m: 14px;
-    --r-l: 22px;
+    --surface-2: #F1F4FA;
+    --ink: #1B2334;
+    --ink-soft: #39445C;
+    --muted: #5E6980;
+    --line: #DFE4EF;
+
+    --brand: hsl(248 62% 55%);
+    --brand-ink: hsl(248 62% 42%);
+    --brand-bg: hsl(248 80% 96%);
+    --brand-on: #FFFFFF;
+
+    --good: hsl(152 58% 34%);
+    --good-bg: hsl(152 60% 92%);
+    --good-line: hsl(152 45% 62%);
+    --bad: hsl(352 62% 45%);
+    --bad-bg: hsl(352 80% 95%);
+    --bad-line: hsl(352 60% 72%);
+    --star: hsl(42 92% 48%);
+
+    --c: hsl(var(--h, 248) 58% 42%);
+    --c-strong: hsl(var(--h, 248) 62% 50%);
+    --c-bg: hsl(var(--h, 248) 80% 95%);
+    --c-line: hsl(var(--h, 248) 60% 82%);
+    --c-on: #FFFFFF;
+
+    --shadow: 0 1px 2px rgba(27,35,52,.05), 0 6px 18px rgba(27,35,52,.07);
+    --shadow-lift: 0 3px 6px rgba(27,35,52,.08), 0 16px 36px rgba(27,35,52,.14);
+
+    --r-s: 12px;
+    --r-m: 18px;
+    --r-l: 26px;
+    --tap: 52px;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #0E151F;
-      --surface: #17202D;
-      --surface-2: #1E2937;
-      --ink: #E7ECF3;
-      --ink-soft: #C3CDDB;
-      --muted: #8B9AAE;
-      --line: #2A3646;
-      --accent: #D8AC5C;
-      --accent-soft: #3A2F1B;
-      --accent-ink: #EFCE92;
-      --good: #64C79B;
-      --good-soft: #16352A;
-      --bad: #E08A90;
-      --bad-soft: #3A1D20;
-      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
-      --shadow-lift: 0 2px 6px rgba(0,0,0,.4), 0 18px 40px rgba(0,0,0,.5);
+      --bg: #12172180;
+      --bg: #121721;
+      --bg-2: #0C1018;
+      --surface: #1B2230;
+      --surface-2: #232C3D;
+      --ink: #EDF0F7;
+      --ink-soft: #CBD3E2;
+      --muted: #9AA5BA;
+      --line: #303B4F;
+
+      --brand: hsl(248 78% 72%);
+      --brand-ink: hsl(248 85% 80%);
+      --brand-bg: hsl(248 40% 22%);
+      --brand-on: #12131F;
+
+      --good: hsl(152 55% 62%);
+      --good-bg: hsl(152 35% 18%);
+      --good-line: hsl(152 40% 40%);
+      --bad: hsl(352 75% 74%);
+      --bad-bg: hsl(352 35% 20%);
+      --bad-line: hsl(352 45% 45%);
+      --star: hsl(42 90% 62%);
+
+      --c: hsl(var(--h, 248) 75% 72%);
+      --c-strong: hsl(var(--h, 248) 70% 64%);
+      --c-bg: hsl(var(--h, 248) 38% 20%);
+      --c-line: hsl(var(--h, 248) 40% 38%);
+      --c-on: #12131F;
+
+      --shadow: 0 1px 2px rgba(0,0,0,.35), 0 6px 18px rgba(0,0,0,.4);
+      --shadow-lift: 0 3px 8px rgba(0,0,0,.45), 0 16px 36px rgba(0,0,0,.55);
     }
   }
   :root[data-theme="dark"] {
-    --bg: #0E151F;
-    --surface: #17202D;
-    --surface-2: #1E2937;
-    --ink: #E7ECF3;
-    --ink-soft: #C3CDDB;
-    --muted: #8B9AAE;
-    --line: #2A3646;
-    --accent: #D8AC5C;
-    --accent-soft: #3A2F1B;
-    --accent-ink: #EFCE92;
-    --good: #64C79B;
-    --good-soft: #16352A;
-    --bad: #E08A90;
-    --bad-soft: #3A1D20;
-    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
-    --shadow-lift: 0 2px 6px rgba(0,0,0,.4), 0 18px 40px rgba(0,0,0,.5);
+    --bg: #121721;
+    --bg-2: #0C1018;
+    --surface: #1B2230;
+    --surface-2: #232C3D;
+    --ink: #EDF0F7;
+    --ink-soft: #CBD3E2;
+    --muted: #9AA5BA;
+    --line: #303B4F;
+    --brand: hsl(248 78% 72%);
+    --brand-ink: hsl(248 85% 80%);
+    --brand-bg: hsl(248 40% 22%);
+    --brand-on: #12131F;
+    --good: hsl(152 55% 62%);
+    --good-bg: hsl(152 35% 18%);
+    --good-line: hsl(152 40% 40%);
+    --bad: hsl(352 75% 74%);
+    --bad-bg: hsl(352 35% 20%);
+    --bad-line: hsl(352 45% 45%);
+    --star: hsl(42 90% 62%);
+    --c: hsl(var(--h, 248) 75% 72%);
+    --c-strong: hsl(var(--h, 248) 70% 64%);
+    --c-bg: hsl(var(--h, 248) 38% 20%);
+    --c-line: hsl(var(--h, 248) 40% 38%);
+    --c-on: #12131F;
+    --shadow: 0 1px 2px rgba(0,0,0,.35), 0 6px 18px rgba(0,0,0,.4);
+    --shadow-lift: 0 3px 8px rgba(0,0,0,.45), 0 16px 36px rgba(0,0,0,.55);
   }
 
   * { box-sizing: border-box; }
+
+  html, body { max-width: 100%; overflow-x: hidden; }
 
   body {
     margin: 0;
     background: var(--bg);
     color: var(--ink);
     font-family: "Heebo", "Segoe UI", system-ui, sans-serif;
-    font-size: 16px;
-    line-height: 1.55;
+    font-size: 1rem;
+    line-height: 1.6;
     direction: rtl;
+    overflow-wrap: anywhere;
+    -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
   }
 
-  .ru {
-    font-family: "PT Serif", Georgia, serif;
-    direction: ltr;
-    unicode-bidi: isolate;
-  }
+  .ru { font-family: "PT Serif", Georgia, serif; direction: ltr; unicode-bidi: isolate; }
 
-  .shell {
-    max-width: 880px;
-    margin: 0 auto;
-    padding: 0 16px 72px;
+  h1, h2, h3 {
+    font-family: "Rubik", "Heebo", system-ui, sans-serif;
+    font-weight: 800;
+    margin: 0;
+    text-wrap: balance;
+    letter-spacing: -.015em;
+    line-height: 1.2;
   }
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.3rem; }
 
-  /* ---------- top bar ---------- */
+  button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+  :focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; border-radius: 6px; }
+
+  .shell { max-width: 900px; margin: 0 auto; padding: 0 14px 96px; }
+
+  /* ---------------- top bar ---------------- */
   .topbar {
-    position: sticky;
-    top: 0;
-    z-index: 20;
-    background: color-mix(in srgb, var(--bg) 88%, transparent);
-    backdrop-filter: blur(10px);
+    position: sticky; top: 0; z-index: 30;
+    background: color-mix(in srgb, var(--bg) 92%, transparent);
+    backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--line);
-    margin: 0 -16px 22px;
-    padding: 12px 16px;
   }
   .topbar-inner {
-    max-width: 880px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    max-width: 900px; margin: 0 auto;
+    padding: 10px 14px;
+    display: flex; align-items: center; gap: 12px;
   }
   .brand {
-    display: flex;
-    align-items: baseline;
-    gap: 9px;
-    font-family: "Frank Ruhl Libre", Georgia, serif;
-    font-weight: 700;
-    font-size: 20px;
-    letter-spacing: -.01em;
+    display: flex; align-items: center; gap: 9px;
+    font-family: "Rubik", sans-serif; font-weight: 800; font-size: 1.1rem;
   }
   .brand .mark {
-    font-family: "PT Serif", Georgia, serif;
-    color: var(--accent);
-    font-size: 20px;
+    width: 34px; height: 34px; border-radius: 11px;
+    background: var(--brand); color: var(--brand-on);
+    display: grid; place-items: center;
+    font-family: "PT Serif", serif; font-size: 1.15rem; line-height: 1;
   }
   .topbar .spacer { flex: 1; }
+  .mini {
+    display: flex; align-items: center; gap: 8px;
+    font-size: .8rem; color: var(--muted); white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .mini-bar { width: 70px; height: 8px; border-radius: 99px; background: var(--line); overflow: hidden; }
+  .mini-bar i { display: block; height: 100%; background: var(--brand); border-radius: 99px; transition: width .45s ease; }
+  .icon-btn {
+    width: 44px; height: 44px; border-radius: 13px;
+    display: grid; place-items: center;
+    background: var(--surface); border: 1px solid var(--line);
+    font-size: 1.1rem; flex: none;
+  }
+  .icon-btn:hover { background: var(--surface-2); }
 
-  .mini-progress {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    color: var(--muted);
+  /* ---------------- settings ---------------- */
+  .settings {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--r-m); box-shadow: var(--shadow);
+    padding: 16px; margin: 14px auto 0; max-width: 900px;
+    display: none; flex-direction: column; gap: 16px;
   }
-  .mini-bar {
-    width: 72px;
-    height: 6px;
-    border-radius: 99px;
-    background: var(--line);
-    overflow: hidden;
+  .settings.open { display: flex; }
+  .set-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  .set-row > .lbl { min-width: 128px; font-weight: 500; }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip {
+    padding: 10px 16px; border-radius: 99px;
+    border: 2px solid var(--line); background: var(--surface);
+    font-weight: 500; min-height: 46px;
   }
-  .mini-bar i {
-    display: block;
-    height: 100%;
-    background: var(--accent);
-    border-radius: 99px;
-    transition: width .4s ease;
-  }
+  .chip[aria-pressed="true"] { border-color: var(--brand); background: var(--brand-bg); color: var(--brand-ink); font-weight: 700; }
 
-  /* ---------- buttons ---------- */
-  button {
-    font: inherit;
-    color: inherit;
-    cursor: pointer;
-    border: none;
-    background: none;
-  }
-  button:focus-visible, .card-btn:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
+  /* ---------------- buttons ---------------- */
   .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 11px 18px;
-    border-radius: var(--r-s);
-    background: var(--surface);
-    border: 1px solid var(--line);
-    color: var(--ink);
-    font-weight: 500;
-    transition: transform .12s ease, box-shadow .15s ease, background .15s ease;
+    display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+    min-height: var(--tap); padding: 12px 22px;
+    border-radius: 14px; border: 2px solid var(--line);
+    background: var(--surface); font-weight: 600;
+    transition: transform .12s ease, box-shadow .18s ease, background .18s ease;
   }
   .btn:hover { box-shadow: var(--shadow); }
-  .btn:active { transform: translateY(1px); }
-  .btn-primary {
-    background: var(--ink);
-    border-color: var(--ink);
-    color: var(--bg);
-  }
-  .btn-accent {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #14100A;
-    font-weight: 700;
-  }
-  .btn-ghost {
-    background: transparent;
-    border-color: transparent;
-    color: var(--muted);
-    padding: 8px 10px;
-  }
-  .btn-ghost:hover { color: var(--ink); box-shadow: none; background: var(--surface-2); }
+  .btn:active { transform: translateY(2px); }
+  .btn-brand { background: var(--brand); border-color: var(--brand); color: var(--brand-on); }
+  .btn-c { background: var(--c-strong); border-color: var(--c-strong); color: var(--c-on); }
+  .btn-soft { background: var(--c-bg); border-color: var(--c-line); color: var(--c); }
+  .btn-ghost { background: transparent; border-color: transparent; color: var(--muted); padding: 10px 14px; }
+  .btn-ghost:hover { background: var(--surface-2); color: var(--ink); box-shadow: none; }
+  .btn-lg { font-size: 1.1rem; min-height: 60px; border-radius: 18px; }
 
-  /* ---------- headings ---------- */
-  h1, h2, h3 {
-    font-family: "Frank Ruhl Libre", Georgia, serif;
-    font-weight: 700;
-    text-wrap: balance;
-    margin: 0;
-    letter-spacing: -.01em;
-  }
-  h1 { font-size: 30px; line-height: 1.25; }
-  h2 { font-size: 21px; }
-  .eyebrow {
-    font-size: 12px;
-    letter-spacing: .12em;
-    color: var(--muted);
-    font-weight: 500;
-  }
-  .lead { color: var(--ink-soft); max-width: 58ch; margin: 8px 0 0; }
-
-  /* ---------- home ---------- */
+  /* ---------------- home ---------------- */
   .hero {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    padding: 4px 0 26px;
-  }
-  .hero-stats {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  .stat {
-    display: flex;
-    align-items: baseline;
-    gap: 6px;
-    padding: 7px 13px;
-    border-radius: 99px;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    font-size: 14px;
-    color: var(--muted);
-  }
-  .stat b {
-    font-size: 16px;
-    color: var(--ink);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .quick-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 28px;
-  }
-
-  .section-head {
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
-    margin-bottom: 12px;
-  }
-  .section-head .hint { color: var(--muted); font-size: 13px; }
-
-  .cat-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 12px;
-  }
-  .cat {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    text-align: start;
-    padding: 16px;
-    border-radius: var(--r-m);
-    background: var(--surface);
-    border: 1px solid var(--line);
-    transition: transform .14s ease, box-shadow .18s ease, border-color .18s ease;
-  }
-  .cat:hover {
-    transform: translateY(-2px);
+    margin: 18px 0 22px; padding: 22px;
+    border-radius: var(--r-l);
+    background: linear-gradient(135deg, hsl(248 62% 55%), hsl(282 58% 52%));
+    color: #FFFFFF;
     box-shadow: var(--shadow-lift);
-    border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+    display: flex; flex-direction: column; gap: 14px;
   }
-  .cat-top {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  .hero h1 { color: #FFFFFF; font-size: 1.75rem; }
+  .hero p { margin: 0; color: rgba(255,255,255,.92); max-width: 46ch; }
+  .hero-bar { height: 12px; border-radius: 99px; background: rgba(255,255,255,.28); overflow: hidden; }
+  .hero-bar i { display: block; height: 100%; border-radius: 99px; background: #FFFFFF; transition: width .5s ease; }
+  .hero-stats { display: flex; gap: 18px; flex-wrap: wrap; font-size: .9rem; color: rgba(255,255,255,.92); }
+  .hero-stats b { font-size: 1.2rem; display: block; font-family: "Rubik", sans-serif; font-variant-numeric: tabular-nums; }
+  .hero .btn { border: none; }
+  .hero-cta { background: #FFFFFF; color: hsl(248 62% 42%); font-weight: 800; }
+
+  .section-head { display: flex; align-items: baseline; gap: 10px; margin: 26px 0 12px; flex-wrap: wrap; }
+  .section-head .hint { color: var(--muted); font-size: .85rem; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
+
+  .lesson {
+    --shadow-c: color-mix(in srgb, var(--c-strong) 22%, transparent);
+    text-align: start; padding: 16px;
+    border-radius: var(--r-m);
+    background: var(--surface);
+    border: 2px solid var(--line);
+    display: flex; flex-direction: column; gap: 12px;
+    transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
   }
-  .cat-num {
-    font-family: "PT Serif", Georgia, serif;
-    font-size: 13px;
-    color: var(--accent-ink);
-    background: var(--accent-soft);
-    border-radius: 6px;
-    padding: 2px 7px;
-    font-variant-numeric: tabular-nums;
+  .lesson:hover { transform: translateY(-3px); border-color: var(--c-line); box-shadow: var(--shadow-lift); }
+  .lesson-top { display: flex; align-items: center; gap: 12px; }
+  .emoji {
+    width: 52px; height: 52px; border-radius: 16px; flex: none;
+    display: grid; place-items: center; font-size: 1.6rem;
+    background: var(--c-bg); border: 1px solid var(--c-line);
   }
-  .cat-title { font-family: "Frank Ruhl Libre", Georgia, serif; font-weight: 700; font-size: 17px; }
-  .cat-sample {
-    font-size: 14px;
-    color: var(--muted);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .cat-foot {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: auto;
-    font-size: 13px;
-    color: var(--muted);
-    font-variant-numeric: tabular-nums;
-  }
-  .track {
-    flex: 1;
-    height: 5px;
-    border-radius: 99px;
-    background: var(--line);
-    overflow: hidden;
-  }
-  .track i {
-    display: block;
-    height: 100%;
-    border-radius: 99px;
-    background: var(--good);
-    transition: width .4s ease;
+  .lesson-name { font-family: "Rubik", sans-serif; font-weight: 700; font-size: 1.05rem; }
+  .lesson-sub { font-size: .84rem; color: var(--muted); }
+  .lesson-blurb { font-size: .9rem; color: var(--ink-soft); }
+  .bar { height: 10px; border-radius: 99px; background: var(--surface-2); overflow: hidden; border: 1px solid var(--line); }
+  .bar i { display: block; height: 100%; background: var(--c-strong); border-radius: 99px; transition: width .45s ease; }
+  .done-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: .8rem; font-weight: 700; color: var(--good);
+    background: var(--good-bg); border-radius: 99px; padding: 2px 10px;
   }
 
-  /* ---------- category screen ---------- */
-  .crumbs {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 14px;
-    color: var(--muted);
-    margin-bottom: 14px;
+  /* ---------------- lesson screen ---------------- */
+  .crumbs { display: flex; align-items: center; gap: 6px; margin: 12px 0; }
+  .head-card {
+    border-radius: var(--r-l); padding: 20px;
+    background: var(--c-bg); border: 2px solid var(--c-line);
+    display: flex; align-items: center; gap: 16px;
   }
-  .mode-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 12px;
-    margin: 18px 0 26px;
-  }
+  .head-card .emoji { width: 64px; height: 64px; font-size: 2rem; background: var(--surface); }
+  .head-card h1 { color: var(--c); font-size: 1.5rem; }
+  .head-card p { margin: 4px 0 0; color: var(--ink-soft); font-size: .92rem; }
+
+  .mode-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 16px 0 26px; }
   .mode {
-    text-align: start;
-    padding: 16px;
-    border-radius: var(--r-m);
-    border: 1px solid var(--line);
-    background: var(--surface);
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    transition: transform .14s ease, box-shadow .18s ease;
+    text-align: start; padding: 18px; border-radius: var(--r-m);
+    border: 2px solid var(--line); background: var(--surface);
+    display: flex; align-items: center; gap: 14px;
+    transition: transform .15s ease, box-shadow .2s ease, border-color .2s;
   }
-  .mode:hover { transform: translateY(-2px); box-shadow: var(--shadow-lift); }
-  .mode strong { font-family: "Frank Ruhl Libre", Georgia, serif; font-size: 17px; }
-  .mode span { font-size: 13px; color: var(--muted); }
+  .mode:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); border-color: var(--c-line); }
+  .mode .ic { font-size: 1.8rem; }
+  .mode strong { display: block; font-family: "Rubik", sans-serif; font-size: 1.05rem; }
+  .mode span { font-size: .85rem; color: var(--muted); }
 
-  .word-list {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--line);
-    border-radius: var(--r-m);
-    overflow: hidden;
-    background: var(--surface);
-  }
+  .word-list { display: flex; flex-direction: column; gap: 8px; }
   .word-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 11px 14px;
-    border-bottom: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 12px minmax(0, 1fr) auto;
+    align-items: center; gap: 2px 12px;
+    padding: 12px 14px; border-radius: var(--r-s);
+    background: var(--surface); border: 1px solid var(--line);
   }
-  .word-row:last-child { border-bottom: none; }
-  .word-row .he { flex: 1; min-width: 0; }
-  .word-row .he b { font-weight: 500; }
-  .word-row .he small { display: block; color: var(--muted); font-size: 13px; }
-  .word-row .tr { color: var(--ink-soft); font-size: 14px; text-align: start; min-width: 34%; }
-  .word-row .tr .cy { display: block; font-size: 12px; color: var(--muted); }
-  .dot {
-    width: 8px; height: 8px; border-radius: 99px;
-    background: var(--line);
-    flex: none;
-  }
-  .dot.learning { background: var(--accent); }
-  .dot.known { background: var(--good); }
+  .word-row .status { grid-column: 1; grid-row: 1; }
+  .word-row .he { grid-column: 2; grid-row: 1; min-width: 0; }
+  .word-row .he b { font-weight: 600; font-size: 1.02rem; }
+  .word-row .he small { display: block; color: var(--muted); font-size: .82rem; line-height: 1.4; }
+  .word-row .tr { grid-column: 2; grid-row: 2; min-width: 0; color: var(--c); font-size: .95rem; font-weight: 500; }
+  .word-row .tr .cy { display: block; font-size: .78rem; color: var(--muted); font-weight: 400; }
+  .word-row .speak { grid-column: 3; grid-row: 1 / span 2; }
+  .status { width: 12px; height: 12px; border-radius: 99px; background: var(--line); flex: none; }
+  .status.learning { background: var(--star); }
+  .status.known { background: var(--good); }
 
   .speak {
-    flex: none;
-    width: 38px; height: 38px;
-    border-radius: 99px;
+    flex: none; width: 50px; height: 50px; border-radius: 16px;
     display: grid; place-items: center;
-    background: var(--surface-2);
-    border: 1px solid var(--line);
-    color: var(--ink);
-    transition: background .15s ease, transform .12s ease;
+    background: var(--c-bg); color: var(--c); border: 1px solid var(--c-line);
+    transition: transform .12s ease, background .15s ease;
   }
-  .speak:hover { background: var(--accent-soft); color: var(--accent-ink); }
-  .speak:active { transform: scale(.94); }
-  .speak.playing { background: var(--accent); color: #14100A; border-color: var(--accent); }
+  .speak:hover { background: var(--c-strong); color: var(--c-on); }
+  .speak:active { transform: scale(.93); }
+  .speak.playing { background: var(--c-strong); color: var(--c-on); }
+  .speak svg { width: 24px; height: 24px; }
 
-  /* ---------- flashcard ---------- */
-  .stage {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 18px;
-    padding-top: 6px;
-  }
-  .counter {
-    font-size: 13px;
-    color: var(--muted);
-    font-variant-numeric: tabular-nums;
-    letter-spacing: .04em;
-  }
+  /* ---------------- cards / stage ---------------- */
+  .stage { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .counter { font-size: .85rem; color: var(--muted); font-variant-numeric: tabular-nums; font-weight: 500; }
+
   .card {
-    width: 100%;
-    max-width: 520px;
-    min-height: 300px;
-    border-radius: var(--r-l);
-    background: var(--surface);
-    border: 1px solid var(--line);
+    width: 100%; max-width: 560px; min-height: 320px;
+    border-radius: var(--r-l); padding: 28px 20px;
+    background: var(--surface); border: 2px solid var(--c-line);
     box-shadow: var(--shadow);
-    padding: 30px 24px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 14px;
-    text-align: center;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 16px; text-align: center;
   }
-  .card .ru-big {
-    font-family: "PT Serif", Georgia, serif;
-    font-size: clamp(30px, 8vw, 46px);
-    line-height: 1.15;
-    color: var(--ink);
+  .translit {
+    font-family: "Rubik", sans-serif; font-weight: 600;
+    font-size: clamp(1.4rem, 7vw, 2rem);
+    color: var(--c); background: var(--c-bg);
+    padding: 6px 18px; border-radius: 99px;
+    line-height: 1.35;
   }
-  .card .translit {
-    font-size: clamp(20px, 5.5vw, 27px);
-    font-weight: 500;
-    color: var(--accent-ink);
-    background: var(--accent-soft);
-    padding: 4px 14px;
-    border-radius: 99px;
-  }
-  .card .meaning {
-    font-family: "Frank Ruhl Libre", Georgia, serif;
-    font-size: clamp(22px, 6vw, 30px);
-    font-weight: 700;
-  }
-  .card .note { font-size: 14px; color: var(--muted); max-width: 40ch; }
-  .veil { color: var(--muted); font-size: 15px; }
-
-  .card-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-    width: 100%;
-    max-width: 520px;
-  }
-  .card-actions .btn { flex: 1; min-width: 120px; }
+  .meaning { font-family: "Rubik", sans-serif; font-weight: 800; font-size: clamp(1.5rem, 7vw, 2.1rem); }
+  .cyr { font-family: "PT Serif", Georgia, serif; font-size: 1.1rem; color: var(--muted); direction: ltr; }
+  .note { font-size: .9rem; color: var(--muted); max-width: 38ch; margin: 0; }
+  .veil { color: var(--muted); font-size: .95rem; margin: 0; }
 
   .big-speak {
-    width: 92px; height: 92px;
-    border-radius: 99px;
+    width: 104px; height: 104px; border-radius: 99px;
     display: grid; place-items: center;
-    background: var(--accent);
-    color: #14100A;
-    border: none;
+    background: var(--c-strong); color: var(--c-on);
     box-shadow: var(--shadow-lift);
-    transition: transform .14s ease;
+    transition: transform .15s ease;
   }
-  .big-speak:hover { transform: scale(1.04); }
-  .big-speak:active { transform: scale(.96); }
-  .big-speak svg { width: 38px; height: 38px; }
+  .big-speak:hover { transform: scale(1.05); }
+  .big-speak:active { transform: scale(.95); }
+  .big-speak svg { width: 44px; height: 44px; }
 
-  /* ---------- quiz ---------- */
-  .quiz-head {
-    width: 100%;
-    max-width: 560px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .quiz-head .track { height: 6px; }
-  .streak {
-    font-size: 13px;
-    color: var(--muted);
-    font-variant-numeric: tabular-nums;
-    white-space: nowrap;
-  }
-  .prompt {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-  }
-  .prompt .ask { font-size: 14px; color: var(--muted); }
-  .prompt .he-word {
-    font-family: "Frank Ruhl Libre", Georgia, serif;
-    font-size: clamp(26px, 7vw, 36px);
-    font-weight: 700;
-  }
-  .options {
-    width: 100%;
-    max-width: 560px;
-    display: grid;
-    gap: 10px;
-  }
+  .row { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; width: 100%; max-width: 560px; }
+  .row .btn { flex: 1; min-width: 140px; }
+
+  /* ---------------- quiz ---------------- */
+  .quiz-head { width: 100%; max-width: 600px; display: flex; align-items: center; gap: 12px; }
+  .quiz-head .bar { flex: 1; }
+  .hearts { font-size: .9rem; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .prompt { display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+  .ask { color: var(--muted); font-size: .92rem; margin: 0; }
+  .he-word { font-family: "Rubik", sans-serif; font-weight: 800; font-size: clamp(1.6rem, 8vw, 2.3rem); }
+
+  .options { width: 100%; max-width: 600px; display: grid; gap: 10px; }
   .opt {
-    text-align: start;
-    padding: 14px 16px;
-    border-radius: var(--r-m);
-    border: 1px solid var(--line);
-    background: var(--surface);
-    font-size: 17px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: background .15s ease, border-color .15s ease, transform .12s ease;
+    text-align: start; padding: 15px 18px; min-height: var(--tap);
+    border-radius: var(--r-m); border: 2px solid var(--line);
+    background: var(--surface); font-size: 1.08rem; font-weight: 500;
+    display: flex; align-items: center; gap: 12px;
+    transition: transform .12s ease, border-color .15s ease, background .15s ease;
   }
-  .opt:hover:not(:disabled) { border-color: var(--accent); transform: translateX(-3px); }
+  .opt .num {
+    width: 30px; height: 30px; border-radius: 9px; flex: none;
+    display: grid; place-items: center; font-size: .85rem; font-weight: 700;
+    background: var(--surface-2); color: var(--muted);
+  }
+  .opt:hover:not(:disabled) { border-color: var(--c-strong); transform: translateX(-4px); }
   .opt:disabled { cursor: default; }
-  .opt .cy { display: block; font-size: 13px; color: var(--muted); }
-  .opt .badge { margin-inline-start: auto; font-size: 20px; line-height: 1; }
-  .opt.correct { background: var(--good-soft); border-color: var(--good); color: var(--good); font-weight: 700; }
-  .opt.correct .cy { color: var(--good); }
-  .opt.wrong { background: var(--bad-soft); border-color: var(--bad); color: var(--bad); }
-  .opt.wrong .cy { color: var(--bad); }
+  .opt .cy { display: block; font-size: .82rem; color: var(--muted); }
+  .opt.correct { background: var(--good-bg); border-color: var(--good-line); color: var(--good); font-weight: 700; }
+  .opt.correct .num, .opt.wrong .num { background: transparent; font-size: 1.2rem; color: inherit; }
+  .opt.correct .cy, .opt.wrong .cy { color: inherit; opacity: .8; }
+  .opt.wrong { background: var(--bad-bg); border-color: var(--bad-line); color: var(--bad); }
 
   .feedback {
-    width: 100%;
-    max-width: 560px;
-    border-radius: var(--r-m);
-    padding: 14px 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 15px;
+    width: 100%; max-width: 600px;
+    border-radius: var(--r-m); padding: 16px;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    font-size: 1rem; border: 2px solid transparent;
   }
-  .feedback.ok { background: var(--good-soft); color: var(--good); }
-  .feedback.no { background: var(--bad-soft); color: var(--bad); }
-  .feedback .txt { flex: 1; }
-  .feedback .txt b { font-weight: 700; }
+  .feedback.ok { background: var(--good-bg); color: var(--good); border-color: var(--good-line); }
+  .feedback.no { background: var(--bad-bg); color: var(--bad); border-color: var(--bad-line); }
+  .feedback .txt { flex: 1; min-width: 180px; }
+  .feedback .txt b { font-weight: 800; }
+  .feedback .btn { border-color: currentColor; background: transparent; color: inherit; }
 
-  /* ---------- results ---------- */
+  /* ---------------- result ---------------- */
   .result {
-    width: 100%;
-    max-width: 520px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    padding: 24px;
-    border-radius: var(--r-l);
-    background: var(--surface);
-    border: 1px solid var(--line);
-    box-shadow: var(--shadow);
+    width: 100%; max-width: 560px; text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 16px;
+    padding: 28px 22px; border-radius: var(--r-l);
+    background: var(--surface); border: 2px solid var(--line); box-shadow: var(--shadow);
   }
-  .score {
-    font-family: "PT Serif", Georgia, serif;
-    font-size: 58px;
-    line-height: 1;
-    color: var(--accent);
-    font-variant-numeric: tabular-nums;
-  }
-  .review {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    text-align: start;
-  }
-  .review .r-row {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    font-size: 14px;
-    padding: 8px 10px;
-    border-radius: var(--r-s);
-    background: var(--surface-2);
-  }
-  .review .r-row .g { color: var(--muted); }
+  .stars { font-size: 2.4rem; letter-spacing: 6px; color: var(--star); }
+  .score { font-family: "Rubik", sans-serif; font-weight: 800; font-size: 3.2rem; line-height: 1; color: var(--c); font-variant-numeric: tabular-nums; }
+  .review { width: 100%; display: flex; flex-direction: column; gap: 8px; text-align: start; }
+  .r-row { display: flex; gap: 12px; align-items: center; padding: 10px 12px; border-radius: var(--r-s); background: var(--surface-2); font-size: .95rem; }
+  .r-row .g { color: var(--muted); }
 
-  /* ---------- notice ---------- */
   .notice {
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-    padding: 12px 14px;
-    border-radius: var(--r-m);
-    background: var(--accent-soft);
-    color: var(--accent-ink);
-    font-size: 14px;
-    margin-bottom: 18px;
-    border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 14px; border-radius: var(--r-m); margin: 14px 0;
+    background: hsl(42 90% 94%); color: hsl(32 80% 28%);
+    border: 1px solid hsl(42 80% 76%); font-size: .9rem;
+  }
+  :root[data-theme="dark"] .notice { background: hsl(42 40% 18%); color: hsl(42 85% 78%); border-color: hsl(42 40% 34%); }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .notice { background: hsl(42 40% 18%); color: hsl(42 85% 78%); border-color: hsl(42 40% 34%); }
   }
   .notice b { display: block; }
+  .foot { text-align: center; color: var(--muted); font-size: .8rem; margin-top: 30px; }
 
-  .sync {
-    font-size: 12px;
-    color: var(--muted);
-    text-align: center;
-    margin-top: 26px;
+  .install-bar {
+    position: fixed; inset-inline: 12px; bottom: 12px; z-index: 40;
+    display: none; align-items: center; gap: 12px;
+    padding: 14px; border-radius: var(--r-m);
+    background: var(--surface); border: 2px solid var(--brand);
+    box-shadow: var(--shadow-lift); max-width: 540px; margin: 0 auto;
+  }
+  .install-bar.show { display: flex; }
+  .install-bar .t { flex: 1; font-size: .9rem; }
+  .install-bar .t b { display: block; font-family: "Rubik", sans-serif; }
+
+  @media (max-width: 540px) {
+    h1 { font-size: 1.55rem; }
+    .shell { padding: 0 12px 90px; }
+    .grid { grid-template-columns: 1fr; }
+    .card { padding: 22px 14px; min-height: 280px; }
+    .hero { padding: 18px; }
+    .row .btn { min-width: 0; flex: 1 1 100%; }
+    .mode-row { grid-template-columns: 1fr; }
+    .set-row > .lbl { min-width: 100%; }
+  }
+  @media (max-width: 400px) {
+    .brand .label { display: none; }
+    .topbar-inner { gap: 8px; padding: 10px 12px; }
   }
 
-  @media (max-width: 520px) {
-    .shell { padding: 0 12px 48px; }
-    h1 { font-size: 25px; }
-    .card { padding: 24px 16px; min-height: 260px; }
-    .cat-grid { grid-template-columns: 1fr; }
+  .install-card {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+    padding: 16px; border-radius: var(--r-m); margin-top: 18px;
+    background: var(--brand-bg); border: 2px dashed var(--brand);
   }
-  @media (prefers-reduced-motion: reduce) {
-    * { transition: none !important; animation: none !important; }
-  }
+  .install-card .t { flex: 1; min-width: 200px; font-size: .92rem; color: var(--ink-soft); }
+  .install-card .t b { display: block; font-family: "Rubik", sans-serif; color: var(--brand-ink); font-size: 1.02rem; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 </style>
+</head>
+<body>
 
-<div class="topbar">
+<header class="topbar">
   <div class="topbar-inner">
-    <div class="brand"><span class="mark">Р</span><span>מדברים רוסית</span></div>
+    <div class="brand"><span class="mark">Р</span><span class="label">מדברים רוסית</span></div>
     <span class="spacer"></span>
-    <div class="mini-progress" id="miniProgress"></div>
+    <div class="mini" id="mini"></div>
+    <button class="icon-btn" id="setBtn" aria-label="הגדרות" aria-expanded="false">⚙️</button>
   </div>
+  <div class="settings" id="settings">
+    <div class="set-row">
+      <span class="lbl">גודל הטקסט</span>
+      <div class="chips" id="sizeChips">
+        <button class="chip" data-size="17">רגיל</button>
+        <button class="chip" data-size="20">גדול</button>
+        <button class="chip" data-size="23">ענק</button>
+      </div>
+    </div>
+    <div class="set-row">
+      <span class="lbl">מהירות הדיבור</span>
+      <div class="chips" id="rateChips">
+        <button class="chip" data-rate="0.6">איטי מאוד</button>
+        <button class="chip" data-rate="0.8">איטי</button>
+        <button class="chip" data-rate="1">רגיל</button>
+      </div>
+    </div>
+    <div class="set-row">
+      <span class="lbl">כתב רוסי</span>
+      <div class="chips" id="cyrChips">
+        <button class="chip" data-cyr="0">להסתיר</button>
+        <button class="chip" data-cyr="1">להציג</button>
+      </div>
+    </div>
+    <div class="set-row">
+      <span class="lbl">התקדמות</span>
+      <button class="btn" id="resetBtn">איפוס כל ההתקדמות</button>
+    </div>
+  </div>
+</header>
+
+<main class="shell" id="app"></main>
+
+<div class="install-bar" id="installBar">
+  <div class="t"><b>להוסיף למסך הבית?</b><span>ייפתח כמו אפליקציה, גם בלי אינטרנט</span></div>
+  <button class="btn btn-brand" id="installBtn">התקנה</button>
+  <button class="icon-btn" id="installNo" aria-label="לא עכשיו">✕</button>
 </div>
 
-<div class="shell" id="app"></div>
-
 <script>
+/* =======================  התוכן  ======================= */
 const CATS = [
-  {
-    id: "greet", title: "שיחה ראשונה", blurb: "מה שאומרים בדקה הראשונה של כל מפגש.",
-    words: [
-      { ru: "Здравствуйте", tr: "זְדְרַאסְטְוּויְטְיֶה", he: "שלום (מנומס, לכל אדם)", note: "הצורה המכבדת — מתאימה לזרים, מבוגרים, בעלי מקצוע." },
-      { ru: "Привет", tr: "פְּרִיבְיֶט", he: "היי (לחברים)", note: "רק עם מכרים, ילדים או חברים." },
-      { ru: "Доброе утро", tr: "דוֹבְּרוֹיֶה אוּטְרָה", he: "בוקר טוב" },
-      { ru: "Добрый день", tr: "דוֹבְּרִי דְיֶן", he: "צהריים טובים" },
-      { ru: "Добрый вечер", tr: "דוֹבְּרִי וְיֶצֶ'ר", he: "ערב טוב" },
-      { ru: "Как дела?", tr: "קַאק דְיֶלָה", he: "מה שלומך?" },
-      { ru: "Хорошо, спасибо", tr: "חַרַשׁוֹ, סְפַּסִיבַּה", he: "טוב, תודה" },
-      { ru: "Как вас зовут?", tr: "קַאק וַואס זַבוּט", he: "איך קוראים לך?" },
-      { ru: "Меня зовут…", tr: "מִינְיָא זַבוּט…", he: "קוראים לי…" },
-      { ru: "Очень приятно", tr: "אוֹצֶ'ן פְּרִיָאטְנָה", he: "נעים מאוד" },
-      { ru: "До свидания", tr: "דַה סְוִידָאנְיָה", he: "להתראות" },
-      { ru: "Пока", tr: "פַּקָא", he: "ביי (לא רשמי)" },
-      { ru: "Спокойной ночи", tr: "סְפַּקוֹינַי נוֹצִ'י", he: "לילה טוב" }
-    ]
-  },
-  {
-    id: "basics", title: "מילות יסוד", blurb: "עשר המילים שמחזיקות כל שיחה על הרגליים.",
-    words: [
-      { ru: "Да", tr: "דָה", he: "כן" },
-      { ru: "Нет", tr: "נְיֶט", he: "לא" },
-      { ru: "Спасибо", tr: "סְפַּסִיבַּה", he: "תודה" },
-      { ru: "Пожалуйста", tr: "פַּזָ'אלוּסְטָה", he: "בבקשה / על לא דבר", note: "משמשת גם כשנותנים משהו וגם כתשובה ל'תודה'." },
-      { ru: "Извините", tr: "אִיזְוִינִיטְיֶה", he: "סליחה" },
-      { ru: "Хорошо", tr: "חַרַשׁוֹ", he: "טוב / בסדר" },
-      { ru: "Плохо", tr: "פְּלוֹחָה", he: "רע" },
-      { ru: "Может быть", tr: "מוֹזֶ'ט בִּיט", he: "אולי" },
-      { ru: "Конечно", tr: "קַנְיֶשְׁנָה", he: "בטח / כמובן" },
-      { ru: "Я не понимаю", tr: "יָא נְיֶה פַּנִימָאיוּ", he: "אני לא מבין/ה" },
-      { ru: "Я не знаю", tr: "יָא נְיֶה זְנָאיוּ", he: "אני לא יודע/ת" },
-      { ru: "Помогите", tr: "פַּמַגִיטְיֶה", he: "תעזרו לי" },
-      { ru: "Повторите, пожалуйста", tr: "פַּבְטַרִיטְיֶה פַּזָ'אלוּסְטָה", he: "תחזור/תחזרי בבקשה" },
-      { ru: "Медленнее", tr: "מְיֶדְלֶנֶיֶה", he: "לאט יותר" }
-    ]
-  },
-  {
-    id: "questions", title: "מילות שאלה", blurb: "איך שואלים — הכלי שמאפשר לנהל שיחה ולא רק לענות.",
-    words: [
-      { ru: "Кто?", tr: "קְטוֹ", he: "מי?" },
-      { ru: "Что?", tr: "שְׁטוֹ", he: "מה?" },
-      { ru: "Где?", tr: "גְדְיֶה", he: "איפה?" },
-      { ru: "Когда?", tr: "קַגְדָא", he: "מתי?" },
-      { ru: "Почему?", tr: "פַּצֶ'מוּ", he: "למה?" },
-      { ru: "Как?", tr: "קַאק", he: "איך?" },
-      { ru: "Сколько?", tr: "סְקוֹלְקָה", he: "כמה?" },
-      { ru: "Какой?", tr: "קַקוֹי", he: "איזה?" },
-      { ru: "Куда?", tr: "קוּדָא", he: "לאן?" },
-      { ru: "Сколько стоит?", tr: "סְקוֹלְקָה סְטוֹיִט", he: "כמה זה עולה?" },
-      { ru: "Где туалет?", tr: "גְדְיֶה טוּאַלְיֶט", he: "איפה השירותים?" },
-      { ru: "Который час?", tr: "קַטוֹרִי צַ'אס", he: "מה השעה?" }
-    ]
-  },
-  {
-    id: "useful", title: "ביטויים שימושיים", blurb: "'אני רוצה', 'אני צריך' — המשפטים שבונים בקשה.",
-    words: [
-      { ru: "Я хочу", tr: "יָא חַצ'וּ", he: "אני רוצה" },
-      { ru: "Я не хочу", tr: "יָא נְיֶה חַצ'וּ", he: "אני לא רוצה" },
-      { ru: "Мне нужно", tr: "מְנְיֶה נוּזְ'נָה", he: "אני צריך/ה" },
-      { ru: "Я люблю", tr: "יָא לְיוּבְּלְיוּ", he: "אני אוהב/ת" },
-      { ru: "Дайте, пожалуйста", tr: "דַאיְטְיֶה פַּזָ'אלוּסְטָה", he: "תן/תני בבקשה" },
-      { ru: "Я голоден", tr: "יָא גוֹלַדֶן", he: "אני רעב" },
-      { ru: "Я устал", tr: "יָא אוּסְטַאל", he: "אני עייף" },
-      { ru: "Всё хорошо", tr: "פְסְיוֹ חַרַשׁוֹ", he: "הכל בסדר" },
-      { ru: "Я говорю по-русски", tr: "יָא גַוַורְיוּ פַּה-רוּסְקִי", he: "אני מדבר/ת רוסית" },
-      { ru: "Вы говорите по-английски?", tr: "וִוי גַוַורִיטְיֶה פַּה-אַנְגְלִיסְקִי", he: "אתה מדבר אנגלית?" },
-      { ru: "Давай", tr: "דַוַואי", he: "בוא / יאללה" },
-      { ru: "Хорошего дня", tr: "חַרוֹשֶׁבָה דְנְיָא", he: "שיהיה יום טוב" }
-    ]
-  },
-  {
-    id: "numbers", title: "מספרים 1–10", blurb: "בלי מספרים אין קניות, אין שעות ואין כתובות.",
-    words: [
-      { ru: "Ноль", tr: "נוֹל", he: "אפס" },
-      { ru: "Один", tr: "אַדִין", he: "אחת" },
-      { ru: "Два", tr: "דְוָוא", he: "שתיים" },
-      { ru: "Три", tr: "טְרִי", he: "שלוש" },
-      { ru: "Четыре", tr: "צֶ'טִירְיֶה", he: "ארבע" },
-      { ru: "Пять", tr: "פְּיָאט", he: "חמש" },
-      { ru: "Шесть", tr: "שֶׁסְט", he: "שש" },
-      { ru: "Семь", tr: "סְיֶם", he: "שבע" },
-      { ru: "Восемь", tr: "ווֹסֶם", he: "שמונה" },
-      { ru: "Девять", tr: "דְיֶוִיט", he: "תשע" },
-      { ru: "Десять", tr: "דְיֶסִיט", he: "עשר" },
-      { ru: "Сто", tr: "סְטוֹ", he: "מאה" }
-    ]
-  },
-  {
-    id: "family", title: "משפחה ואנשים", blurb: "המילים שכל שיחת היכרות מגיעה אליהן.",
-    words: [
-      { ru: "Мама", tr: "מָאמָה", he: "אמא" },
-      { ru: "Папа", tr: "פָּאפָּה", he: "אבא" },
-      { ru: "Брат", tr: "בְּרַאט", he: "אח" },
-      { ru: "Сестра", tr: "סִיסְטְרָא", he: "אחות" },
-      { ru: "Бабушка", tr: "בָּאבּוּשְׁקָה", he: "סבתא" },
-      { ru: "Дедушка", tr: "דְיֶדוּשְׁקָה", he: "סבא" },
-      { ru: "Сын", tr: "סִין", he: "בן" },
-      { ru: "Дочь", tr: "דוֹץ'", he: "בת" },
-      { ru: "Муж", tr: "מוּשׁ", he: "בעל" },
-      { ru: "Жена", tr: "זֶ'נָא", he: "אישה (רעיה)" },
-      { ru: "Ребёнок", tr: "רִיבְּיוֹנַק", he: "ילד" },
-      { ru: "Друг", tr: "דְרוּג", he: "חבר" },
-      { ru: "Семья", tr: "סִימְיָא", he: "משפחה" }
-    ]
-  },
-  {
-    id: "food", title: "אוכל ושתייה", blurb: "מה מזמינים, מה קונים, מה שמים על השולחן.",
-    words: [
-      { ru: "Вода", tr: "וַדָא", he: "מים" },
-      { ru: "Хлеб", tr: "חְלְיֶבּ", he: "לחם" },
-      { ru: "Молоко", tr: "מַלַקוֹ", he: "חלב" },
-      { ru: "Чай", tr: "צָ'אי", he: "תה" },
-      { ru: "Кофе", tr: "קוֹפֶה", he: "קפה" },
-      { ru: "Суп", tr: "סוּפּ", he: "מרק" },
-      { ru: "Мясо", tr: "מְיָאסָה", he: "בשר" },
-      { ru: "Рыба", tr: "רִיבָּה", he: "דג" },
-      { ru: "Сыр", tr: "סִיר", he: "גבינה" },
-      { ru: "Яйцо", tr: "יַיְצוֹ", he: "ביצה" },
-      { ru: "Фрукты", tr: "פְרוּקְטִי", he: "פירות" },
-      { ru: "Овощи", tr: "אוֹבַשִׁי", he: "ירקות" },
-      { ru: "Вкусно", tr: "פְקוּסְנָה", he: "טעים" }
-    ]
-  },
-  {
-    id: "time", title: "זמן וימים", blurb: "היום, מחר, עכשיו — איך קובעים ומתארים זמן.",
-    words: [
-      { ru: "Сегодня", tr: "סִיווֹדְנְיָה", he: "היום" },
-      { ru: "Завтра", tr: "זַאבְטְרָה", he: "מחר" },
-      { ru: "Вчера", tr: "פְצִ'ירָא", he: "אתמול" },
-      { ru: "Сейчас", tr: "סִיצָ'אס", he: "עכשיו" },
-      { ru: "Утро", tr: "אוּטְרָה", he: "בוקר" },
-      { ru: "День", tr: "דְיֶן", he: "יום" },
-      { ru: "Вечер", tr: "וְיֶצֶ'ר", he: "ערב" },
-      { ru: "Ночь", tr: "נוֹץ'", he: "לילה" },
-      { ru: "Неделя", tr: "נִידְיֶלְיָה", he: "שבוע" },
-      { ru: "Месяц", tr: "מְיֶסִיץ", he: "חודש" },
-      { ru: "Год", tr: "גוֹט", he: "שנה" },
-      { ru: "Час", tr: "צַ'אס", he: "שעה" },
-      { ru: "Минута", tr: "מִינוּטָה", he: "דקה" }
-    ]
-  },
-  {
-    id: "places", title: "מקומות בעיר", blurb: "לאן הולכים, ואיך אומרים איפה זה.",
-    words: [
-      { ru: "Дом", tr: "דוֹם", he: "בית" },
-      { ru: "Магазин", tr: "מַגַזִין", he: "חנות" },
-      { ru: "Аптека", tr: "אַפְּטְיֶקָה", he: "בית מרקחת" },
-      { ru: "Больница", tr: "בַּלְנִיצָה", he: "בית חולים" },
-      { ru: "Школа", tr: "שְׁקוֹלָה", he: "בית ספר" },
-      { ru: "Работа", tr: "רַבּוֹטָה", he: "עבודה" },
-      { ru: "Улица", tr: "אוּלִיצָה", he: "רחוב" },
-      { ru: "Город", tr: "גוֹרַט", he: "עיר" },
-      { ru: "Ресторан", tr: "רִיסְטַרַאן", he: "מסעדה" },
-      { ru: "Вокзал", tr: "וַקְזַאל", he: "תחנת רכבת" },
-      { ru: "Банк", tr: "בַּאנְק", he: "בנק" },
-      { ru: "Рынок", tr: "רִינַק", he: "שוק" }
-    ]
-  },
-  {
-    id: "colors", title: "צבעים ותיאורים", blurb: "מילים שמאפשרות לתאר ולהצביע על משהו מסוים.",
-    words: [
-      { ru: "Красный", tr: "קְרָאסְנִי", he: "אדום" },
-      { ru: "Синий", tr: "סִינִי", he: "כחול" },
-      { ru: "Зелёный", tr: "זִילְיוֹנִי", he: "ירוק" },
-      { ru: "Жёлтый", tr: "זוֹ'לְטִי", he: "צהוב" },
-      { ru: "Белый", tr: "בְּיֶלִי", he: "לבן" },
-      { ru: "Чёрный", tr: "צ'וֹרְנִי", he: "שחור" },
-      { ru: "Большой", tr: "בַּלְשׁוֹי", he: "גדול" },
-      { ru: "Маленький", tr: "מָאלֶנְקִי", he: "קטן" },
-      { ru: "Новый", tr: "נוֹבִי", he: "חדש" },
-      { ru: "Старый", tr: "סְטָארִי", he: "ישן" },
-      { ru: "Красивый", tr: "קְרַסִיבִי", he: "יפה" },
-      { ru: "Дорогой", tr: "דַרַגוֹי", he: "יקר" }
-    ]
-  }
+  { id:"greet", title:"שיחה ראשונה", icon:"👋", h:25, blurb:"מה שאומרים בדקה הראשונה של כל מפגש.", words:[
+    { ru:"Здравствуйте", tr:"זְדְרַאסְטְוּויְטְיֶה", he:"שלום (מנומס)", note:"הצורה המכבדת — לזרים, מבוגרים, בעלי מקצוע." },
+    { ru:"Привет", tr:"פְּרִיבְיֶט", he:"היי (לחברים)" },
+    { ru:"Доброе утро", tr:"דוֹבְּרוֹיֶה אוּטְרָה", he:"בוקר טוב" },
+    { ru:"Добрый день", tr:"דוֹבְּרִי דְיֶן", he:"צהריים טובים" },
+    { ru:"Добрый вечер", tr:"דוֹבְּרִי וְיֶצֶ'ר", he:"ערב טוב" },
+    { ru:"Как дела?", tr:"קַאק דְיֶלָה", he:"מה שלומך?" },
+    { ru:"Хорошо, спасибо", tr:"חַרַשׁוֹ, סְפַּסִיבַּה", he:"טוב, תודה" },
+    { ru:"Как вас зовут?", tr:"קַאק וַואס זַבוּט", he:"איך קוראים לך?" },
+    { ru:"Меня зовут…", tr:"מִינְיָא זַבוּט…", he:"קוראים לי…" },
+    { ru:"Очень приятно", tr:"אוֹצֶ'ן פְּרִיָאטְנָה", he:"נעים מאוד" },
+    { ru:"Как поживаете?", tr:"קַאק פַּזִ'יוָואיֶטְיֶה", he:"איך אתה מרגיש/מסתדר?" },
+    { ru:"Всё хорошо", tr:"פְסְיוֹ חַרַשׁוֹ", he:"הכל בסדר" },
+    { ru:"До свидания", tr:"דַה סְוִידָאנְיָה", he:"להתראות" },
+    { ru:"Пока", tr:"פַּקָא", he:"ביי (לא רשמי)" },
+    { ru:"Спокойной ночи", tr:"סְפַּקוֹינַי נוֹצִ'י", he:"לילה טוב" },
+    { ru:"Добро пожаловать", tr:"דַבְּרוֹ פַּזָ'אלַבַאט", he:"ברוך הבא" }
+  ]},
+  { id:"basics", title:"מילות יסוד", icon:"✅", h:145, blurb:"המילים שמחזיקות כל שיחה על הרגליים.", words:[
+    { ru:"Да", tr:"דָה", he:"כן" },
+    { ru:"Нет", tr:"נְיֶט", he:"לא" },
+    { ru:"Спасибо", tr:"סְפַּסִיבַּה", he:"תודה" },
+    { ru:"Большое спасибо", tr:"בַּלְשׁוֹיֶה סְפַּסִיבַּה", he:"תודה רבה" },
+    { ru:"Пожалуйста", tr:"פַּזָ'אלוּסְטָה", he:"בבקשה / על לא דבר", note:"גם כשנותנים משהו וגם כתשובה ל'תודה'." },
+    { ru:"Извините", tr:"אִיזְוִינִיטְיֶה", he:"סליחה" },
+    { ru:"Ничего", tr:"נִיצִ'יווֹ", he:"לא נורא / כלום" },
+    { ru:"Хорошо", tr:"חַרַשׁוֹ", he:"טוב / בסדר" },
+    { ru:"Плохо", tr:"פְּלוֹחָה", he:"רע" },
+    { ru:"Может быть", tr:"מוֹזֶ'ט בִּיט", he:"אולי" },
+    { ru:"Конечно", tr:"קַנְיֶשְׁנָה", he:"בטח / כמובן" },
+    { ru:"Я не понимаю", tr:"יָא נְיֶה פַּנִימָאיוּ", he:"אני לא מבין/ה" },
+    { ru:"Я не знаю", tr:"יָא נְיֶה זְנָאיוּ", he:"אני לא יודע/ת" },
+    { ru:"Помогите", tr:"פַּמַגִיטְיֶה", he:"תעזרו לי" },
+    { ru:"Повторите, пожалуйста", tr:"פַּבְטַרִיטְיֶה פַּזָ'אלוּסְטָה", he:"תחזור/תחזרי בבקשה" },
+    { ru:"Медленнее", tr:"מְיֶדְלֶנֶיֶה", he:"לאט יותר" }
+  ]},
+  { id:"questions", title:"מילות שאלה", icon:"❓", h:215, blurb:"איך שואלים — הכלי שמאפשר לנהל שיחה ולא רק לענות.", words:[
+    { ru:"Кто?", tr:"קְטוֹ", he:"מי?" },
+    { ru:"Что?", tr:"שְׁטוֹ", he:"מה?" },
+    { ru:"Где?", tr:"גְדְיֶה", he:"איפה?" },
+    { ru:"Когда?", tr:"קַגְדָא", he:"מתי?" },
+    { ru:"Почему?", tr:"פַּצֶ'מוּ", he:"למה?" },
+    { ru:"Как?", tr:"קַאק", he:"איך?" },
+    { ru:"Сколько?", tr:"סְקוֹלְקָה", he:"כמה?" },
+    { ru:"Какой?", tr:"קַקוֹי", he:"איזה?" },
+    { ru:"Куда?", tr:"קוּדָא", he:"לאן?" },
+    { ru:"Чей?", tr:"צֵ'י", he:"של מי?" },
+    { ru:"Сколько стоит?", tr:"סְקוֹלְקָה סְטוֹיִט", he:"כמה זה עולה?" },
+    { ru:"Где туалет?", tr:"גְדְיֶה טוּאַלְיֶט", he:"איפה השירותים?" },
+    { ru:"Который час?", tr:"קַטוֹרִי צַ'אס", he:"מה השעה?" },
+    { ru:"Что это?", tr:"שְׁטוֹ אֶטָה", he:"מה זה?" }
+  ]},
+  { id:"useful", title:"ביטויים שימושיים", icon:"💬", h:280, blurb:"'אני רוצה', 'אני צריך' — המשפטים שבונים בקשה.", words:[
+    { ru:"Я хочу", tr:"יָא חַצ'וּ", he:"אני רוצה" },
+    { ru:"Я не хочу", tr:"יָא נְיֶה חַצ'וּ", he:"אני לא רוצה" },
+    { ru:"Мне нужно", tr:"מְנְיֶה נוּזְ'נָה", he:"אני צריך/ה" },
+    { ru:"Я люблю", tr:"יָא לְיוּבְּלְיוּ", he:"אני אוהב/ת" },
+    { ru:"Мне нравится", tr:"מְנְיֶה נְרָאוִיצָה", he:"אני מחבב/ת את זה" },
+    { ru:"Дайте, пожалуйста", tr:"דַאיְטְיֶה פַּזָ'אלוּסְטָה", he:"תן/תני בבקשה" },
+    { ru:"Можно?", tr:"מוֹזְ'נָה", he:"אפשר?" },
+    { ru:"Я голоден", tr:"יָא גוֹלַדֶן", he:"אני רעב" },
+    { ru:"Я устал", tr:"יָא אוּסְטַאל", he:"אני עייף" },
+    { ru:"Я готов", tr:"יָא גַטוֹב", he:"אני מוכן" },
+    { ru:"Я говорю по-русски", tr:"יָא גַוַורְיוּ פַּה-רוּסְקִי", he:"אני מדבר/ת רוסית" },
+    { ru:"Вы говорите по-английски?", tr:"וִוי גַוַורִיטְיֶה פַּה-אַנְגְלִיסְקִי", he:"אתה מדבר אנגלית?" },
+    { ru:"Давай", tr:"דַוַואי", he:"בוא / יאללה" },
+    { ru:"Хорошего дня", tr:"חַרוֹשֶׁבָה דְנְיָא", he:"שיהיה יום טוב" }
+  ]},
+  { id:"num1", title:"מספרים 1–10", icon:"🔢", h:5, blurb:"בלי מספרים אין קניות, אין שעות ואין כתובות.", words:[
+    { ru:"Ноль", tr:"נוֹל", he:"אפס" },
+    { ru:"Один", tr:"אַדִין", he:"אחת" },
+    { ru:"Два", tr:"דְוָוא", he:"שתיים" },
+    { ru:"Три", tr:"טְרִי", he:"שלוש" },
+    { ru:"Четыре", tr:"צֶ'טִירְיֶה", he:"ארבע" },
+    { ru:"Пять", tr:"פְּיָאט", he:"חמש" },
+    { ru:"Шесть", tr:"שֶׁסְט", he:"שש" },
+    { ru:"Семь", tr:"סְיֶם", he:"שבע" },
+    { ru:"Восемь", tr:"ווֹסֶם", he:"שמונה" },
+    { ru:"Девять", tr:"דְיֶוִיט", he:"תשע" },
+    { ru:"Десять", tr:"דְיֶסִיט", he:"עשר" }
+  ]},
+  { id:"num2", title:"מספרים 11 ומעלה", icon:"💯", h:345, blurb:"מחירים, כתובות וגילאים — המספרים הגדולים.", words:[
+    { ru:"Одиннадцать", tr:"אַדִינַצַאט", he:"אחת עשרה" },
+    { ru:"Двенадцать", tr:"דְוִינָאצַאט", he:"שתים עשרה" },
+    { ru:"Тринадцать", tr:"טְרִינָאצַאט", he:"שלוש עשרה" },
+    { ru:"Четырнадцать", tr:"צֶ'טִירְנַצַאט", he:"ארבע עשרה" },
+    { ru:"Пятнадцать", tr:"פִּיטְנָאצַאט", he:"חמש עשרה" },
+    { ru:"Шестнадцать", tr:"שִׁיסְנָאצַאט", he:"שש עשרה" },
+    { ru:"Семнадцать", tr:"סִימְנָאצַאט", he:"שבע עשרה" },
+    { ru:"Восемнадцать", tr:"וַסִימְנָאצַאט", he:"שמונה עשרה" },
+    { ru:"Девятнадцать", tr:"דִיוִיטְנָאצַאט", he:"תשע עשרה" },
+    { ru:"Двадцать", tr:"דְוָואצַאט", he:"עשרים" },
+    { ru:"Тридцать", tr:"טְרִיצַאט", he:"שלושים" },
+    { ru:"Сорок", tr:"סוֹרַק", he:"ארבעים" },
+    { ru:"Пятьдесят", tr:"פִּידִיסְיָאט", he:"חמישים" },
+    { ru:"Сто", tr:"סְטוֹ", he:"מאה" },
+    { ru:"Тысяча", tr:"טִיסִיצָ'ה", he:"אלף" }
+  ]},
+  { id:"week", title:"ימי השבוע", icon:"📅", h:195, blurb:"לקבוע פגישה, להגיד מתי — בלי זה אי אפשר.", words:[
+    { ru:"Понедельник", tr:"פַּנִידְיֶלְנִיק", he:"יום שני" },
+    { ru:"Вторник", tr:"פְטוֹרְנִיק", he:"יום שלישי" },
+    { ru:"Среда", tr:"סְרִידָא", he:"יום רביעי" },
+    { ru:"Четверг", tr:"צִ'יטְוֶורְג", he:"יום חמישי" },
+    { ru:"Пятница", tr:"פְּיָאטְנִיצָה", he:"יום שישי" },
+    { ru:"Суббота", tr:"סוּבּוֹטָה", he:"שבת" },
+    { ru:"Воскресенье", tr:"וַסְקְרִיסְיֶנְיֶה", he:"יום ראשון" },
+    { ru:"Выходной", tr:"וִיחַדְנוֹי", he:"יום חופש" },
+    { ru:"Каждый день", tr:"קָאזְ'דִי דְיֶן", he:"כל יום" },
+    { ru:"На этой неделе", tr:"נָא אֶטַי נִידְיֶלְיֶה", he:"השבוע" }
+  ]},
+  { id:"time", title:"זמן ותאריך", icon:"⏰", h:250, blurb:"היום, מחר, עכשיו — איך מתארים זמן.", words:[
+    { ru:"Сегодня", tr:"סִיווֹדְנְיָה", he:"היום" },
+    { ru:"Завтра", tr:"זַאבְטְרָה", he:"מחר" },
+    { ru:"Вчера", tr:"פְצִ'ירָא", he:"אתמול" },
+    { ru:"Сейчас", tr:"סִיצָ'אס", he:"עכשיו" },
+    { ru:"Потом", tr:"פַּטוֹם", he:"אחר כך" },
+    { ru:"Утро", tr:"אוּטְרָה", he:"בוקר" },
+    { ru:"День", tr:"דְיֶן", he:"יום" },
+    { ru:"Вечер", tr:"וְיֶצֶ'ר", he:"ערב" },
+    { ru:"Ночь", tr:"נוֹץ'", he:"לילה" },
+    { ru:"Неделя", tr:"נִידְיֶלְיָה", he:"שבוע" },
+    { ru:"Месяц", tr:"מְיֶסִיץ", he:"חודש" },
+    { ru:"Год", tr:"גוֹט", he:"שנה" },
+    { ru:"Час", tr:"צַ'אס", he:"שעה" },
+    { ru:"Минута", tr:"מִינוּטָה", he:"דקה" },
+    { ru:"Рано", tr:"רָאנָה", he:"מוקדם" },
+    { ru:"Поздно", tr:"פּוֹזְנָה", he:"מאוחר" }
+  ]},
+  { id:"family", title:"משפחה ואנשים", icon:"👨‍👩‍👧", h:320, blurb:"המילים שכל שיחת היכרות מגיעה אליהן.", words:[
+    { ru:"Мама", tr:"מָאמָה", he:"אמא" },
+    { ru:"Папа", tr:"פָּאפָּה", he:"אבא" },
+    { ru:"Брат", tr:"בְּרַאט", he:"אח" },
+    { ru:"Сестра", tr:"סִיסְטְרָא", he:"אחות" },
+    { ru:"Бабушка", tr:"בָּאבּוּשְׁקָה", he:"סבתא" },
+    { ru:"Дедушка", tr:"דְיֶדוּשְׁקָה", he:"סבא" },
+    { ru:"Сын", tr:"סִין", he:"בן" },
+    { ru:"Дочь", tr:"דוֹץ'", he:"בת" },
+    { ru:"Муж", tr:"מוּשׁ", he:"בעל" },
+    { ru:"Жена", tr:"זֶ'נָא", he:"אישה (רעיה)" },
+    { ru:"Ребёнок", tr:"רִיבְּיוֹנַק", he:"ילד" },
+    { ru:"Друг", tr:"דְרוּג", he:"חבר" },
+    { ru:"Подруга", tr:"פַּדְרוּגָה", he:"חברה" },
+    { ru:"Семья", tr:"סִימְיָא", he:"משפחה" },
+    { ru:"Мужчина", tr:"מוּשְׁצִ'ינָה", he:"גבר" },
+    { ru:"Женщина", tr:"זֶ'נְשִׁינָה", he:"אישה" }
+  ]},
+  { id:"food", title:"אוכל ושתייה", icon:"🍎", h:90, blurb:"מה קונים, מה מבשלים, מה שמים על השולחן.", words:[
+    { ru:"Вода", tr:"וַדָא", he:"מים" },
+    { ru:"Хлеб", tr:"חְלְיֶבּ", he:"לחם" },
+    { ru:"Молоко", tr:"מַלַקוֹ", he:"חלב" },
+    { ru:"Чай", tr:"צָ'אי", he:"תה" },
+    { ru:"Кофе", tr:"קוֹפֶה", he:"קפה" },
+    { ru:"Сок", tr:"סוֹק", he:"מיץ" },
+    { ru:"Суп", tr:"סוּפּ", he:"מרק" },
+    { ru:"Мясо", tr:"מְיָאסָה", he:"בשר" },
+    { ru:"Курица", tr:"קוּרִיצָה", he:"עוף" },
+    { ru:"Рыба", tr:"רִיבָּה", he:"דג" },
+    { ru:"Сыр", tr:"סִיר", he:"גבינה" },
+    { ru:"Яйцо", tr:"יַיְצוֹ", he:"ביצה" },
+    { ru:"Рис", tr:"רִיס", he:"אורז" },
+    { ru:"Фрукты", tr:"פְרוּקְטִי", he:"פירות" },
+    { ru:"Овощи", tr:"אוֹבַשִׁי", he:"ירקות" },
+    { ru:"Яблоко", tr:"יָאבְּלַקָה", he:"תפוח" },
+    { ru:"Сахар", tr:"סָאחַאר", he:"סוכר" },
+    { ru:"Соль", tr:"סוֹל", he:"מלח" }
+  ]},
+  { id:"rest", title:"במסעדה", icon:"🍽️", h:45, blurb:"להזמין, לבקש, לשלם — בלי להסתבך.", words:[
+    { ru:"Меню", tr:"מִינְיוּ", he:"תפריט" },
+    { ru:"Официант", tr:"אַפִיצִיאַנְט", he:"מלצר" },
+    { ru:"Счёт, пожалуйста", tr:"שׁוֹט פַּזָ'אלוּסְטָה", he:"חשבון בבקשה" },
+    { ru:"Заказать", tr:"זַקַזָאט", he:"להזמין" },
+    { ru:"Вилка", tr:"וִילְקָה", he:"מזלג" },
+    { ru:"Ложка", tr:"לוֹשְׁקָה", he:"כף" },
+    { ru:"Нож", tr:"נוֹשׁ", he:"סכין" },
+    { ru:"Тарелка", tr:"טַרְיֶלְקָה", he:"צלחת" },
+    { ru:"Стакан", tr:"סְטַקָאן", he:"כוס" },
+    { ru:"Вкусно", tr:"פְקוּסְנָה", he:"טעים" },
+    { ru:"Горячий", tr:"גַרְיָאצִ'י", he:"חם" },
+    { ru:"Холодный", tr:"חַלוֹדְנִי", he:"קר" },
+    { ru:"Сладкий", tr:"סְלָאדְקִי", he:"מתוק" },
+    { ru:"Приятного аппетита", tr:"פְּרִיָאטְנַבָה אַפִּיטִיטָה", he:"בתיאבון" }
+  ]},
+  { id:"places", title:"מקומות בעיר", icon:"🏙️", h:170, blurb:"לאן הולכים, ואיך אומרים איפה זה.", words:[
+    { ru:"Дом", tr:"דוֹם", he:"בית" },
+    { ru:"Магазин", tr:"מַגַזִין", he:"חנות" },
+    { ru:"Аптека", tr:"אַפְּטְיֶקָה", he:"בית מרקחת" },
+    { ru:"Больница", tr:"בַּלְנִיצָה", he:"בית חולים" },
+    { ru:"Школа", tr:"שְׁקוֹלָה", he:"בית ספר" },
+    { ru:"Работа", tr:"רַבּוֹטָה", he:"עבודה" },
+    { ru:"Улица", tr:"אוּלִיצָה", he:"רחוב" },
+    { ru:"Город", tr:"גוֹרַט", he:"עיר" },
+    { ru:"Ресторан", tr:"רִיסְטַרַאן", he:"מסעדה" },
+    { ru:"Вокзал", tr:"וַקְזַאל", he:"תחנת רכבת" },
+    { ru:"Банк", tr:"בַּאנְק", he:"בנק" },
+    { ru:"Рынок", tr:"רִינַק", he:"שוק" },
+    { ru:"Парк", tr:"פַּארְק", he:"פארק" },
+    { ru:"Почта", tr:"פּוֹצְ'טָה", he:"דואר" }
+  ]},
+  { id:"colors", title:"צבעים ותיאורים", icon:"🎨", h:300, blurb:"מילים שמאפשרות לתאר ולהצביע על משהו מסוים.", words:[
+    { ru:"Красный", tr:"קְרָאסְנִי", he:"אדום" },
+    { ru:"Синий", tr:"סִינִי", he:"כחול" },
+    { ru:"Зелёный", tr:"זִילְיוֹנִי", he:"ירוק" },
+    { ru:"Жёлтый", tr:"זוֹ'לְטִי", he:"צהוב" },
+    { ru:"Белый", tr:"בְּיֶלִי", he:"לבן" },
+    { ru:"Чёрный", tr:"צ'וֹרְנִי", he:"שחור" },
+    { ru:"Серый", tr:"סְיֶרִי", he:"אפור" },
+    { ru:"Большой", tr:"בַּלְשׁוֹי", he:"גדול" },
+    { ru:"Маленький", tr:"מָאלֶנְקִי", he:"קטן" },
+    { ru:"Новый", tr:"נוֹבִי", he:"חדש" },
+    { ru:"Старый", tr:"סְטָארִי", he:"ישן" },
+    { ru:"Красивый", tr:"קְרַסִיבִי", he:"יפה" },
+    { ru:"Дорогой", tr:"דַרַגוֹי", he:"יקר" },
+    { ru:"Дешёвый", tr:"דִישׁוֹבִי", he:"זול" }
+  ]},
+  { id:"verbs", title:"פעלים יומיומיים", icon:"🏃", h:215, blurb:"הפעולות שחוזרות בכל יום — הלב של כל משפט.", words:[
+    { ru:"Быть", tr:"בִּיט", he:"להיות" },
+    { ru:"Делать", tr:"דְיֶלַאט", he:"לעשות" },
+    { ru:"Идти", tr:"אִיטִי", he:"ללכת" },
+    { ru:"Есть", tr:"יֶסְט", he:"לאכול" },
+    { ru:"Пить", tr:"פִּיט", he:"לשתות" },
+    { ru:"Спать", tr:"סְפַּאט", he:"לישון" },
+    { ru:"Говорить", tr:"גַוַרִיט", he:"לדבר" },
+    { ru:"Слушать", tr:"סְלוּשַׁאט", he:"להקשיב" },
+    { ru:"Смотреть", tr:"סְמַטְרְיֶט", he:"להסתכל" },
+    { ru:"Читать", tr:"צִ'יטָאט", he:"לקרוא" },
+    { ru:"Писать", tr:"פִּיסָאט", he:"לכתוב" },
+    { ru:"Работать", tr:"רַבּוֹטַאט", he:"לעבוד" },
+    { ru:"Жить", tr:"זִ'יט", he:"לגור / לחיות" },
+    { ru:"Знать", tr:"זְנַאט", he:"לדעת" },
+    { ru:"Понимать", tr:"פַּנִימָאט", he:"להבין" },
+    { ru:"Купить", tr:"קוּפִּיט", he:"לקנות" },
+    { ru:"Помочь", tr:"פַּמוֹץ'", he:"לעזור" },
+    { ru:"Ждать", tr:"זְ'דַאט", he:"לחכות" }
+  ]},
+  { id:"home", title:"בבית", icon:"🏠", h:30, blurb:"החפצים שמסביבך עכשיו — הכי קל לתרגל איתם.", words:[
+    { ru:"Стол", tr:"סְטוֹל", he:"שולחן" },
+    { ru:"Стул", tr:"סְטוּל", he:"כיסא" },
+    { ru:"Кровать", tr:"קְרַוַואט", he:"מיטה" },
+    { ru:"Дверь", tr:"דְוֶור", he:"דלת" },
+    { ru:"Окно", tr:"אַקְנוֹ", he:"חלון" },
+    { ru:"Ключ", tr:"קְלְיוּץ'", he:"מפתח" },
+    { ru:"Телефон", tr:"טִילִיפוֹן", he:"טלפון" },
+    { ru:"Книга", tr:"קְנִיגָה", he:"ספר" },
+    { ru:"Сумка", tr:"סוּמְקָה", he:"תיק" },
+    { ru:"Кухня", tr:"קוּחְנְיָה", he:"מטבח" },
+    { ru:"Ванная", tr:"וָואנַיָה", he:"חדר אמבטיה" },
+    { ru:"Комната", tr:"קוֹמְנַטָה", he:"חדר" },
+    { ru:"Свет", tr:"סְוְיֶט", he:"אור" },
+    { ru:"Зеркало", tr:"זְיֶרְקַלָה", he:"מראה" }
+  ]},
+  { id:"health", title:"גוף ובריאות", icon:"🧑‍⚕️", h:350, blurb:"המילים שחייבים לדעת כשמשהו כואב.", words:[
+    { ru:"Голова", tr:"גַלַוָוא", he:"ראש" },
+    { ru:"Рука", tr:"רוּקָא", he:"יד" },
+    { ru:"Нога", tr:"נַגָא", he:"רגל" },
+    { ru:"Глаз", tr:"גְלַאז", he:"עין" },
+    { ru:"Зуб", tr:"זוּבּ", he:"שן" },
+    { ru:"Живот", tr:"זִ'יווֹט", he:"בטן" },
+    { ru:"Спина", tr:"סְפִּינָא", he:"גב" },
+    { ru:"Сердце", tr:"סְיֶרְצֶה", he:"לב" },
+    { ru:"Болит", tr:"בַּלִיט", he:"כואב" },
+    { ru:"Врач", tr:"וְרַאץ'", he:"רופא" },
+    { ru:"Лекарство", tr:"לִיקַארְסְטְבָה", he:"תרופה" },
+    { ru:"Температура", tr:"טִימְפִּירַטוּרָה", he:"חום" },
+    { ru:"Здоровье", tr:"זְדַרוֹבְיֶה", he:"בריאות" },
+    { ru:"Мне плохо", tr:"מְנְיֶה פְּלוֹחָה", he:"אני מרגיש/ה רע" }
+  ]},
+  { id:"feel", title:"רגשות ומצבים", icon:"😊", h:45, blurb:"להגיד איך מרגישים — ולהבין איך הצד השני מרגיש.", words:[
+    { ru:"Рад", tr:"רַאד", he:"שמח" },
+    { ru:"Грустно", tr:"גְרוּסְנָה", he:"עצוב" },
+    { ru:"Весело", tr:"וְיֶסִילָה", he:"כיף" },
+    { ru:"Страшно", tr:"סְטְרָאשְׁנָה", he:"מפחיד" },
+    { ru:"Скучно", tr:"סְקוּשְׁנָה", he:"משעמם" },
+    { ru:"Интересно", tr:"אִינְטִירְיֶסְנָה", he:"מעניין" },
+    { ru:"Спокойно", tr:"סְפַּקוֹינָה", he:"רגוע" },
+    { ru:"Сердитый", tr:"סִירְדִיטִי", he:"כועס" },
+    { ru:"Больной", tr:"בַּלְנוֹי", he:"חולה" },
+    { ru:"Голодный", tr:"גַלוֹדְנִי", he:"רעב" },
+    { ru:"Уставший", tr:"אוּסְטָאבְשִׁי", he:"עייף" },
+    { ru:"Счастье", tr:"שָׁאסְטְיֶה", he:"אושר" },
+    { ru:"Я скучаю", tr:"יָא סְקוּצָ'איוּ", he:"אני מתגעגע/ת" }
+  ]},
+  { id:"clothes", title:"בגדים", icon:"👕", h:260, blurb:"להתלבש, לקנות ולבקש מידה.", words:[
+    { ru:"Одежда", tr:"אַדְיֶזְ'דָה", he:"בגדים" },
+    { ru:"Рубашка", tr:"רוּבָּאשְׁקָה", he:"חולצה מכופתרת" },
+    { ru:"Футболка", tr:"פוּטְבּוֹלְקָה", he:"טי-שירט" },
+    { ru:"Платье", tr:"פְּלָאטְיֶה", he:"שמלה" },
+    { ru:"Брюки", tr:"בְּרְיוּקִי", he:"מכנסיים" },
+    { ru:"Юбка", tr:"יוּבְּקָה", he:"חצאית" },
+    { ru:"Куртка", tr:"קוּרְטְקָה", he:"מעיל" },
+    { ru:"Обувь", tr:"אוֹבּוּב", he:"נעליים" },
+    { ru:"Носки", tr:"נַסְקִי", he:"גרביים" },
+    { ru:"Шапка", tr:"שָׁאפְּקָה", he:"כובע" },
+    { ru:"Очки", tr:"אַצְ'קִי", he:"משקפיים" },
+    { ru:"Размер", tr:"רַזְמְיֶר", he:"מידה" }
+  ]},
+  { id:"weather", title:"מזג אוויר וטבע", icon:"☀️", h:190, blurb:"נושא השיחה הבטוח ביותר בכל שפה.", words:[
+    { ru:"Погода", tr:"פַּגוֹדָה", he:"מזג אוויר" },
+    { ru:"Солнце", tr:"סוֹנְצֶה", he:"שמש" },
+    { ru:"Дождь", tr:"דוֹשְׁץ'", he:"גשם" },
+    { ru:"Снег", tr:"סְנְיֶג", he:"שלג" },
+    { ru:"Ветер", tr:"וְיֶטְיֶר", he:"רוח" },
+    { ru:"Холодно", tr:"חוֹלַדְנָה", he:"קר" },
+    { ru:"Жарко", tr:"זָ'ארְקָה", he:"חם מאוד" },
+    { ru:"Тепло", tr:"טִיפְּלוֹ", he:"חמים / נעים" },
+    { ru:"Небо", tr:"נְיֶבָּה", he:"שמיים" },
+    { ru:"Море", tr:"מוֹרְיֶה", he:"ים" },
+    { ru:"Дерево", tr:"דְיֶרִיבָה", he:"עץ" },
+    { ru:"Цветок", tr:"צְוִיטוֹק", he:"פרח" },
+    { ru:"Гора", tr:"גַרָא", he:"הר" },
+    { ru:"Лес", tr:"לְיֶס", he:"יער" }
+  ]},
+  { id:"travel", title:"תחבורה ונסיעות", icon:"🚌", h:140, blurb:"להגיע מנקודה לנקודה בלי ללכת לאיבוד.", words:[
+    { ru:"Машина", tr:"מַשִׁינָה", he:"מכונית" },
+    { ru:"Автобус", tr:"אַפְטוֹבּוּס", he:"אוטובוס" },
+    { ru:"Поезд", tr:"פּוֹיִזְד", he:"רכבת" },
+    { ru:"Самолёт", tr:"סַמַלְיוֹט", he:"מטוס" },
+    { ru:"Такси", tr:"טַקְסִי", he:"מונית" },
+    { ru:"Метро", tr:"מִיטְרוֹ", he:"רכבת תחתית" },
+    { ru:"Билет", tr:"בִּילְיֶט", he:"כרטיס" },
+    { ru:"Остановка", tr:"אַסְטַנוֹבְקָה", he:"תחנה" },
+    { ru:"Аэропорт", tr:"אַאֶרַפּוֹרְט", he:"שדה תעופה" },
+    { ru:"Дорога", tr:"דַרוֹגָה", he:"דרך" },
+    { ru:"Чемодан", tr:"צִ'ימַדָאן", he:"מזוודה" },
+    { ru:"Паспорт", tr:"פָּאסְפַּרְט", he:"דרכון" },
+    { ru:"Ехать", tr:"יֶחַאט", he:"לנסוע" }
+  ]},
+  { id:"shop", title:"קניות וכסף", icon:"🛒", h:100, blurb:"לשאול מחיר, לשלם ולהבין כמה זה יצא.", words:[
+    { ru:"Деньги", tr:"דְיֶנְגִי", he:"כסף" },
+    { ru:"Цена", tr:"צֵינָא", he:"מחיר" },
+    { ru:"Дорого", tr:"דוֹרַגָה", he:"יקר" },
+    { ru:"Дёшево", tr:"דְיוֹשֶׁבָה", he:"זול" },
+    { ru:"Скидка", tr:"סְקִידְקָה", he:"הנחה" },
+    { ru:"Касса", tr:"קָאסָה", he:"קופה" },
+    { ru:"Карта", tr:"קָארְטָה", he:"כרטיס אשראי" },
+    { ru:"Наличные", tr:"נַלִיצְ'נִיֶה", he:"מזומן" },
+    { ru:"Чек", tr:"צֶ'ק", he:"קבלה" },
+    { ru:"Открыто", tr:"אַטְקְרִיטָה", he:"פתוח" },
+    { ru:"Закрыто", tr:"זַקְרִיטָה", he:"סגור" },
+    { ru:"Продавать", tr:"פְּרַדַוַואט", he:"למכור" }
+  ]},
+  { id:"animals", title:"בעלי חיים", icon:"🐶", h:20, blurb:"מילים קלות וכיפיות — טובות להתחלה.", words:[
+    { ru:"Собака", tr:"סַבָּאקָה", he:"כלב" },
+    { ru:"Кошка", tr:"קוֹשְׁקָה", he:"חתול" },
+    { ru:"Птица", tr:"פְּטִיצָה", he:"ציפור" },
+    { ru:"Лошадь", tr:"לוֹשַׁאד", he:"סוס" },
+    { ru:"Корова", tr:"קַרוֹבָה", he:"פרה" },
+    { ru:"Мышь", tr:"מִישׁ", he:"עכבר" },
+    { ru:"Медведь", tr:"מִידְוְיֶד", he:"דוב" },
+    { ru:"Волк", tr:"ווֹלְק", he:"זאב" },
+    { ru:"Свинья", tr:"סְוִינְיָא", he:"חזיר" },
+    { ru:"Кролик", tr:"קְרוֹלִיק", he:"ארנב" }
+  ]},
+  { id:"where", title:"כיוונים ומיקום", icon:"🧭", h:230, blurb:"איפה זה נמצא, ולאן ממשיכים.", words:[
+    { ru:"Здесь", tr:"זְדְיֶס", he:"כאן" },
+    { ru:"Там", tr:"טַאם", he:"שם" },
+    { ru:"Справа", tr:"סְפְּרָאבָה", he:"מימין" },
+    { ru:"Слева", tr:"סְלְיֶבָה", he:"משמאל" },
+    { ru:"Прямо", tr:"פְּרְיָאמָה", he:"ישר" },
+    { ru:"Наверху", tr:"נַוִירְחוּ", he:"למעלה" },
+    { ru:"Внизу", tr:"בְנִיזוּ", he:"למטה" },
+    { ru:"Рядом", tr:"רְיָאדַם", he:"ליד" },
+    { ru:"Далеко", tr:"דַלִיקוֹ", he:"רחוק" },
+    { ru:"Близко", tr:"בְּלִיזְקָה", he:"קרוב" },
+    { ru:"Назад", tr:"נַזָאד", he:"אחורה" },
+    { ru:"Вперёд", tr:"פְפִּירְיוֹד", he:"קדימה" }
+  ]},
+  { id:"glue", title:"מילים מחברות", icon:"🔗", h:270, blurb:"המילים הקטנות שהופכות מילים בודדות למשפט.", words:[
+    { ru:"И", tr:"אִי", he:"ו־ (וגם)" },
+    { ru:"Но", tr:"נוֹ", he:"אבל" },
+    { ru:"Или", tr:"אִילִי", he:"או" },
+    { ru:"Потому что", tr:"פַּטַמוּ שְׁטוֹ", he:"כי" },
+    { ru:"Тоже", tr:"טוֹזֶ'ה", he:"גם" },
+    { ru:"Очень", tr:"אוֹצֶ'ן", he:"מאוד" },
+    { ru:"Ещё", tr:"יִשׁוֹ", he:"עוד" },
+    { ru:"Уже", tr:"אוּזֶ'ה", he:"כבר" },
+    { ru:"Только", tr:"טוֹלְקָה", he:"רק" },
+    { ru:"Всегда", tr:"פְסִיגְדָא", he:"תמיד" },
+    { ru:"Никогда", tr:"נִיקַגְדָא", he:"אף פעם" },
+    { ru:"Иногда", tr:"אִינַגְדָא", he:"לפעמים" },
+    { ru:"Надо", tr:"נָאדָה", he:"צריך" },
+    { ru:"Можно", tr:"מוֹזְ'נָה", he:"אפשר" }
+  ]}
 ];
 
-CATS.forEach((c, ci) => c.words.forEach((w, wi) => { w.id = c.id + "-" + wi; w.cat = c.id; w.catTitle = c.title; }));
-const ALL_WORDS = CATS.flatMap(c => c.words);
-const TOTAL = ALL_WORDS.length;
+CATS.forEach(c => c.words.forEach((w, i) => { w.id = c.id + "-" + i; w.cat = c.id; }));
+const ALL = CATS.flatMap(c => c.words);
+const TOTAL = ALL.length;
 const MASTER_AT = 3;
 
-/* ---------------- state ---------------- */
-let progress = {};            // id -> {score, right, wrong}
+/* =======================  מצב  ======================= */
+let progress = {};
+let prefs = { size: 17, rate: 0.8, cyr: 1 };
 const state = { screen: "home", catId: null, idx: 0, flipped: false, quiz: null };
-let dbRef = null, saveTimer = null, syncNote = "נשמר במכשיר הזה";
 
-function scoreOf(id) { return (progress[id] && progress[id].score) || 0; }
-function levelOf(id) { const s = scoreOf(id); return s >= MASTER_AT ? "known" : s > 0 ? "learning" : ""; }
-function masteredCount(words) { return words.filter(w => scoreOf(w.id) >= MASTER_AT).length; }
-function touched(words) { return words.filter(w => scoreOf(w.id) > 0).length; }
+try { progress = JSON.parse(localStorage.getItem("ru-progress") || "{}") || {}; } catch (e) { progress = {}; }
+try { Object.assign(prefs, JSON.parse(localStorage.getItem("ru-prefs") || "{}")); } catch (e) {}
 
+const scoreOf = id => (progress[id] && progress[id].score) || 0;
+const levelOf = id => { const s = scoreOf(id); return s >= MASTER_AT ? "known" : s > 0 ? "learning" : ""; };
+const mastered = ws => ws.filter(w => scoreOf(w.id) >= MASTER_AT).length;
+const started = ws => ws.filter(w => scoreOf(w.id) > 0).length;
+
+function saveProgress() {
+  try { localStorage.setItem("ru-progress", JSON.stringify(progress)); } catch (e) {}
+  renderMini();
+}
+function savePrefs() {
+  try { localStorage.setItem("ru-prefs", JSON.stringify(prefs)); } catch (e) {}
+  applyPrefs();
+}
+function applyPrefs() {
+  document.documentElement.style.fontSize = prefs.size + "px";
+  document.querySelectorAll("#sizeChips .chip").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.size === +prefs.size)));
+  document.querySelectorAll("#rateChips .chip").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.rate === +prefs.rate)));
+  document.querySelectorAll("#cyrChips .chip").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.cyr === +prefs.cyr)));
+}
 function bump(id, right) {
   const p = progress[id] || (progress[id] = { score: 0, right: 0, wrong: 0 });
   if (right) { p.score = Math.min(5, p.score + 1); p.right++; }
   else { p.score = Math.max(0, p.score - 1); p.wrong++; }
-  save();
+  saveProgress();
 }
 function setKnown(id, known) {
   const p = progress[id] || (progress[id] = { score: 0, right: 0, wrong: 0 });
   p.score = known ? MASTER_AT : 1;
-  save();
+  saveProgress();
 }
 
-function save() {
-  try { localStorage.setItem("ru-progress", JSON.stringify(progress)); } catch (e) {}
-  renderMini();
-  if (!dbRef) return;
-  clearTimeout(saveTimer);
-  saveTimer = setTimeout(() => {
-    dbRef.set({ words: progress, updatedAt: new Date().toISOString() }).catch(() => {});
-  }, 700);
-}
-
-try {
-  const raw = localStorage.getItem("ru-progress");
-  if (raw) progress = JSON.parse(raw) || {};
-} catch (e) { progress = {}; }
-
-(async function initDb() {
-  if (!window.claude || !claude.use) return;
-  const db = await claude.use("db");
-  if (!db) return;
-  dbRef = db.doc("progress/main");
-  try {
-    const snap = await dbRef.get();
-    if (snap.exists) {
-      const remote = (snap.data() || {}).words || {};
-      Object.keys(remote).forEach(id => {
-        const r = remote[id], l = progress[id];
-        if (!l || (r.score || 0) > (l.score || 0)) progress[id] = r;
-      });
-      render();
-    }
-    syncNote = "ההתקדמות מסונכרנת בין המכשירים שלך";
-    renderSync();
-  } catch (e) {}
-})();
-
-/* ---------------- speech ---------------- */
+/* =======================  דיבור  ======================= */
 let ruVoice = null, voicesChecked = false;
 function loadVoices() {
   if (!window.speechSynthesis) return;
@@ -885,12 +958,14 @@ function loadVoices() {
   if (!vs.length) return;
   voicesChecked = true;
   ruVoice = vs.find(v => (v.lang || "").toLowerCase().replace("_", "-").startsWith("ru")) || null;
-  renderVoiceNotice();
+  const el = document.getElementById("voiceNotice");
+  if (el) el.innerHTML = voiceNoticeHTML();
 }
-if (window.speechSynthesis) {
-  loadVoices();
-  speechSynthesis.onvoiceschanged = loadVoices;
-  setTimeout(loadVoices, 900);
+if (window.speechSynthesis) { loadVoices(); speechSynthesis.onvoiceschanged = loadVoices; setTimeout(loadVoices, 1000); }
+function voiceNoticeHTML() {
+  if (!voicesChecked || ruVoice) return "";
+  return '<div class="notice"><span>🔈</span><div><b>עדיין אין קול רוסי במכשיר</b>' +
+    'ההקראה תעבוד, אבל ההגייה לא תהיה מדויקת. באנדרואיד: הגדרות ← שפה וקלט ← פלט טקסט לדיבור ← מנוע Google ← התקנת נתוני קול ← Русский.</div></div>';
 }
 function speak(text, btn) {
   if (!window.speechSynthesis) return;
@@ -898,129 +973,127 @@ function speak(text, btn) {
   const u = new SpeechSynthesisUtterance(text);
   u.lang = "ru-RU";
   if (ruVoice) u.voice = ruVoice;
-  u.rate = 0.82;
+  u.rate = prefs.rate;
   if (btn) {
     btn.classList.add("playing");
     const off = () => btn.classList.remove("playing");
-    u.onend = off; u.onerror = off;
-    setTimeout(off, 4000);
+    u.onend = off; u.onerror = off; setTimeout(off, 5000);
   }
   speechSynthesis.speak(u);
 }
 
-const ICON_SPEAK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
-
-/* ---------------- helpers ---------------- */
+/* =======================  עזרים  ======================= */
+const ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const shuffle = a => { const x = a.slice(); for (let i = x.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [x[i], x[j]] = [x[j], x[i]]; } return x; };
-const byId = id => ALL_WORDS.find(w => w.id === id);
 const catById = id => CATS.find(c => c.id === id);
 const app = document.getElementById("app");
+const cyr = w => prefs.cyr ? '<span class="cy ru">' + esc(w.ru) + '</span>' : "";
 
 function go(screen, patch) { Object.assign(state, patch || {}, { screen }); render(); window.scrollTo({ top: 0, behavior: "smooth" }); }
 
-/* ---------------- screens ---------------- */
+/* =======================  מסכים  ======================= */
 function renderMini() {
-  const done = masteredCount(ALL_WORDS);
-  const pct = Math.round(done / TOTAL * 100);
-  document.getElementById("miniProgress").innerHTML =
-    '<span>' + done + '/' + TOTAL + ' מילים</span><span class="mini-bar"><i style="width:' + pct + '%"></i></span>';
-}
-function renderSync() {
-  const el = document.querySelector(".sync");
-  if (el) el.textContent = syncNote;
-}
-function renderVoiceNotice() {
-  const el = document.getElementById("voiceNotice");
-  if (!el) return;
-  el.innerHTML = (voicesChecked && !ruVoice)
-    ? '<div class="notice"><span>🔈</span><div><b>לא נמצא קול רוסי במכשיר</b>ההקראה תעבוד, אבל ההגייה עלולה להישמע מוזרה. באנדרואיד אפשר להוסיף קול רוסי בהגדרות ← שפות ← טקסט לדיבור.</div></div>'
-    : "";
+  const done = mastered(ALL), pct = Math.round(done / TOTAL * 100);
+  document.getElementById("mini").innerHTML =
+    '<span>' + done + '/' + TOTAL + '</span><span class="mini-bar"><i style="width:' + pct + '%"></i></span>';
 }
 
 function screenHome() {
-  const done = masteredCount(ALL_WORDS), started = touched(ALL_WORDS);
-  const next = CATS.find(c => masteredCount(c.words) < c.words.length) || CATS[0];
+  const done = mastered(ALL), inWork = started(ALL), pct = Math.round(done / TOTAL * 100);
+  const next = CATS.find(c => mastered(c.words) < c.words.length) || CATS[0];
   app.innerHTML =
-    '<div id="voiceNotice"></div>' +
-    '<div class="hero">' +
-      '<div>' +
-        '<p class="eyebrow">קורס רוסית מדוברת</p>' +
-        '<h1>לומדים לשמוע ולדבר — בלי אותיות</h1>' +
-        '<p class="lead">כל מילה מגיעה עם הקראה בקול, כתיב בעברית כדי לדעת איך לבטא, והתרגול הוא הקשבה: שומעים ובוחרים מה נאמר. בדיוק כמו שמורה היה מתחיל — קודם השיחה, האותיות אחר כך.</p>' +
-      '</div>' +
+    '<div id="voiceNotice">' + voiceNoticeHTML() + '</div>' +
+    '<section class="hero">' +
+      '<h1>לומדים לשמוע ולדבר רוסית</h1>' +
+      '<p>כל מילה עם הקראה בקול וכתיב בעברית — שומעים, חוזרים בקול, ומתרגלים. בלי אותיות רוסיות, בלי שיעורי דקדוק.</p>' +
+      '<div class="hero-bar"><i style="width:' + pct + '%"></i></div>' +
       '<div class="hero-stats">' +
-        '<span class="stat"><b>' + done + '</b> מילים שאת/ה יודע/ת</span>' +
-        '<span class="stat"><b>' + started + '</b> בתרגול</span>' +
-        '<span class="stat"><b>' + TOTAL + '</b> בקורס</span>' +
+        '<span><b>' + done + '</b>מילים שאת/ה יודע/ת</span>' +
+        '<span><b>' + inWork + '</b>בתרגול</span>' +
+        '<span><b>' + TOTAL + '</b>בקורס</span>' +
       '</div>' +
-      '<div class="quick-row">' +
-        '<button class="btn btn-accent" data-go="quiz" data-cat="mix">תרגול האזנה מהיר</button>' +
-        '<button class="btn" data-go="cat" data-cat="' + next.id + '">המשך: ' + esc(next.title) + '</button>' +
+      '<div class="row">' +
+        '<button class="btn btn-lg hero-cta" data-go="quiz" data-cat="mix">🎧 תרגול מהיר</button>' +
+        '<button class="btn btn-lg" style="background:rgba(255,255,255,.18);color:#fff" data-go="cat" data-cat="' + next.id + '">' + esc(next.icon) + ' ' + esc(next.title) + '</button>' +
       '</div>' +
-    '</div>' +
-    '<div class="section-head"><h2>שיעורים</h2><span class="hint">לפי סדר — כל שיעור בונה על הקודם</span></div>' +
-    '<div class="cat-grid">' +
+    '</section>' +
+    '<div class="section-head"><h2>השיעורים</h2><span class="hint">' + CATS.length + ' שיעורים · לפי סדר לימוד</span></div>' +
+    '<div class="grid">' +
       CATS.map((c, i) => {
-        const m = masteredCount(c.words), pct = Math.round(m / c.words.length * 100);
-        return '<button class="cat" data-go="cat" data-cat="' + c.id + '">' +
-          '<div class="cat-top"><span class="cat-num">' + (i + 1) + '</span><span class="cat-title">' + esc(c.title) + '</span></div>' +
-          '<div class="cat-sample">' + esc(c.blurb) + '</div>' +
-          '<div class="cat-foot"><span>' + m + '/' + c.words.length + '</span><span class="track"><i style="width:' + pct + '%"></i></span></div>' +
+        const m = mastered(c.words), p = Math.round(m / c.words.length * 100);
+        return '<button class="lesson" style="--h:' + c.h + '" data-go="cat" data-cat="' + c.id + '">' +
+          '<div class="lesson-top"><span class="emoji">' + c.icon + '</span>' +
+            '<span><span class="lesson-name">' + esc(c.title) + '</span>' +
+            '<span class="lesson-sub">שיעור ' + (i + 1) + ' · ' + c.words.length + ' מילים</span></span></div>' +
+          '<div class="lesson-blurb">' + esc(c.blurb) + '</div>' +
+          '<div class="bar"><i style="width:' + p + '%"></i></div>' +
+          (m === c.words.length
+            ? '<span class="done-pill">✓ הושלם</span>'
+            : '<span class="lesson-sub">' + m + ' מתוך ' + c.words.length + ' כבר יודעים</span>') +
         '</button>';
       }).join("") +
     '</div>' +
-    '<p class="sync">' + esc(syncNote) + '</p>';
-  renderVoiceNotice();
+    installCardHTML() +
+    '<p class="foot">ההתקדמות נשמרת במכשיר הזה</p>';
+}
+
+function isInstalled() {
+  return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+}
+function installCardHTML() {
+  if (isInstalled()) return "";
+  return '<div class="install-card">' +
+    '<span class="t"><b>📱 להפוך את זה לאפליקציה</b>' +
+    'מוסיפים אייקון למסך הבית — נפתח במסך מלא, בלי שורת כתובת, ועובד גם בלי אינטרנט.</span>' +
+    '<button class="btn btn-brand" data-install="1">איך עושים את זה?</button></div>';
 }
 
 function screenCat() {
-  const c = catById(state.catId);
-  const m = masteredCount(c.words);
+  const c = catById(state.catId), m = mastered(c.words);
   app.innerHTML =
-    '<div class="crumbs"><button class="btn-ghost" data-go="home">← כל השיעורים</button></div>' +
-    '<p class="eyebrow">שיעור ' + (CATS.indexOf(c) + 1) + '</p>' +
-    '<h1>' + esc(c.title) + '</h1>' +
-    '<p class="lead">' + esc(c.blurb) + ' ' + m + ' מתוך ' + c.words.length + ' מילים כבר יושבות טוב.</p>' +
-    '<div class="mode-row">' +
-      '<button class="mode" data-go="learn" data-cat="' + c.id + '"><strong>ללמוד את המילים</strong><span>כרטיסיות עם הקראה — שומעים, חוזרים בקול, מסמנים אם ידעת</span></button>' +
-      '<button class="mode" data-go="quiz" data-cat="' + c.id + '"><strong>תרגול האזנה</strong><span>10 שאלות: שומעים מילה ובוחרים את המשמעות</span></button>' +
-    '</div>' +
-    '<div class="section-head"><h2>כל המילים בשיעור</h2><span class="hint">לחיצה על הרמקול משמיעה</span></div>' +
-    '<div class="word-list">' +
-      c.words.map(w =>
-        '<div class="word-row">' +
-          '<span class="dot ' + levelOf(w.id) + '"></span>' +
-          '<div class="he"><b>' + esc(w.he) + '</b>' + (w.note ? '<small>' + esc(w.note) + '</small>' : '') + '</div>' +
-          '<div class="tr">' + esc(w.tr) + '<span class="cy ru">' + esc(w.ru) + '</span></div>' +
-          '<button class="speak" data-say="' + esc(w.ru) + '" aria-label="השמע ' + esc(w.he) + '">' + ICON_SPEAK + '</button>' +
-        '</div>').join("") +
+    '<div class="crumbs"><button class="btn btn-ghost" data-go="home">← כל השיעורים</button></div>' +
+    '<div style="--h:' + c.h + '">' +
+      '<div class="head-card"><span class="emoji">' + c.icon + '</span>' +
+        '<div><h1>' + esc(c.title) + '</h1><p>' + esc(c.blurb) + ' · ' + m + ' מתוך ' + c.words.length + ' כבר יודעים.</p></div></div>' +
+      '<div class="mode-row">' +
+        '<button class="mode" data-go="learn" data-cat="' + c.id + '"><span class="ic">🃏</span><span><strong>ללמוד את המילים</strong><span>כרטיסיות עם הקראה — אחת אחת</span></span></button>' +
+        '<button class="mode" data-go="quiz" data-cat="' + c.id + '"><span class="ic">🎧</span><span><strong>תרגול האזנה</strong><span>10 שאלות קצרות</span></span></button>' +
+      '</div>' +
+      '<div class="section-head"><h2>כל המילים בשיעור</h2><span class="hint">לחיצה על הרמקול משמיעה</span></div>' +
+      '<div class="word-list">' +
+        c.words.map(w =>
+          '<div class="word-row">' +
+            '<span class="status ' + levelOf(w.id) + '" aria-hidden="true"></span>' +
+            '<span class="he"><b>' + esc(w.he) + '</b>' + (w.note ? '<small>' + esc(w.note) + '</small>' : '') + '</span>' +
+            '<span class="tr">' + esc(w.tr) + cyr(w) + '</span>' +
+            '<button class="speak" data-say="' + esc(w.ru) + '" aria-label="השמע: ' + esc(w.he) + '">' + ICON + '</button>' +
+          '</div>').join("") +
+      '</div>' +
     '</div>';
 }
 
 function screenLearn() {
-  const c = catById(state.catId);
-  const w = c.words[state.idx];
+  const c = catById(state.catId), w = c.words[state.idx];
   app.innerHTML =
-    '<div class="crumbs"><button class="btn-ghost" data-go="cat" data-cat="' + c.id + '">← ' + esc(c.title) + '</button></div>' +
-    '<div class="stage">' +
+    '<div class="crumbs"><button class="btn btn-ghost" data-go="cat" data-cat="' + c.id + '">← ' + esc(c.title) + '</button></div>' +
+    '<div class="stage" style="--h:' + c.h + '">' +
       '<span class="counter">כרטיסייה ' + (state.idx + 1) + ' מתוך ' + c.words.length + '</span>' +
       '<div class="card">' +
-        '<button class="big-speak" data-say="' + esc(w.ru) + '" aria-label="השמע">' + ICON_SPEAK + '</button>' +
+        '<button class="big-speak" data-say="' + esc(w.ru) + '" aria-label="השמע שוב">' + ICON + '</button>' +
         '<div class="translit">' + esc(w.tr) + '</div>' +
         (state.flipped
-          ? '<div class="meaning">' + esc(w.he) + '</div>' +
-            '<div class="ru-big" style="font-size:22px">' + esc(w.ru) + '</div>' +
-            (w.note ? '<p class="note">' + esc(w.note) + '</p>' : '')
-          : '<p class="veil">תשמע/י, תגיד/י בקול — ואז גלה/י את המשמעות</p>') +
+          ? '<div class="meaning">' + esc(w.he) + '</div>' + (prefs.cyr ? '<div class="cyr">' + esc(w.ru) + '</div>' : "") +
+            (w.note ? '<p class="note">' + esc(w.note) + '</p>' : "")
+          : '<p class="veil">תשמעי, תגידי בקול — ואז גלי את המשמעות</p>') +
       '</div>' +
-      '<div class="card-actions">' +
+      '<div class="row">' +
         (state.flipped
-          ? '<button class="btn" data-learn="again">עוד לא יודע/ת</button><button class="btn btn-accent" data-learn="known">ידעתי ✓</button>'
-          : '<button class="btn btn-primary" data-learn="flip">גלה משמעות</button>') +
+          ? '<button class="btn btn-lg" data-learn="again">עוד לא 🙂</button><button class="btn btn-lg btn-c" data-learn="known">ידעתי ✓</button>'
+          : '<button class="btn btn-lg btn-c" data-learn="flip">גלי את המשמעות</button>') +
       '</div>' +
-      '<div class="card-actions">' +
-        '<button class="btn btn-ghost" data-learn="prev"' + (state.idx === 0 ? ' disabled' : '') + '>הקודם</button>' +
+      '<div class="row">' +
+        '<button class="btn btn-ghost" data-learn="prev"' + (state.idx === 0 ? " disabled" : "") + '>הקודם</button>' +
         '<button class="btn btn-ghost" data-learn="next">הבא ←</button>' +
       '</div>' +
     '</div>';
@@ -1030,48 +1103,50 @@ function screenLearn() {
 function buildQuiz(catId) {
   let pool;
   if (catId === "mix") {
-    const weak = ALL_WORDS.filter(w => scoreOf(w.id) > 0 && scoreOf(w.id) < MASTER_AT);
-    const fresh = ALL_WORDS.filter(w => scoreOf(w.id) === 0);
-    pool = shuffle(weak).slice(0, 6).concat(shuffle(fresh).slice(0, 6));
-    if (pool.length < 10) pool = pool.concat(shuffle(ALL_WORDS).slice(0, 10));
-  } else {
-    pool = shuffle(catById(catId).words);
-  }
+    const weak = ALL.filter(w => scoreOf(w.id) > 0 && scoreOf(w.id) < MASTER_AT);
+    const fresh = ALL.filter(w => scoreOf(w.id) === 0);
+    pool = shuffle(weak).slice(0, 6).concat(shuffle(fresh).slice(0, 8));
+    if (pool.length < 10) pool = pool.concat(shuffle(ALL).slice(0, 10));
+  } else pool = shuffle(catById(catId).words);
   const picks = shuffle(pool).slice(0, 10);
-  const qs = picks.map((w, i) => {
-    const sameCat = ALL_WORDS.filter(x => x.cat === w.cat && x.id !== w.id);
-    const others = shuffle(sameCat.length >= 3 ? sameCat : ALL_WORDS.filter(x => x.id !== w.id)).slice(0, 3);
-    return { word: w, type: i % 3 === 2 ? "recall" : "listen", options: shuffle([w].concat(others)) };
-  });
-  return { catId, qs, i: 0, right: 0, answered: null, wrongList: [] };
+  return {
+    catId,
+    h: catId === "mix" ? 248 : catById(catId).h,
+    qs: picks.map((w, i) => {
+      const sameCat = ALL.filter(x => x.cat === w.cat && x.id !== w.id);
+      const others = shuffle(sameCat.length >= 3 ? sameCat : ALL.filter(x => x.id !== w.id)).slice(0, 3);
+      return { word: w, type: i % 3 === 2 ? "recall" : "listen", options: shuffle([w].concat(others)) };
+    }),
+    i: 0, right: 0, answered: null, wrongList: []
+  };
 }
 
 function screenQuiz() {
   const q = state.quiz, cur = q.qs[q.i], w = cur.word;
   const pct = Math.round(q.i / q.qs.length * 100);
-  const backCat = q.catId === "mix" ? "" : '<button class="btn-ghost" data-go="cat" data-cat="' + q.catId + '">← ' + esc(catById(q.catId).title) + '</button>';
   app.innerHTML =
-    '<div class="crumbs">' + (backCat || '<button class="btn-ghost" data-go="home">← כל השיעורים</button>') + '</div>' +
-    '<div class="stage">' +
+    '<div class="crumbs">' +
+      (q.catId === "mix"
+        ? '<button class="btn btn-ghost" data-go="home">← כל השיעורים</button>'
+        : '<button class="btn btn-ghost" data-go="cat" data-cat="' + q.catId + '">← ' + esc(catById(q.catId).title) + '</button>') +
+    '</div>' +
+    '<div class="stage" style="--h:' + q.h + '">' +
       '<div class="quiz-head">' +
         '<span class="counter">' + (q.i + 1) + '/' + q.qs.length + '</span>' +
-        '<span class="track"><i style="width:' + pct + '%"></i></span>' +
-        '<span class="streak">' + q.right + ' נכונות</span>' +
+        '<span class="bar"><i style="width:' + pct + '%"></i></span>' +
+        '<span class="hearts">✓ ' + q.right + '</span>' +
       '</div>' +
       '<div class="prompt">' +
         (cur.type === "listen"
-          ? '<p class="ask">מה שמעת?</p><button class="big-speak" data-say="' + esc(w.ru) + '" aria-label="השמע שוב">' + ICON_SPEAK + '</button><p class="ask">לחיצה להשמעה חוזרת</p>'
+          ? '<p class="ask">מה שמעת?</p><button class="big-speak" data-say="' + esc(w.ru) + '" aria-label="השמע שוב">' + ICON + '</button><p class="ask">לחיצה = להשמיע שוב</p>'
           : '<p class="ask">איך אומרים ברוסית?</p><div class="he-word">' + esc(w.he) + '</div>') +
       '</div>' +
       '<div class="options">' +
-        cur.options.map(o =>
-          '<button class="opt" data-ans="' + o.id + '">' +
-            (cur.type === "listen"
-              ? esc(o.he)
-              : esc(o.tr) + '<span class="cy ru">' + esc(o.ru) + '</span>') +
-          '</button>').join("") +
+        cur.options.map((o, n) =>
+          '<button class="opt" data-ans="' + o.id + '"><span class="num">' + (n + 1) + '</span>' +
+            '<span>' + (cur.type === "listen" ? esc(o.he) : esc(o.tr) + cyr(o)) + '</span></button>').join("") +
       '</div>' +
-      '<div id="fb"></div>' +
+      '<div id="fb" aria-live="polite"></div>' +
     '</div>';
   if (cur.type === "listen") setTimeout(() => speak(w.ru), 260);
 }
@@ -1085,37 +1160,37 @@ function answer(id) {
   if (right) q.right++; else q.wrongList.push(w);
   document.querySelectorAll(".opt").forEach(b => {
     b.disabled = true;
-    if (b.dataset.ans === w.id) b.classList.add("correct");
-    else if (b.dataset.ans === id) b.classList.add("wrong");
+    if (b.dataset.ans === w.id) { b.classList.add("correct"); b.querySelector(".num").textContent = "✓"; }
+    else if (b.dataset.ans === id) { b.classList.add("wrong"); b.querySelector(".num").textContent = "✕"; }
   });
   speak(w.ru);
   const last = q.i === q.qs.length - 1;
   document.getElementById("fb").innerHTML =
     '<div class="feedback ' + (right ? "ok" : "no") + '">' +
-      '<div class="txt">' + (right ? "נכון! " : "לא נורא — ") + '<b>' + esc(w.tr) + '</b> = ' + esc(w.he) + '</div>' +
-      '<button class="btn btn-primary" data-next="1">' + (last ? "סיום" : "הבא ←") + '</button>' +
+      '<span class="txt">' + (right ? "יפה מאוד! " : "כמעט — ") + '<b>' + esc(w.tr) + '</b> = ' + esc(w.he) + '</span>' +
+      '<button class="btn" data-next="1">' + (last ? "סיום" : "הבא ←") + '</button>' +
     '</div>';
   document.querySelector("[data-next]").focus();
 }
 
 function screenResult() {
-  const q = state.quiz;
-  const pct = Math.round(q.right / q.qs.length * 100);
-  const title = pct >= 90 ? "מצוין — זה כבר נשמע כמו רוסית" : pct >= 60 ? "יפה מאוד, ממשיכים" : "זה בדיוק שלב הלמידה";
+  const q = state.quiz, pct = q.right / q.qs.length;
+  const stars = pct >= 0.9 ? "★★★" : pct >= 0.6 ? "★★☆" : "★☆☆";
+  const title = pct >= 0.9 ? "מעולה! זה כבר נשמע כמו רוסית" : pct >= 0.6 ? "יפה מאוד, ממשיכים" : "ככה בדיוק לומדים";
   app.innerHTML =
-    '<div class="stage">' +
+    '<div class="stage" style="--h:' + q.h + '">' +
       '<div class="result">' +
-        '<p class="eyebrow">סיום תרגול</p>' +
+        '<div class="stars">' + stars + '</div>' +
         '<div class="score">' + q.right + '/' + q.qs.length + '</div>' +
         '<h2>' + title + '</h2>' +
         (q.wrongList.length
           ? '<div class="review">' + q.wrongList.map(w =>
-              '<div class="r-row"><button class="speak" data-say="' + esc(w.ru) + '" aria-label="השמע">' + ICON_SPEAK + '</button>' +
+              '<div class="r-row"><button class="speak" data-say="' + esc(w.ru) + '" aria-label="השמע">' + ICON + '</button>' +
               '<span><b>' + esc(w.tr) + '</b> <span class="g">— ' + esc(w.he) + '</span></span></div>').join("") + '</div>'
-          : '<p class="lead" style="text-align:center">בלי טעויות בכלל. שווה לעבור לשיעור הבא.</p>') +
-        '<div class="card-actions">' +
-          '<button class="btn btn-accent" data-go="quiz" data-cat="' + q.catId + '">עוד סיבוב</button>' +
-          '<button class="btn" data-go="home">כל השיעורים</button>' +
+          : '<p class="note">בלי טעויות בכלל! אפשר לעבור לשיעור הבא.</p>') +
+        '<div class="row">' +
+          '<button class="btn btn-lg btn-c" data-go="quiz" data-cat="' + q.catId + '">עוד סיבוב 🔁</button>' +
+          '<button class="btn btn-lg" data-go="home">כל השיעורים</button>' +
         '</div>' +
       '</div>' +
     '</div>';
@@ -1123,14 +1198,10 @@ function screenResult() {
 
 function render() {
   renderMini();
-  if (state.screen === "home") screenHome();
-  else if (state.screen === "cat") screenCat();
-  else if (state.screen === "learn") screenLearn();
-  else if (state.screen === "quiz") screenQuiz();
-  else if (state.screen === "result") screenResult();
+  ({ home: screenHome, cat: screenCat, learn: screenLearn, quiz: screenQuiz, result: screenResult }[state.screen])();
 }
 
-/* ---------------- events ---------------- */
+/* =======================  אירועים  ======================= */
 document.addEventListener("click", e => {
   const say = e.target.closest("[data-say]");
   if (say) { speak(say.dataset.say, say); return; }
@@ -1157,20 +1228,45 @@ document.addEventListener("click", e => {
 
   const lb = e.target.closest("[data-learn]");
   if (lb) {
-    const c = catById(state.catId), act = lb.dataset.learn;
-    const w = c.words[state.idx];
+    const c = catById(state.catId), w = c.words[state.idx], act = lb.dataset.learn;
     if (act === "flip") { state.flipped = true; render(); }
     else if (act === "known" || act === "again") {
       setKnown(w.id, act === "known");
       if (state.idx === c.words.length - 1) go("cat", { catId: c.id });
       else { state.idx++; state.flipped = false; render(); }
-    }
-    else if (act === "next") {
+    } else if (act === "next") {
       if (state.idx === c.words.length - 1) go("cat", { catId: c.id });
       else { state.idx++; state.flipped = false; render(); }
-    }
-    else if (act === "prev" && state.idx > 0) { state.idx--; state.flipped = false; render(); }
+    } else if (act === "prev" && state.idx > 0) { state.idx--; state.flipped = false; render(); }
+    return;
   }
+
+  if (e.target.closest("[data-install]")) {
+    if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt.userChoice.then(() => { deferredPrompt = null; }); }
+    else alert("בכרום באנדרואיד:\n\n1. לוחצים על שלוש הנקודות ⋮ למעלה\n2. בוחרים \"הוספה למסך הבית\"\n3. מאשרים \"התקנה\"\n\nבאייפון (ספארי):\n1. לוחצים על כפתור השיתוף למטה\n2. בוחרים \"הוסף למסך הבית\"");
+    return;
+  }
+
+  const chip = e.target.closest(".chip");
+  if (chip) {
+    if (chip.dataset.size) prefs.size = +chip.dataset.size;
+    if (chip.dataset.rate) { prefs.rate = +chip.dataset.rate; speak("Привет"); }
+    if (chip.dataset.cyr) { prefs.cyr = +chip.dataset.cyr; render(); }
+    if (chip.dataset.cyr === "0") { prefs.cyr = 0; render(); }
+    savePrefs();
+  }
+});
+
+document.getElementById("setBtn").addEventListener("click", e => {
+  const panel = document.getElementById("settings");
+  const open = panel.classList.toggle("open");
+  e.currentTarget.setAttribute("aria-expanded", String(open));
+});
+document.getElementById("resetBtn").addEventListener("click", () => {
+  if (!confirm("לאפס את כל ההתקדמות ולהתחיל מחדש?")) return;
+  progress = {};
+  saveProgress();
+  render();
 });
 
 document.addEventListener("keydown", e => {
@@ -1179,66 +1275,31 @@ document.addEventListener("keydown", e => {
     if (e.key === "ArrowLeft") document.querySelector('[data-learn="next"]')?.click();
     if (e.key === "ArrowRight") document.querySelector('[data-learn="prev"]')?.click();
   }
-  if (state.screen === "quiz" && /^[1-4]$/.test(e.key)) {
-    document.querySelectorAll(".opt")[+e.key - 1]?.click();
-  }
+  if (state.screen === "quiz" && /^[1-4]$/.test(e.key)) document.querySelectorAll(".opt")[+e.key - 1]?.click();
   if (e.key === "Enter") document.querySelector("[data-next]")?.click();
 });
 
-render();
-</script>
-<style>
-  .install-bar {
-    position: fixed;
-    inset-inline: 12px;
-    bottom: 12px;
-    z-index: 40;
-    display: none;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 14px;
-    border-radius: 14px;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    box-shadow: var(--shadow-lift);
-    font-size: 14px;
-    max-width: 520px;
-    margin: 0 auto;
-  }
-  .install-bar.show { display: flex; }
-  .install-bar .t { flex: 1; }
-  .install-bar .t b { display: block; font-family: "Frank Ruhl Libre", Georgia, serif; }
-  .install-bar .t span { color: var(--muted); font-size: 13px; }
-</style>
-<div class="install-bar" id="installBar">
-  <div class="t"><b>להוסיף למסך הבית?</b><span>ייפתח כמו אפליקציה, גם בלי אינטרנט</span></div>
-  <button class="btn btn-accent" id="installBtn">התקנה</button>
-  <button class="btn btn-ghost" id="installNo" aria-label="לא עכשיו">✕</button>
-</div>
-<script>
-  let deferredPrompt = null;
-  const bar = document.getElementById("installBar");
-  window.addEventListener("beforeinstallprompt", e => {
-    e.preventDefault();
-    deferredPrompt = e;
-    if (!localStorage.getItem("ru-install-dismissed")) bar.classList.add("show");
-  });
-  document.getElementById("installBtn").addEventListener("click", async () => {
-    bar.classList.remove("show");
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    await deferredPrompt.userChoice;
-    deferredPrompt = null;
-  });
-  document.getElementById("installNo").addEventListener("click", () => {
-    bar.classList.remove("show");
-    try { localStorage.setItem("ru-install-dismissed", "1"); } catch (e) {}
-  });
-  window.addEventListener("appinstalled", () => bar.classList.remove("show"));
+/* =======================  התקנה + אופליין  ======================= */
+let deferredPrompt = null;
+const bar = document.getElementById("installBar");
+window.addEventListener("beforeinstallprompt", e => {
+  e.preventDefault(); deferredPrompt = e;
+  if (!localStorage.getItem("ru-install-dismissed")) bar.classList.add("show");
+});
+document.getElementById("installBtn").addEventListener("click", async () => {
+  bar.classList.remove("show");
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null;
+});
+document.getElementById("installNo").addEventListener("click", () => {
+  bar.classList.remove("show");
+  try { localStorage.setItem("ru-install-dismissed", "1"); } catch (e) {}
+});
+window.addEventListener("appinstalled", () => bar.classList.remove("show"));
+if ("serviceWorker" in navigator) window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
 
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
-  }
+applyPrefs();
+render();
 </script>
 </body>
 </html>

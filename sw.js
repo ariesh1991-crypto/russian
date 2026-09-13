@@ -1,4 +1,4 @@
-const CACHE = "ru-speak-v1";
+const CACHE = "ru-speak-v2";
 const ASSETS = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", e => {
@@ -13,16 +13,34 @@ self.addEventListener("activate", e => {
   );
 });
 
+// דף האפליקציה: קודם מהרשת (כדי שעדכונים יגיעו), ורק אם אין אינטרנט — מהמטמון.
+// שאר הקבצים: מהמטמון מיד, ומתרעננים ברקע.
 self.addEventListener("fetch", e => {
-  if (e.request.method !== "GET") return;
+  const req = e.request;
+  if (req.method !== "GET") return;
+
+  const isPage = req.mode === "navigate" || (req.destination === "document");
+  if (isPage) {
+    e.respondWith(
+      fetch(req)
+        .then(res => {
+          const copy = res.clone();
+          caches.open(CACHE).then(c => c.put("./index.html", copy)).catch(() => {});
+          return res;
+        })
+        .catch(() => caches.match("./index.html").then(hit => hit || caches.match("./")))
+    );
+    return;
+  }
+
   e.respondWith(
-    caches.match(e.request).then(hit => {
-      if (hit) return hit;
-      return fetch(e.request).then(res => {
+    caches.match(req).then(hit => {
+      const net = fetch(req).then(res => {
         const copy = res.clone();
-        caches.open(CACHE).then(c => c.put(e.request, copy)).catch(() => {});
+        caches.open(CACHE).then(c => c.put(req, copy)).catch(() => {});
         return res;
-      }).catch(() => caches.match("./index.html"));
+      }).catch(() => hit);
+      return hit || net;
     })
   );
 });
