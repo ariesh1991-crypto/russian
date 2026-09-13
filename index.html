@@ -1035,7 +1035,7 @@ function screenHome() {
       }).join("") +
     '</div>' +
     installCardHTML() +
-    '<p class="foot">גרסה 3 · ' + TOTAL + ' מילים · ההתקדמות נשמרת במכשיר הזה</p>';
+    '<p class="foot">גרסה 4 · ' + TOTAL + ' מילים · ההתקדמות נשמרת במכשיר הזה</p>';
 }
 
 function isInstalled() {
@@ -1296,13 +1296,9 @@ document.getElementById("installNo").addEventListener("click", () => {
   try { localStorage.setItem("ru-install-dismissed", "1"); } catch (e) {}
 });
 window.addEventListener("appinstalled", () => bar.classList.remove("show"));
+// הרענון אחרי עדכון נעשה בצד ה-service worker בלבד (ראה sw.js).
+// אין כאן מאזין ל-controllerchange בכוונה — שני מנגנוני רענון יחד יוצרים לולאה.
 if ("serviceWorker" in navigator) {
-  let reloading = false;
-  navigator.serviceWorker.addEventListener("controllerchange", () => {
-    if (reloading) return;
-    reloading = true;
-    location.reload();
-  });
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("sw.js")
       .then(reg => reg.update().catch(() => {}))
