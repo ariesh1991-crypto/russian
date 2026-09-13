@@ -1,4 +1,4 @@
-const CACHE = "ru-speak-v4";
+const CACHE = "ru-speak-v5";
 const ASSETS = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", e => {
@@ -27,8 +27,10 @@ self.addEventListener("fetch", e => {
 
   const isPage = req.mode === "navigate" || (req.destination === "document");
   if (isPage) {
+    // cache: "reload" מדלג על מטמון ה-HTTP של הדפדפן —
+    // GitHub Pages מבקש לשמור את הדף 10 דקות, ובלי זה עדכון לא מגיע מיד.
     e.respondWith(
-      fetch(req)
+      fetch(new Request(req.url, { cache: "reload", credentials: "same-origin" }))
         .then(res => {
           const copy = res.clone();
           caches.open(CACHE).then(c => c.put("./index.html", copy)).catch(() => {});
