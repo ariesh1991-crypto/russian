@@ -57,7 +57,6 @@
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #12172180;
       --bg: #121721;
       --bg-2: #0C1018;
       --surface: #1B2230;
@@ -523,6 +522,13 @@
       </div>
     </div>
     <div class="set-row">
+      <span class="lbl">מי לומד/ת?</span>
+      <div class="chips" id="genderChips">
+        <button class="chip" data-gender="f">אישה</button>
+        <button class="chip" data-gender="m">גבר</button>
+      </div>
+    </div>
+    <div class="set-row">
       <span class="lbl">כתב רוסי</span>
       <div class="chips" id="cyrChips">
         <button class="chip" data-cyr="0">להסתיר</button>
@@ -558,7 +564,7 @@ const CATS = [
     { ru:"Как вас зовут?", tr:"קַאק וַואס זַבוּט", he:"איך קוראים לך?" },
     { ru:"Меня зовут…", tr:"מִינְיָא זַבוּט…", he:"קוראים לי…" },
     { ru:"Очень приятно", tr:"אוֹצֶ'ן פְּרִיָאטְנָה", he:"נעים מאוד" },
-    { ru:"Как поживаете?", tr:"קַאק פַּזִ'יוָואיֶטְיֶה", he:"איך אתה מרגיש/מסתדר?" },
+    { ru:"Как поживаете?", tr:"קַאק פַּזִ'יוָואיֶטְיֶה", he:"מה שלומך? (רשמי)" },
     { ru:"Всё хорошо", tr:"פְסְיוֹ חַרַשׁוֹ", he:"הכל בסדר" },
     { ru:"До свидания", tr:"דַה סְוִידָאנְיָה", he:"להתראות" },
     { ru:"Пока", tr:"פַּקָא", he:"ביי (לא רשמי)" },
@@ -606,12 +612,12 @@ const CATS = [
     { ru:"Я люблю", tr:"יָא לְיוּבְּלְיוּ", he:"אני אוהב/ת" },
     { ru:"Мне нравится", tr:"מְנְיֶה נְרָאוִיצָה", he:"אני מחבב/ת את זה" },
     { ru:"Дайте, пожалуйста", tr:"דַאיְטְיֶה פַּזָ'אלוּסְטָה", he:"תן/תני בבקשה" },
-    { ru:"Можно?", tr:"מוֹזְ'נָה", he:"אפשר?" },
-    { ru:"Я голоден", tr:"יָא גוֹלַדֶן", he:"אני רעב" },
-    { ru:"Я устал", tr:"יָא אוּסְטַאל", he:"אני עייף" },
-    { ru:"Я готов", tr:"יָא גַטוֹב", he:"אני מוכן" },
+    { ru:"Можно?", tr:"מוֹזְ'נָה", he:"אפשר? / מותר?" },
+    { ru:"Я голоден", tr:"יָא גוֹלַדֶן", he:"אני רעב", g:{ ru:"Я голодна", tr:"יָא גַלַדְנָה", he:"אני רעבה" } },
+    { ru:"Я устал", tr:"יָא אוּסְטַאל", he:"אני עייף", g:{ ru:"Я устала", tr:"יָא אוּסְטַאלָה", he:"אני עייפה" } },
+    { ru:"Я готов", tr:"יָא גַטוֹב", he:"אני מוכן", g:{ ru:"Я готова", tr:"יָא גַטוֹבָה", he:"אני מוכנה" } },
     { ru:"Я говорю по-русски", tr:"יָא גַוַורְיוּ פַּה-רוּסְקִי", he:"אני מדבר/ת רוסית" },
-    { ru:"Вы говорите по-английски?", tr:"וִוי גַוַורִיטְיֶה פַּה-אַנְגְלִיסְקִי", he:"אתה מדבר אנגלית?" },
+    { ru:"Вы говорите по-английски?", tr:"וִוי גַוַורִיטְיֶה פַּה-אַנְגְלִיסְקִי", he:"מדברים אנגלית? (בנימוס)" },
     { ru:"Давай", tr:"דַוַואי", he:"בוא / יאללה" },
     { ru:"Хорошего дня", tr:"חַרוֹשֶׁבָה דְנְיָא", he:"שיהיה יום טוב" }
   ]},
@@ -725,7 +731,7 @@ const CATS = [
     { ru:"Стакан", tr:"סְטַקָאן", he:"כוס" },
     { ru:"Вкусно", tr:"פְקוּסְנָה", he:"טעים" },
     { ru:"Горячий", tr:"גַרְיָאצִ'י", he:"חם" },
-    { ru:"Холодный", tr:"חַלוֹדְנִי", he:"קר" },
+    { ru:"Холодный", tr:"חַלוֹדְנִי", he:"קר (משקה, אוכל)" },
     { ru:"Сладкий", tr:"סְלָאדְקִי", he:"מתוק" },
     { ru:"Приятного аппетита", tr:"פְּרִיָאטְנַבָה אַפִּיטִיטָה", he:"בתיאבון" }
   ]},
@@ -758,8 +764,8 @@ const CATS = [
     { ru:"Новый", tr:"נוֹבִי", he:"חדש" },
     { ru:"Старый", tr:"סְטָארִי", he:"ישן" },
     { ru:"Красивый", tr:"קְרַסִיבִי", he:"יפה" },
-    { ru:"Дорогой", tr:"דַרַגוֹי", he:"יקר" },
-    { ru:"Дешёвый", tr:"דִישׁוֹבִי", he:"זול" }
+    { ru:"Дорогой", tr:"דַרַגוֹי", he:"יקר (תואר)" },
+    { ru:"Дешёвый", tr:"דִישׁוֹבִי", he:"זול (תואר)" }
   ]},
   { id:"verbs", title:"פעלים יומיומיים", icon:"🏃", h:215, blurb:"הפעולות שחוזרות בכל יום — הלב של כל משפט.", words:[
     { ru:"Быть", tr:"בִּיט", he:"להיות" },
@@ -814,7 +820,7 @@ const CATS = [
     { ru:"Мне плохо", tr:"מְנְיֶה פְּלוֹחָה", he:"אני מרגיש/ה רע" }
   ]},
   { id:"feel", title:"רגשות ומצבים", icon:"😊", h:45, blurb:"להגיד איך מרגישים — ולהבין איך הצד השני מרגיש.", words:[
-    { ru:"Рад", tr:"רַאד", he:"שמח" },
+    { ru:"Рад", tr:"רַאד", he:"שמח", g:{ ru:"Рада", tr:"רָאדָה", he:"שמחה" } },
     { ru:"Грустно", tr:"גְרוּסְנָה", he:"עצוב" },
     { ru:"Весело", tr:"וְיֶסִילָה", he:"כיף" },
     { ru:"Страшно", tr:"סְטְרָאשְׁנָה", he:"מפחיד" },
@@ -848,7 +854,7 @@ const CATS = [
     { ru:"Дождь", tr:"דוֹשְׁץ'", he:"גשם" },
     { ru:"Снег", tr:"סְנְיֶג", he:"שלג" },
     { ru:"Ветер", tr:"וְיֶטְיֶר", he:"רוח" },
-    { ru:"Холодно", tr:"חוֹלַדְנָה", he:"קר" },
+    { ru:"Холодно", tr:"חוֹלַדְנָה", he:"קר (בחוץ)" },
     { ru:"Жарко", tr:"זָ'ארְקָה", he:"חם מאוד" },
     { ru:"Тепло", tr:"טִיפְּלוֹ", he:"חמים / נעים" },
     { ru:"Небо", tr:"נְיֶבָּה", he:"שמיים" },
@@ -876,8 +882,8 @@ const CATS = [
   { id:"shop", title:"קניות וכסף", icon:"🛒", h:100, blurb:"לשאול מחיר, לשלם ולהבין כמה זה יצא.", words:[
     { ru:"Деньги", tr:"דְיֶנְגִי", he:"כסף" },
     { ru:"Цена", tr:"צֵינָא", he:"מחיר" },
-    { ru:"Дорого", tr:"דוֹרַגָה", he:"יקר" },
-    { ru:"Дёшево", tr:"דְיוֹשֶׁבָה", he:"זול" },
+    { ru:"Дорого", tr:"דוֹרַגָה", he:"זה יקר" },
+    { ru:"Дёшево", tr:"דְיוֹשֶׁבָה", he:"זה זול" },
     { ru:"Скидка", tr:"סְקִידְקָה", he:"הנחה" },
     { ru:"Касса", tr:"קָאסָה", he:"קופה" },
     { ru:"Карта", tr:"קָארְטָה", he:"כרטיס אשראי" },
@@ -927,25 +933,45 @@ const CATS = [
     { ru:"Никогда", tr:"נִיקַגְדָא", he:"אף פעם" },
     { ru:"Иногда", tr:"אִינַגְדָא", he:"לפעמים" },
     { ru:"Надо", tr:"נָאדָה", he:"צריך" },
-    { ru:"Можно", tr:"מוֹזְ'נָה", he:"אפשר" }
+    { ru:"Нельзя", tr:"נִילְזְיָה", he:"אסור / אי אפשר" }
   ]}
 ];
 
-CATS.forEach(c => c.words.forEach((w, i) => { w.id = c.id + "-" + i; w.cat = c.id; }));
+CATS.forEach(c => c.words.forEach((w, i) => { w.id = c.id + "-" + i; w.cat = c.id; w.ru0 = w.ru; w.tr0 = w.tr; w.he0 = w.he; }));
+
+// ניסוח לפי מגדר הדובר/ת: "מבין/ה" -> "מבינה", ולמילים עם צורה נקבית ברוסית (g) מחליפים את כל הצורה.
+const FINALS = { "ך": "כ", "ם": "מ", "ן": "נ", "ף": "פ", "ץ": "צ" };
+function heGender(text, fem) {
+  return text.replace(/([א-ת]+)\/([א-ת]+)/g, (m, a, b) => {
+    const suffix = b.length <= 1;
+    if (!fem) return a;
+    return suffix ? a.slice(0, -1) + (FINALS[a.slice(-1)] || a.slice(-1)) + b : b;
+  });
+}
+function applyGender() {
+  const fem = prefs.gender !== "m";
+  CATS.forEach(c => c.words.forEach(w => {
+    const f = fem && w.g;
+    w.ru = f ? w.g.ru : w.ru0;
+    w.tr = f ? w.g.tr : w.tr0;
+    w.he = f ? w.g.he : heGender(w.he0, fem);
+  }));
+}
 const ALL = CATS.flatMap(c => c.words);
 const TOTAL = ALL.length;
 const MASTER_AT = 3;
 
 /* =======================  מצב  ======================= */
 let progress = {};
-let prefs = { size: 17, rate: 0.8, cyr: 1 };
+let prefs = { size: 17, rate: 0.8, cyr: 1, gender: "f" };
 const state = { screen: "home", catId: null, idx: 0, flipped: false, quiz: null };
 
 try { progress = JSON.parse(localStorage.getItem("ru-progress") || "{}") || {}; } catch (e) { progress = {}; }
 try { Object.assign(prefs, JSON.parse(localStorage.getItem("ru-prefs") || "{}")); } catch (e) {}
+applyGender();
 
 const scoreOf = id => (progress[id] && progress[id].score) || 0;
-const levelOf = id => { const s = scoreOf(id); return s >= MASTER_AT ? "known" : s > 0 ? "learning" : ""; };
+const levelOf = id => { const s = scoreOf(id); return s >= MASTER_AT ? "known" : (s > 0 || isSeen(id)) ? "learning" : ""; };
 const mastered = ws => ws.filter(w => scoreOf(w.id) >= MASTER_AT).length;
 const started = ws => ws.filter(w => scoreOf(w.id) > 0).length;
 
@@ -961,6 +987,7 @@ function applyPrefs() {
   document.documentElement.style.fontSize = prefs.size + "px";
   document.querySelectorAll("#sizeChips .chip").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.size === +prefs.size)));
   document.querySelectorAll("#rateChips .chip").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.rate === +prefs.rate)));
+  document.querySelectorAll("#genderChips .chip").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.gender === prefs.gender)));
   document.querySelectorAll("#cyrChips .chip").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.cyr === +prefs.cyr)));
 }
 function bump(id, right) {
@@ -971,7 +998,7 @@ function bump(id, right) {
 }
 function setKnown(id, known) {
   const p = progress[id] || (progress[id] = { score: 0, right: 0, wrong: 0 });
-  p.score = known ? MASTER_AT : 1;
+  p.score = known ? Math.max(p.score, 1) : 0;
   saveProgress();
 }
 
@@ -987,7 +1014,13 @@ function loadVoices() {
   if (el) el.innerHTML = voiceNoticeHTML();
 }
 if (window.speechSynthesis) { loadVoices(); speechSynthesis.onvoiceschanged = loadVoices; setTimeout(loadVoices, 1000); }
+let ttsGaveUp = false;
+setTimeout(() => { if (!voicesChecked) { ttsGaveUp = true; const el = document.getElementById("voiceNotice"); if (el) el.innerHTML = voiceNoticeHTML(); } }, 3000);
 function voiceNoticeHTML() {
+  if (!window.speechSynthesis || ttsGaveUp) {
+    return '<div class="notice"><span>🔇</span><div><b>אין הקראה במכשיר הזה</b>' +
+      'בלי קול אי אפשר ללמוד לשמוע. נסי לפתוח את האתר בדפדפן Chrome, ובהגדרות הטלפון לוודא שמותקן "פלט טקסט לדיבור" של Google.</div></div>';
+  }
   if (!voicesChecked || ruVoice) return "";
   return '<div class="notice"><span>🔈</span><div><b>עדיין אין קול רוסי במכשיר</b>' +
     'ההקראה תעבוד, אבל ההגייה לא תהיה מדויקת. באנדרואיד: הגדרות ← שפה וקלט ← פלט טקסט לדיבור ← מנוע Google ← התקנת נתוני קול ← Русский.</div></div>';
@@ -1015,7 +1048,26 @@ const catById = id => CATS.find(c => c.id === id);
 const app = document.getElementById("app");
 const cyr = w => prefs.cyr ? '<span class="cy ru">' + esc(w.ru) + '</span>' : "";
 
-function go(screen, patch) { Object.assign(state, patch || {}, { screen }); render(); window.scrollTo({ top: 0, behavior: "smooth" }); }
+let navGuard = false, ignorePop = false;
+function syncHistory() {
+  if (state.screen !== "home" && !navGuard) { history.pushState({ ru: 1 }, ""); navGuard = true; }
+  else if (state.screen === "home" && navGuard) { navGuard = false; ignorePop = true; history.back(); }
+}
+function go(screen, patch) {
+  Object.assign(state, patch || {}, { screen });
+  render();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  try { syncHistory(); } catch (e) {}
+}
+window.addEventListener("popstate", () => {
+  if (ignorePop) { ignorePop = false; return; }
+  navGuard = false;
+  const s = state.screen;
+  if (s === "home") return;
+  if (s === "cat") go("home", { catId: null });
+  else if (s === "learn") go("cat");
+  else go((state.quiz && state.quiz.kind === "quick") ? "home" : "cat", { catId: state.quiz && state.quiz.catId !== "mix" ? state.quiz.catId : state.catId });
+});
 
 /* =======================  מסכים  ======================= */
 function renderMini() {
@@ -1066,7 +1118,7 @@ function screenHome() {
       }).join("") +
     '</div>' +
     installCardHTML() +
-    '<p class="foot">גרסה 8 · ' + TOTAL + ' מילים · ההתקדמות נשמרת במכשיר הזה</p>';
+    '<p class="foot">גרסה 9 · ' + TOTAL + ' מילים · ההתקדמות נשמרת במכשיר הזה</p>';
 }
 
 function isInstalled() {
@@ -1182,9 +1234,10 @@ function buildQuestions(listenWords, recallWords, pool) {
   const src = listenWords.map(w => ({ w: w, type: "listen" }))
     .concat(recallWords.map(w => ({ w: w, type: "recall" })));
   return shuffle(src).map(q => {
-    let others = shuffle(pool.filter(x => x.id !== q.w.id)).slice(0, 3);
+    const clash = x => x.id === q.w.id || x.he === q.w.he || x.tr === q.w.tr;
+    let others = shuffle(pool.filter(x => !clash(x))).slice(0, 3);
     if (others.length < 3) {
-      const same = ALL.filter(x => x.cat === q.w.cat && x.id !== q.w.id && !others.some(o => o.id === x.id));
+      const same = ALL.filter(x => !clash(x) && !others.some(o => o.id === x.id) && !others.some(o => o.he === x.he));
       others = others.concat(shuffle(same).slice(0, 3 - others.length));
     }
     return { word: q.w, type: q.type, options: shuffle([q.w].concat(others)) };
@@ -1376,7 +1429,7 @@ document.addEventListener("click", e => {
     if (chip.dataset.size) prefs.size = +chip.dataset.size;
     if (chip.dataset.rate) { prefs.rate = +chip.dataset.rate; speak("Привет"); }
     if (chip.dataset.cyr) { prefs.cyr = +chip.dataset.cyr; render(); }
-    if (chip.dataset.cyr === "0") { prefs.cyr = 0; render(); }
+    if (chip.dataset.gender) { prefs.gender = chip.dataset.gender; applyGender(); render(); }
     savePrefs();
   }
 });
