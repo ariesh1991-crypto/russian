@@ -288,6 +288,16 @@
   .head-card h1 { color: var(--c); font-size: 1.5rem; }
   .head-card p { margin: 4px 0 0; color: var(--ink-soft); font-size: .92rem; }
 
+  .group { margin-top: 12px; border: 1px solid var(--line); border-radius: var(--r-m); background: var(--surface); }
+  .group > summary { list-style: none; cursor: pointer; padding: 14px 16px; min-height: var(--tap); display: flex; align-items: center; gap: 12px; border-radius: var(--r-m); }
+  .group > summary::-webkit-details-marker { display: none; }
+  .group > summary::after { content: "▾"; color: var(--muted); transition: transform .2s ease; }
+  .group[open] > summary::after { transform: rotate(180deg); }
+  .g-title { flex: 1; font-family: "Rubik", sans-serif; font-weight: 700; font-size: 1.05rem; }
+  .g-count { color: var(--muted); font-size: .85rem; font-variant-numeric: tabular-nums; }
+  .g-bar { width: 54px; height: 8px; border-radius: 99px; background: var(--line); overflow: hidden; }
+  .g-bar i { display: block; height: 100%; background: var(--good); border-radius: 99px; }
+  .group .grid { padding: 0 12px 14px; }
   .restore { width: 100%; display: flex; flex-direction: column; gap: 8px; }
   .restore p { margin: 0; font-size: .9rem; color: var(--muted); }
   .restore textarea {
@@ -1057,9 +1067,38 @@ const levelOf = id => { const s = scoreOf(id); return s >= MASTER_AT ? "known" :
 const mastered = ws => ws.filter(w => scoreOf(w.id) >= MASTER_AT).length;
 const started = ws => ws.filter(w => scoreOf(w.id) > 0).length;
 
-function saveProgress() {
+function saveProgress(quiet) {
   try { localStorage.setItem("ru-progress", JSON.stringify(progress)); } catch (e) {}
+  if (!quiet) markActive();
   renderMini();
+}
+
+/* ---- רצף ימים וחזרה מרווחת ---- */
+function dayKey(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+function loadDays() { try { const v = JSON.parse(localStorage.getItem("ru-days") || "[]"); return Array.isArray(v) ? v : []; } catch (e) { return []; } }
+function markActive() {
+  const days = loadDays(), t = dayKey(new Date());
+  if (days.includes(t)) return;
+  days.push(t);
+  try { localStorage.setItem("ru-days", JSON.stringify(days.slice(-90))); } catch (e) {}
+}
+function streak() {
+  const days = new Set(loadDays()), d = new Date();
+  if (!days.has(dayKey(d))) d.setDate(d.getDate() - 1);
+  let n = 0;
+  while (days.has(dayKey(d))) { n++; d.setDate(d.getDate() - 1); }
+  return n;
+}
+const REVIEW_DAYS = [0, 1, 2, 4, 8, 16];
+const nowMinutes = () => Math.floor(Date.now() / 60000);
+function isDue(w) {
+  const p = progress[w.id];
+  if (!p || !p.seen) return false;
+  if (!p.last) return true;
+  return (nowMinutes() - p.last) / 1440 >= REVIEW_DAYS[Math.min(p.score || 0, 5)];
+}
+function dueWords() {
+  return ALL.filter(isDue).sort((a, b) => ((progress[a.id].last || 0) - (progress[b.id].last || 0)));
 }
 function savePrefs() {
   try { localStorage.setItem("ru-prefs", JSON.stringify(prefs)); } catch (e) {}
@@ -1076,6 +1115,7 @@ function bump(id, right) {
   const p = progress[id] || (progress[id] = { score: 0, right: 0, wrong: 0 });
   if (right) { p.score = Math.min(5, p.score + 1); p.right++; }
   else { p.score = Math.max(0, p.score - 1); p.wrong++; }
+  p.last = nowMinutes();
   saveProgress();
 }
 function setKnown(id, known) {
@@ -1151,13 +1191,13 @@ function voiceNoticeHTML() {
   return '<div class="notice"><span>🔈</span><div><b>עדיין אין קול רוסי במכשיר</b>' +
     'ההקראה תעבוד, אבל ההגייה לא תהיה מדויקת. באנדרואיד: הגדרות ← שפה וקלט ← פלט טקסט לדיבור ← מנוע Google ← התקנת נתוני קול ← Русский.</div></div>';
 }
-function speak(text, btn) {
+function speak(text, btn, rate) {
   if (!window.speechSynthesis) return;
   speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
   u.lang = "ru-RU";
   if (ruVoice) u.voice = ruVoice;
-  u.rate = prefs.rate;
+  u.rate = rate || prefs.rate;
   if (btn) {
     btn.classList.add("playing");
     const off = () => btn.classList.remove("playing");
@@ -1205,7 +1245,7 @@ function renderMini() {
 
 function screenHome() {
   const done = mastered(ALL), learned = taught(ALL).length, pct = Math.round(done / TOTAL * 100);
-  const step = nextStep();
+  const step = nextStep(), due = dueWords();
   const cta = step
     ? '<button class="btn btn-lg hero-cta" data-start="' + step.c.id + ':' + step.ci + '">' +
       (learned ? "ממשיכים ללמוד ←" : "מתחילים ללמוד ←") + '</button>'
@@ -1219,33 +1259,42 @@ function screenHome() {
       '<div class="hero-stats">' +
         '<span><b>' + learned + '</b>מילים שלמדת</span>' +
         '<span><b>' + done + '</b>כבר יושבות טוב</span>' +
-        '<span><b>' + TOTAL + '</b>בקורס</span>' +
+        '<span><b>' + (streak() ? "🔥 " : "") + streak() + '</b>ימים ברצף</span>' +
       '</div>' +
       '<div class="row">' + cta +
-        (learned >= 4
-          ? '<button class="btn btn-lg" style="background:rgba(255,255,255,.18);color:#fff" data-quiz="quick">🎧 תרגול חוזר</button>'
-          : "") +
+        (due.length
+          ? '<button class="btn btn-lg" style="background:rgba(255,255,255,.18);color:#fff" data-quiz="quick">🔁 חזרה של היום · ' + due.length + '</button>'
+          : learned >= 4
+            ? '<button class="btn btn-lg" style="background:rgba(255,255,255,.18);color:#fff" data-quiz="quick">🎧 תרגול חוזר</button>'
+            : "") +
       '</div>' +
+      (due.length ? '<p style="margin:0;font-size:.85rem">' + due.length + ' מילים מחכות לרענון — חוזרים עליהן לפני שנשכחות.</p>' : "") +
       (step ? '<p style="margin:0;font-size:.85rem">הבא בתור: ' + esc(step.c.icon + " " + step.c.title) + ' · שלב ' + (step.ci + 1) + ' מתוך ' + step.chunks.length + '</p>' : "") +
     '</section>' +
     '<div class="section-head"><h2>השיעורים</h2><span class="hint">' + CATS.length + ' שיעורים · לפי סדר לימוד</span></div>' +
-    '<div class="grid">' +
-      CATS.map((c, i) => {
-        const m = mastered(c.words), p = Math.round(m / c.words.length * 100);
-        return '<button class="lesson" style="--h:' + c.h + '" data-go="cat" data-cat="' + c.id + '">' +
-          '<div class="lesson-top"><span class="emoji">' + c.icon + '</span>' +
-            '<span><span class="lesson-name">' + esc(c.title) + '</span>' +
-            '<span class="lesson-sub">שיעור ' + (i + 1) + ' · ' + c.words.length + ' מילים</span></span></div>' +
-          '<div class="lesson-blurb">' + esc(c.blurb) + '</div>' +
-          '<div class="bar"><i style="width:' + p + '%"></i></div>' +
-          (m === c.words.length
-            ? '<span class="done-pill">✓ הושלם</span>'
-            : '<span class="lesson-sub">' + m + ' מתוך ' + c.words.length + ' כבר יודעים</span>') +
-        '</button>';
-      }).join("") +
-    '</div>' +
+    GROUPS.map(g => {
+      const cs = g.ids.map(id => catById(id)), all = cs.reduce((n, c) => n + c.words.length, 0), got = cs.reduce((n, c) => n + mastered(c.words), 0);
+      state.groupOpen = state.groupOpen || {};
+      const open = g.id in state.groupOpen ? state.groupOpen[g.id] : (step ? g.ids.includes(step.c.id) : g.id === "g1");
+      return '<details class="group" data-group="' + g.id + '"' + (open ? " open" : "") + '>' +
+        '<summary><span class="g-title">' + esc(g.title) + '</span><span class="g-count">' + got + '/' + all + '</span>' +
+        '<span class="g-bar"><i style="width:' + Math.round(got / all * 100) + '%"></i></span></summary>' +
+        '<div class="grid">' + cs.map(c => {
+          const m = mastered(c.words), p = Math.round(m / c.words.length * 100), unit = c.id.startsWith("s-") ? "משפטים" : "מילים";
+          return '<button class="lesson" style="--h:' + c.h + '" data-go="cat" data-cat="' + c.id + '">' +
+            '<div class="lesson-top"><span class="emoji">' + c.icon + '</span>' +
+              '<span><span class="lesson-name">' + esc(c.title) + '</span>' +
+              '<span class="lesson-sub">' + c.words.length + ' ' + unit + '</span></span></div>' +
+            '<div class="lesson-blurb">' + esc(c.blurb) + '</div>' +
+            '<div class="bar"><i style="width:' + p + '%"></i></div>' +
+            (m === c.words.length
+              ? '<span class="done-pill">✓ הושלם</span>'
+              : '<span class="lesson-sub">' + m + ' מתוך ' + c.words.length + ' כבר יודעים</span>') +
+          '</button>';
+        }).join("") + '</div></details>';
+    }).join("") +
     installCardHTML() +
-    '<p class="foot">גרסה 12 · ' + TOTAL + ' מילים · ההתקדמות נשמרת במכשיר הזה</p>';
+    '<p class="foot">גרסה 13 · ' + TOTAL + ' מילים · ההתקדמות נשמרת במכשיר הזה</p>';
 }
 
 function isInstalled() {
@@ -1276,8 +1325,17 @@ function markSeen(id) {
   const p = progress[id] || (progress[id] = { score: 0, right: 0, wrong: 0 });
   if (!p.seen) { p.seen = true; saveProgress(); }
 }
+const GROUPS = [
+  { id: "g1", title: "מתחילים לדבר", ids: ["greet", "basics", "questions", "useful", "s-intro"] },
+  { id: "g2", title: "מספרים וזמן", ids: ["num1", "num2", "week", "time"] },
+  { id: "g3", title: "אנשים ובית", ids: ["family", "home", "feel", "health", "clothes"] },
+  { id: "g4", title: "אוכל וקניות", ids: ["food", "rest", "shop", "s-shop"] },
+  { id: "g5", title: "בעיר ובדרכים", ids: ["places", "travel", "where", "s-way", "weather"] },
+  { id: "g6", title: "לתאר ולדבר", ids: ["colors", "verbs", "glue", "animals", "s-daily"] }
+];
+const ORDERED = GROUPS.flatMap(g => g.ids.map(id => CATS.find(c => c.id === id)));
 function nextStep() {
-  for (const c of CATS) {
+  for (const c of ORDERED) {
     const chunks = chunksOf(c);
     for (let i = 0; i < chunks.length; i++) if (taught(chunks[i]).length < chunks[i].length) return { c, ci: i, chunks };
   }
@@ -1336,6 +1394,7 @@ function screenLearn() {
       '<span class="counter">שלב ' + (state.ci + 1) + ' · לומדים מילה ' + (state.idx + 1) + ' מתוך ' + list.length + '</span>' +
       '<div class="card">' +
         '<button class="big-speak" data-say="' + esc(w.ru) + '" aria-label="השמע שוב">' + ICON + '</button>' +
+        '<button class="speak big" data-say="' + esc(w.ru) + '" data-slow="1" aria-label="השמע לאט">🐢 <span>לאט</span></button>' +
         '<div class="translit">' + esc(w.tr) + '</div>' +
         (state.flipped
           ? '<div class="meaning">' + esc(w.he) + '</div>' + (prefs.cyr ? '<div class="cyr">' + esc(w.ru) + '</div>' : "") +
@@ -1392,11 +1451,11 @@ function quizForReview(catId) {
   });
 }
 function quizQuick() {
-  const t = taught(ALL);
+  const t = taught(ALL), due = dueWords();
   const weak = t.filter(w => scoreOf(w.id) < MASTER_AT);
-  const picks = uniq(shuffle(weak).slice(0, 7).concat(shuffle(t))).slice(0, 10);
+  const picks = uniq(due.slice(0, 10).concat(shuffle(weak), shuffle(t))).slice(0, 10);
   return emptyQuiz({
-    kind: "quick", catId: "mix", h: 248, label: "תרגול על מילים שכבר למדת",
+    kind: "quick", catId: "mix", h: 248, label: due.length ? "חזרה של היום — מילים שהגיע הזמן לרענן" : "תרגול על מילים שכבר למדת",
     qs: buildQuestions(picks.slice(0, 7), picks.slice(7, 10), t)
   });
 }
@@ -1419,7 +1478,7 @@ function screenQuiz() {
       '<span class="counter">' + esc(q.label) + '</span>' +
       '<div class="prompt">' +
         (cur.type === "listen"
-          ? '<p class="ask">מה שמעת?</p><button class="big-speak" data-say="' + esc(w.ru) + '" aria-label="השמע שוב">' + ICON + '</button><p class="ask">לחיצה = להשמיע שוב</p>'
+          ? '<p class="ask">מה שמעת?</p><button class="big-speak" data-say="' + esc(w.ru) + '" aria-label="השמע שוב">' + ICON + '</button><button class="speak big" data-say="' + esc(w.ru) + '" data-slow="1" aria-label="השמע לאט">🐢 <span>לאט</span></button>'
           : '<p class="ask">איך אומרים ברוסית?</p><div class="he-word">' + esc(w.he) + '</div>') +
       '</div>' +
       '<div class="options">' +
@@ -1462,7 +1521,8 @@ function resultActions(q) {
         (more ? "לשלב הבא ←" : "ללמוד את השלב שוב") + '</button>' +
       '<button class="btn btn-lg btn-soft" data-speak="' + c.id + ':' + q.ci + '">🎤 לתרגל דיבור</button>' +
       '<button class="btn btn-lg" data-quiz="chunk:' + c.id + ':' + q.ci + '">לתרגל שוב 🔁</button>' +
-      '<button class="btn btn-ghost" data-go="cat" data-cat="' + c.id + '">חזרה לשיעור</button>';
+      '<button class="btn btn-ghost" data-go="cat" data-cat="' + c.id + '">חזרה לשיעור</button>' +
+      '<button class="btn btn-ghost" data-go="home">לדף הבית</button>';
   }
   const again = q.kind === "review" ? 'data-quiz="review:' + q.catId + '"' : 'data-quiz="quick"';
   return '<button class="btn btn-lg btn-c" ' + again + '>עוד סיבוב 🔁</button>' +
@@ -1581,7 +1641,8 @@ function screenSpeak() {
       '<div class="card">' +
         '<div class="meaning">' + esc(w.he) + '</div>' +
         '<div class="translit">' + esc(w.tr) + '</div>' +
-        '<button class="speak big" data-say="' + esc(w.ru) + '" aria-label="השמע">' + ICON + ' <span>להקשיב</span></button>' +
+        '<div class="row"><button class="speak big" data-say="' + esc(w.ru) + '" aria-label="השמע">' + ICON + ' <span>להקשיב</span></button>' +
+        '<button class="speak big" data-say="' + esc(w.ru) + '" data-slow="1" aria-label="השמע לאט">🐢 <span>לאט</span></button></div>' +
         (SR
           ? '<button class="mic' + (listening ? " on" : "") + '" data-sp="mic" aria-label="לדבר"' + (listening ? " disabled" : "") + '>' + MIC + '</button>' +
             '<p class="veil">' + (listening ? "מקשיבה…" : "לחצי על המיקרופון ואמרי את המילה") + '</p>'
@@ -1634,7 +1695,7 @@ function render() {
 /* =======================  אירועים  ======================= */
 document.addEventListener("click", e => {
   const say = e.target.closest("[data-say]");
-  if (say) { speak(say.dataset.say, say); return; }
+  if (say) { speak(say.dataset.say, say, say.dataset.slow ? 0.5 : undefined); return; }
 
   const nav = e.target.closest("[data-go]");
   if (nav) {
@@ -1720,6 +1781,11 @@ document.addEventListener("click", e => {
   }
 });
 
+document.addEventListener("toggle", e => {
+  const d = e.target;
+  if (d && d.dataset && d.dataset.group) { state.groupOpen = state.groupOpen || {}; state.groupOpen[d.dataset.group] = d.open; }
+}, true);
+
 document.getElementById("setBtn").addEventListener("click", e => {
   const panel = document.getElementById("settings");
   const open = panel.classList.toggle("open");
@@ -1748,14 +1814,15 @@ document.getElementById("restoreGo").addEventListener("click", () => {
   progress = data.progress;
   Object.assign(prefs, data.prefs);
   try { localStorage.setItem("ru-days", JSON.stringify(data.days)); } catch (e) {}
-  savePrefs(); applyGender(); saveProgress(); render();
+  savePrefs(); applyGender(); saveProgress(true); render();
   document.getElementById("restoreBox").value = ""; document.getElementById("restorePane").hidden = true;
   backupMsg("שוחזרו " + n + " מילים.", "ok");
 });
 document.getElementById("resetBtn").addEventListener("click", () => {
   if (!confirm("לאפס את כל ההתקדמות ולהתחיל מחדש?")) return;
   progress = {};
-  saveProgress();
+  try { localStorage.removeItem("ru-days"); } catch (e) {}
+  saveProgress(true);
   render();
 });
 
