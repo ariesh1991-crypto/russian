@@ -1,4 +1,4 @@
-const CACHE = "ru-speak-v9";
+const CACHE = "ru-speak-v10";
 const ASSETS = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", e => {
