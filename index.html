@@ -288,6 +288,19 @@
   .head-card h1 { color: var(--c); font-size: 1.5rem; }
   .head-card p { margin: 4px 0 0; color: var(--ink-soft); font-size: .92rem; }
 
+  .mic {
+    width: 96px; height: 96px; border-radius: 99px; display: grid; place-items: center;
+    background: var(--c-strong); color: var(--c-on); box-shadow: var(--shadow-lift);
+    transition: transform .15s ease;
+  }
+  .mic svg { width: 42px; height: 42px; }
+  .mic:hover { transform: scale(1.05); }
+  .mic:active { transform: scale(.95); }
+  .mic.on { background: var(--bad); animation: pulse 1.1s ease-in-out infinite; }
+  .speak.big { width: auto; height: 46px; padding: 0 18px; gap: 8px; display: inline-flex; align-items: center; font-weight: 600; }
+  .feedback.listen { background: var(--c-bg); color: var(--c); border-color: var(--c-line); justify-content: center; }
+  .feedback small { font-size: .85rem; opacity: .85; }
+  @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--bad) 50%, transparent); } 50% { box-shadow: 0 0 0 18px transparent; } }
   .mode-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 16px 0 26px; }
   .mode {
     text-align: start; padding: 18px; border-radius: var(--r-m);
@@ -1054,6 +1067,7 @@ function syncHistory() {
   else if (state.screen === "home" && navGuard) { navGuard = false; ignorePop = true; history.back(); }
 }
 function go(screen, patch) {
+  if (state.rec) { try { state.rec.abort(); } catch (e) {} state.rec = null; }
   Object.assign(state, patch || {}, { screen });
   render();
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -1065,7 +1079,7 @@ window.addEventListener("popstate", () => {
   const s = state.screen;
   if (s === "home") return;
   if (s === "cat") go("home", { catId: null });
-  else if (s === "learn") go("cat");
+  else if (s === "learn" || s === "speak") go("cat");
   else go((state.quiz && state.quiz.kind === "quick") ? "home" : "cat", { catId: state.quiz && state.quiz.catId !== "mix" ? state.quiz.catId : state.catId });
 });
 
@@ -1118,7 +1132,7 @@ function screenHome() {
       }).join("") +
     '</div>' +
     installCardHTML() +
-    '<p class="foot">גרסה 9 · ' + TOTAL + ' מילים · ההתקדמות נשמרת במכשיר הזה</p>';
+    '<p class="foot">גרסה 10 · ' + TOTAL + ' מילים · ההתקדמות נשמרת במכשיר הזה</p>';
 }
 
 function isInstalled() {
@@ -1179,6 +1193,7 @@ function screenCat() {
             '<span class="step-body"><b>' + ch.length + ' מילים</b>' +
               '<span class="step-words">' + ch.map(w => esc(w.he)).join(" · ") + '</span>' + pill + '</span>' +
             '<button class="btn ' + (state2 === "new" || state2 === "part" ? "btn-c" : "") + '" data-start="' + c.id + ':' + i + '">' + label + '</button>' +
+            (seen > 0 ? '<button class="btn btn-soft" data-speak="' + c.id + ':' + i + '">🎤 דיבור</button>' : "") +
           '</div>';
         }).join("") +
       '</div>' +
@@ -1332,6 +1347,7 @@ function resultActions(q) {
     const more = q.ci + 1 < chunks.length;
     return '<button class="btn btn-lg btn-c" data-start="' + c.id + ':' + (more ? q.ci + 1 : q.ci) + '">' +
         (more ? "לשלב הבא ←" : "ללמוד את השלב שוב") + '</button>' +
+      '<button class="btn btn-lg btn-soft" data-speak="' + c.id + ':' + q.ci + '">🎤 לתרגל דיבור</button>' +
       '<button class="btn btn-lg" data-quiz="chunk:' + c.id + ':' + q.ci + '">לתרגל שוב 🔁</button>' +
       '<button class="btn btn-ghost" data-go="cat" data-cat="' + c.id + '">חזרה לשיעור</button>';
   }
@@ -1360,9 +1376,146 @@ function screenResult() {
     '</div>';
 }
 
+/* =======================  דיבור: זיהוי הגייה במיקרופון  ======================= */
+let SR = window.SpeechRecognition || window.webkitSpeechRecognition || null;
+
+function normRu(s) {
+  return String(s).toLowerCase().replace(/ё/g, "е").replace(/[^а-я0-9\s]/g, " ").replace(/\s+/g, " ").trim();
+}
+function editDistance(a, b) {
+  const m = a.length, n = b.length;
+  if (!m) return n; if (!n) return m;
+  let prev = []; for (let j = 0; j <= n; j++) prev[j] = j;
+  for (let i = 1; i <= m; i++) {
+    const cur = [i];
+    for (let j = 1; j <= n; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    prev = cur;
+  }
+  return prev[n];
+}
+// מילים קצרות (עד 3 אותיות) חייבות להיות מדויקות; ארוכות מקבלות סטייה של עד רבע מהאורך.
+// ביטוי שנגמר ב"…" (למשל "קוראים לי…") מתקבל גם כשממשיכים אחריו בשם.
+function spokenOk(expected, heard) {
+  const e = normRu(expected);
+  if (!e) return false;
+  const open = /…|\.\.\./.test(expected);
+  return heard.some(h => {
+    const n = normRu(h);
+    if (!n) return false;
+    if (n === e) return true;
+    if (open && n.startsWith(e)) return true;
+    if (e.length <= 3) return false;
+    return editDistance(n, e) / Math.max(n.length, e.length) <= 0.25;
+  });
+}
+
+function listenOnce(done) {
+  const rec = new SR();
+  rec.lang = "ru-RU"; rec.maxAlternatives = 5; rec.interimResults = false; rec.continuous = false;
+  let finished = false;
+  const finish = r => { if (!finished) { finished = true; done(r); } };
+  rec.onresult = e => finish({ alts: [...e.results[0]].map(a => a.transcript) });
+  rec.onerror = e => finish({ error: e.error || "unknown" });
+  rec.onend = () => finish({ error: "no-speech" });
+  try { rec.start(); } catch (err) { finish({ error: "busy" }); }
+  return rec;
+}
+
+const MIC = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg>';
+const MIC_ERRORS = {
+  "not-allowed": "צריך לאשר גישה למיקרופון: בהגדרות האתר בדפדפן ← מיקרופון ← לאפשר.",
+  "service-not-allowed": "צריך לאשר גישה למיקרופון: בהגדרות האתר בדפדפן ← מיקרופון ← לאפשר.",
+  "no-speech": "לא שמעתי כלום. נסי שוב, קרוב יותר למיקרופון.",
+  "network": "זיהוי דיבור צריך חיבור לאינטרנט.",
+  "audio-capture": "לא נמצא מיקרופון במכשיר.",
+  "language-not-supported": "הדפדפן הזה לא מזהה רוסית."
+};
+
+function newSpeak(words) {
+  return { list: words.slice(), i: 0, status: "idle", heard: "", attempts: 0, ok: 0, missed: [], err: "", played: false, done: false };
+}
+
+function screenSpeak() {
+  const s = state.speak, c = catById(state.catId);
+  const back = '<div class="crumbs"><button class="btn btn-ghost" data-go="cat" data-cat="' + c.id + '">← ' + esc(c.title) + '</button></div>';
+  if (s.done) {
+    app.innerHTML = back + '<div class="stage" style="--h:' + c.h + '"><div class="result">' +
+      '<div class="stars">🎤</div>' +
+      '<div class="score">' + s.ok + '/' + s.list.length + '</div>' +
+      '<h2>' + (s.ok === s.list.length ? "כולן יצאו מצוין" : "עבודה יפה, זה תרגול") + '</h2>' +
+      (s.missed.length
+        ? '<p class="note">כדאי עוד סיבוב על אלה:</p><div class="review">' + s.missed.map(w =>
+            '<div class="r-row"><button class="speak" data-say="' + esc(w.ru) + '" aria-label="השמע">' + ICON + '</button>' +
+            '<span><b>' + esc(w.tr) + '</b> <span class="g">— ' + esc(w.he) + '</span></span></div>').join("") + '</div>'
+        : '<p class="note">אמרת את כל המילים נכון.</p>') +
+      '<div class="row"><button class="btn btn-lg btn-c" data-speak-again="1">עוד סיבוב 🔁</button>' +
+      '<button class="btn btn-lg" data-go="cat" data-cat="' + c.id + '">חזרה לשיעור</button></div>' +
+    '</div></div>';
+    return;
+  }
+  const w = s.list[s.i], listening = s.status === "listening";
+  let fb = "";
+  if (listening) fb = '<div class="feedback listen">מקשיבה… אמרי עכשיו</div>';
+  else if (s.status === "ok") fb = '<div class="feedback ok"><span class="txt">✓ מעולה, זה נשמע נכון</span></div>';
+  else if (s.status === "miss") fb = '<div class="feedback no"><span class="txt">לא בדיוק. הקשיבי שוב ונסי עוד פעם' +
+      (prefs.cyr && s.heard ? '<br><small>שמעתי: <span class="ru">' + esc(s.heard) + '</span></small>' : '') + '</span></div>';
+  else if (s.err) fb = '<div class="feedback no"><span class="txt">' + esc(MIC_ERRORS[s.err] || "משהו השתבש, נסי שוב.") + '</span></div>';
+
+  app.innerHTML = back +
+    '<div class="stage" style="--h:' + c.h + '">' +
+      '<span class="counter">תרגול דיבור · מילה ' + (s.i + 1) + ' מתוך ' + s.list.length + '</span>' +
+      (SR ? "" : '<div class="notice"><span>🎤</span><div><b>הדפדפן הזה לא מזהה דיבור</b>ב-Chrome באנדרואיד זה עובד. בינתיים אפשר לתרגל לבד: להקשיב, לומר בקול, ולסמן "אמרתי".</div></div>') +
+      '<div class="card">' +
+        '<div class="meaning">' + esc(w.he) + '</div>' +
+        '<div class="translit">' + esc(w.tr) + '</div>' +
+        '<button class="speak big" data-say="' + esc(w.ru) + '" aria-label="השמע">' + ICON + ' <span>להקשיב</span></button>' +
+        (SR
+          ? '<button class="mic' + (listening ? " on" : "") + '" data-sp="mic" aria-label="לדבר"' + (listening ? " disabled" : "") + '>' + MIC + '</button>' +
+            '<p class="veil">' + (listening ? "מקשיבה…" : "לחצי על המיקרופון ואמרי את המילה") + '</p>'
+          : '<button class="btn btn-lg btn-c" data-sp="self">אמרתי בקול ✓</button>') +
+      '</div>' +
+      '<div id="fb" aria-live="polite">' + fb + '</div>' +
+      '<div class="row">' +
+        (s.status === "ok"
+          ? '<button class="btn btn-lg btn-c" data-sp="next">' + (s.i === s.list.length - 1 ? "לסיכום" : "הבאה ←") + '</button>'
+          : '<button class="btn btn-ghost" data-sp="next">' + (s.attempts >= 2 ? "לא נורא, הבאה ←" : "דלגי ←") + '</button>') +
+      '</div>' +
+    '</div>';
+  if (!s.played) { s.played = true; setTimeout(() => speak(w.ru), 250); }
+}
+
+function doListen() {
+  const s = state.speak;
+  if (!SR || s.status === "listening") return;
+  const w = s.list[s.i];
+  try { speechSynthesis.cancel(); } catch (e) {}
+  s.status = "listening"; s.err = ""; render();
+  setTimeout(() => {
+    state.rec = listenOnce(res => {
+      state.rec = null;
+      if (state.screen !== "speak" || state.speak !== s || s.list[s.i] !== w) return;
+      if (res.error) { s.status = "idle"; s.err = res.error; }
+      else {
+        s.attempts++; s.heard = res.alts[0] || "";
+        if (spokenOk(w.ru, res.alts)) { s.status = "ok"; s.ok++; const p = progress[w.id] || (progress[w.id] = { score: 0, right: 0, wrong: 0 }); p.said = (p.said || 0) + 1; saveProgress(); }
+        else s.status = "miss";
+      }
+      render();
+    });
+  }, 350);
+}
+
+function nextSpeak() {
+  const s = state.speak, w = s.list[s.i];
+  if (s.status !== "ok") s.missed.push(w);
+  if (s.i === s.list.length - 1) s.done = true;
+  else { s.i++; s.status = "idle"; s.heard = ""; s.attempts = 0; s.err = ""; s.played = false; }
+  render();
+}
+
 function render() {
   renderMini();
-  ({ home: screenHome, cat: screenCat, learn: screenLearn, quiz: screenQuiz, result: screenResult }[state.screen])();
+  ({ home: screenHome, cat: screenCat, learn: screenLearn, quiz: screenQuiz, result: screenResult, speak: screenSpeak }[state.screen])();
 }
 
 /* =======================  אירועים  ======================= */
@@ -1375,6 +1528,26 @@ document.addEventListener("click", e => {
     const to = nav.dataset.go, cat = nav.dataset.cat;
     if (to === "home") go("home", { catId: null });
     else if (to === "cat") go("cat", { catId: cat });
+    return;
+  }
+
+  const sp = e.target.closest("[data-speak]");
+  if (sp) {
+    const parts = sp.dataset.speak.split(":"), c = catById(parts[0]);
+    go("speak", { catId: c.id, speakChunk: +parts[1], speak: newSpeak(taught(chunksOf(c)[+parts[1]]).length ? taught(chunksOf(c)[+parts[1]]) : chunksOf(c)[+parts[1]]) });
+    return;
+  }
+  if (e.target.closest("[data-speak-again]")) {
+    const c = catById(state.catId), list = chunksOf(c)[state.speakChunk];
+    go("speak", { speak: newSpeak(list) });
+    return;
+  }
+  const spa = e.target.closest("[data-sp]");
+  if (spa) {
+    const act = spa.dataset.sp;
+    if (act === "mic") doListen();
+    else if (act === "next") nextSpeak();
+    else if (act === "self") { const s = state.speak; if (s.status !== "ok") { s.status = "ok"; s.ok++; } render(); }
     return;
   }
 
