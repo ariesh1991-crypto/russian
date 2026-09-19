@@ -288,6 +288,14 @@
   .head-card h1 { color: var(--c); font-size: 1.5rem; }
   .head-card p { margin: 4px 0 0; color: var(--ink-soft); font-size: .92rem; }
 
+  .restore { width: 100%; display: flex; flex-direction: column; gap: 8px; }
+  .restore p { margin: 0; font-size: .9rem; color: var(--muted); }
+  .restore textarea {
+    width: 100%; padding: 10px; border-radius: 12px; border: 2px solid var(--line);
+    background: var(--surface-2); color: var(--ink); font: .8rem/1.4 monospace; resize: vertical;
+  }
+  .backup-msg { width: 100%; margin: 0; font-size: .9rem; min-height: 1.3em; }
+  .backup-msg.ok { color: var(--good); } .backup-msg.bad { color: var(--bad); }
   .mic {
     width: 96px; height: 96px; border-radius: 99px; display: grid; place-items: center;
     background: var(--c-strong); color: var(--c-on); box-shadow: var(--shadow-lift);
@@ -547,6 +555,19 @@
         <button class="chip" data-cyr="0">להסתיר</button>
         <button class="chip" data-cyr="1">להציג</button>
       </div>
+    </div>
+    <div class="set-row">
+      <span class="lbl">גיבוי</span>
+      <div class="chips">
+        <button class="btn" id="backupBtn">📋 העתקת קוד גיבוי</button>
+        <button class="btn" id="restoreBtn">שחזור מקוד</button>
+      </div>
+      <div id="restorePane" class="restore" hidden>
+        <p>הדביקי כאן את הקוד ששמרת:</p>
+        <textarea id="restoreBox" rows="3" dir="ltr" spellcheck="false" placeholder="RU1:..."></textarea>
+        <button class="btn btn-brand" id="restoreGo">שחזור</button>
+      </div>
+      <p id="backupMsg" class="backup-msg" role="status"></p>
     </div>
     <div class="set-row">
       <span class="lbl">התקדמות</span>
@@ -1063,6 +1084,50 @@ function setKnown(id, known) {
   saveProgress();
 }
 
+/* =======================  גיבוי והעברה בין מכשירים  ======================= */
+const PACK_FIELDS = ["score", "right", "wrong", "seen", "said", "last"];
+function packProgress(p) {
+  return Object.keys(p).filter(id => ALL.some(w => w.id === id)).map(id => {
+    const e = p[id];
+    return id + "=" + PACK_FIELDS.map(f => f === "seen" ? (e.seen ? 1 : 0) : (Number(e[f]) || 0)).join(",");
+  }).join(";");
+}
+function unpackProgress(str) {
+  const out = {};
+  String(str).split(";").forEach(part => {
+    const i = part.indexOf("=");
+    if (i < 1) return;
+    const id = part.slice(0, i), v = part.slice(i + 1).split(",").map(Number);
+    if (!ALL.some(w => w.id === id) || v.length < 4 || v.some(x => !Number.isFinite(x))) return;
+    const e = {};
+    PACK_FIELDS.forEach((f, k) => { if (f === "seen") { if (v[k]) e.seen = true; } else e[f] = v[k] || 0; });
+    out[id] = e;
+  });
+  return out;
+}
+function makeBackup() {
+  let days = []; try { days = JSON.parse(localStorage.getItem("ru-days") || "[]"); } catch (e) {}
+  return "RU1:" + btoa(JSON.stringify({ v: 1, p: packProgress(progress), f: prefs, d: days }));
+}
+function parseBackup(text) {
+  const t = String(text).trim();
+  if (!t.startsWith("RU1:")) throw new Error("format");
+  let data;
+  try { data = JSON.parse(atob(t.slice(4).replace(/\s+/g, ""))); } catch (e) { throw new Error("corrupt"); }
+  if (!data || data.v !== 1 || typeof data.p !== "string") throw new Error("corrupt");
+  const p = unpackProgress(data.p);
+  const f = data.f && typeof data.f === "object" ? data.f : {}, safe = {};
+  if ([17, 20, 23].includes(f.size)) safe.size = f.size;
+  if ([0.6, 0.8, 1].includes(f.rate)) safe.rate = f.rate;
+  if ([0, 1].includes(f.cyr)) safe.cyr = f.cyr;
+  if (f.gender === "f" || f.gender === "m") safe.gender = f.gender;
+  return { progress: p, prefs: safe, days: Array.isArray(data.d) ? data.d.filter(x => /^\d{4}-\d{2}-\d{2}$/.test(x)) : [] };
+}
+function backupMsg(text, kind) {
+  const el = document.getElementById("backupMsg");
+  if (el) { el.textContent = text; el.className = "backup-msg " + (kind || ""); }
+}
+
 /* =======================  דיבור  ======================= */
 let ruVoice = null, voicesChecked = false;
 function loadVoices() {
@@ -1180,7 +1245,7 @@ function screenHome() {
       }).join("") +
     '</div>' +
     installCardHTML() +
-    '<p class="foot">גרסה 11 · ' + TOTAL + ' מילים · ההתקדמות נשמרת במכשיר הזה</p>';
+    '<p class="foot">גרסה 12 · ' + TOTAL + ' מילים · ההתקדמות נשמרת במכשיר הזה</p>';
 }
 
 function isInstalled() {
@@ -1659,6 +1724,33 @@ document.getElementById("setBtn").addEventListener("click", e => {
   const panel = document.getElementById("settings");
   const open = panel.classList.toggle("open");
   e.currentTarget.setAttribute("aria-expanded", String(open));
+});
+document.getElementById("backupBtn").addEventListener("click", async () => {
+  const code = makeBackup();
+  try { await navigator.clipboard.writeText(code); backupMsg("הקוד הועתק. אפשר לשלוח אותו לעצמך בוואטסאפ ולשמור.", "ok"); }
+  catch (e) {
+    const pane = document.getElementById("restorePane"), box = document.getElementById("restoreBox");
+    pane.hidden = false; box.value = code; box.select();
+    backupMsg("לא הצלחתי להעתיק אוטומטית. הקוד מופיע בתיבה למטה: לסמן הכול, להעתיק ולשמור.", "bad");
+  }
+});
+document.getElementById("restoreBtn").addEventListener("click", () => {
+  const pane = document.getElementById("restorePane");
+  pane.hidden = !pane.hidden;
+  if (!pane.hidden) document.getElementById("restoreBox").focus();
+});
+document.getElementById("restoreGo").addEventListener("click", () => {
+  let data;
+  try { data = parseBackup(document.getElementById("restoreBox").value); }
+  catch (e) { backupMsg(e.message === "format" ? "זה לא נראה כמו קוד גיבוי. הוא מתחיל ב-RU1:" : "הקוד פגום או נחתך באמצע ההעתקה. נסי להעתיק אותו שוב במלואו.", "bad"); return; }
+  const n = Object.keys(data.progress).length;
+  if (!confirm("לשחזר " + n + " מילים? זה יחליף את ההתקדמות שיש כרגע במכשיר הזה.")) return;
+  progress = data.progress;
+  Object.assign(prefs, data.prefs);
+  try { localStorage.setItem("ru-days", JSON.stringify(data.days)); } catch (e) {}
+  savePrefs(); applyGender(); saveProgress(); render();
+  document.getElementById("restoreBox").value = ""; document.getElementById("restorePane").hidden = true;
+  backupMsg("שוחזרו " + n + " מילים.", "ok");
 });
 document.getElementById("resetBtn").addEventListener("click", () => {
   if (!confirm("לאפס את כל ההתקדמות ולהתחיל מחדש?")) return;
